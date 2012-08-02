@@ -1,14 +1,3 @@
-/* LOGIN BOX */
-#loginbox {
-	background: url(../images/login_boxbg.jpg) no-repeat;
-	width: 310px;
-	height: 152px;
-	margin: 0 auto;
-	padding: 40px 0 0 30px;
-}
-#loginbox form .user, #loginbox form .pass, .rememfor {
-	overflow: hidden;
-}
 .userTitle, .userInput, .passTitle, .passInput, .remember {
 	float: left;
 }
@@ -24,7 +13,7 @@
 	line-height: 27px;
 }
 input.userInput, input.passInput {
-	background: url(../images/login_inputbox.jpg) no-repeat;
+	background: url(images/login_inputbox.jpg) no-repeat;
 	width: 165px;
 	height: 27px;
 	border: 1px solid #999999;
@@ -51,7 +40,7 @@ input.checkbox {
 	padding: 0;
 }
 input.login {
-	background: url(../images/login_button.jpg) no-repeat;
+	background: url(images/login_button.jpg) no-repeat;
 	width: 111px;
 	height: 30px;
 	border: 0;
@@ -80,4 +69,85 @@ a:visited.clickForgot {
 }
 a:hover.clickForgot {
 	color: #1ba3e3;
+}
+.dixilogo {
+  background: url(images/logo.png) no-repeat left top transparent;
+  float: left;
+  height: 81px;
+  width: 981px;  
+}
+.headerText {
+	background: url(images/title-bg.jpg) repeat-x;
+	background-position: 0 0;
+	overflow: hidden;
+}
+.headerText h1 {
+	margin: 0;
+}
+
+form#login_form {
+	width: 290px;
+	margin: 0 auto;
+	padding-top: 43px;
+}
+form#login_form .user {
+	margin-bottom: 4px;
+}
+form#login_form .user, form#login_form .pass {
+	overflow: hidden;
+}
+form#login_form .user label, form#login_form .pass label {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #656565;
+	margin-top: 10px;
+	float: left;
+}
+form#login_form .user input, form#login_form .pass input {
+	width: 178px;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 15px;
+	border: 1px solid #999999;
+	float: right;
+	color: #406e85;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+}
+.rememberLoginWrap {
+	margin: 15px 0 0 80px;
+	overflow: hidden;
+}
+.rememberLoginWrap .rememfor {
+	float: left;
+}
+.rememberLoginWrap .rememfor label input#rememberme {
+	width: 13px;
+	height: 13px;
+	margin: 0;
+	padding: 0;
+}
+.rememberLoginWrap .loginButton {
+	float: right;
+}
+.rememberLoginWrap .loginButton input#submit {
+	background: url(images/sign-in-btn.png) no-repeat;
+	background-position: 0 0;
+	width: 92px;
+	height: 30px;
+	border: 0;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #fff;
+}
+.rememberLoginWrap .loginButton input:hover#submit {
+	background-position: 0 -30px;
+}
+#div_login {
+	background: url(images/login-box.png) no-repeat;
+	width: 366px;
+	height: 190px;
+	margin: 150px auto 0 auto;
 }
