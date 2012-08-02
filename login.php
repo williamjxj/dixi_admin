@@ -126,7 +126,8 @@ $('#username').select().focus();
 		
 		$res = $this->mdb2->query($query);
 		if (PEAR::isError($res)) {
-			die($res->getMessage().__LINE__.$query);
+			echo __FILE__.'['.__LINE__.']'.$query;
+			die($res->getMessage());
 		}
 		$total = $res->numRows();
 		if ($total>0) {
