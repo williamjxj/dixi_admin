@@ -1,0 +1,221 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{config_load file="{$config.smarty}"}
+{if $config.self=='themes'}
+<script language="javascript" type="text/javascript" src="{$config.path}js/jquery.form.js"></script>
+{/if}
+<link type="text/css" rel="stylesheet" href="http://cdat.com/admin/themes/default/css/pams-style.css">
+<style type="text/css">
+.message-succ {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FF0000;
+	margin: 20px auto;
+	padding: 4px;
+	border: thin dotted #0000FF;
+	width: 60%;
+	display: none;
+	text-shadow: 0 1px 0 #FFF;
+}
+</style>
+{if $config.self=='themes'}
+<div id="upload_response"></div>
+<iframe id="iframe" name="iframe" src="about:blank" frameborder="0" style="width:100;height:100;border:0px solid #fff;"></iframe>
+<form class="page-form add-form" id="add_form" name="add_form" method="POST" action="{$smarty.server.SCRIPT_NAME}" enctype="multipart/form-data" target="iframe">
+<input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+{else}
+<form class="page-form add-form" id="add_form" name="add_form" method="POST" action="{$smarty.server.SCRIPT_NAME}" >
+  {/if}
+  <div class="content-headline">Add {$config.title|default:$config.self} Form:</div>
+  {foreach $add_form as $item}
+  {if {$dcn} % {$config.dcn}}{/if}
+  
+
+  {if $item['type']=='text'}
+  <div class="input input-{$item['name']}">
+    <label for="{$item['id']}">{$item['display_name']} </label>
+    <input name="{$item['name']}" type="text" id="{$item['id']}" class="validate[required]" />
+  </div>
+
+  {elseif $item['type']=='password'}
+  <div class="input">
+    <label for="{$item['id']}"> {$item['display_name']} </label>
+    {if $item['id']=='password1'}
+    <input name="{$item['name']}" type="password" id="{$item['id']}" class="validate[required]" />
+    {else}
+    <input name="{$item['name']}" type="password" id="{$item['id']}" class="validate[required,confirm[password1]]" />
+    {/if} </div>
+
+  {elseif $item['type']=='select'}
+  <div class="input">
+    <label for="{$item['id']}"> {$item['display_name']} </label>
+    <div class="selectWrapper">
+      <select name="{$item['name']}" id="{$item['id']}" class="validate[required]">          
+    {if $config.self=='users'}{obj->get_level}
+	{elseif $config.self=='sites'}{obj->get_level}
+	{elseif $config.self=='pages'}{obj->get_sites_options}
+	{elseif $config.self=='modules'}{obj->get_sites_options}
+	{elseif $config.self=='divisions'}{obj->get_sites_options}
+	{elseif $config.self=='common_users'}{obj->get_divisions_options}
+	{/if}          
+      </select>
+    </div>
+  </div>
+
+  {elseif  $item['type']=='date'}
+  <div class="input">
+    <label for="{$item['id']}"> {$item['display_name']} </label>
+    <a href="javascript: fPopCalendar('{$item['id']}')">
+    <input type="text" name="{$item['name']}" id="{$item['id']}"  value="YYYY-MM-DD" onFocus="this.select();" size="{$item['size']}" class="validate[required,custom[date]]"/>
+    <img src="{$config.path}images/cal2.jpg" width="14" height="14" alt="{$item['name']}" border="0"></a> </div>
+
+  {elseif $item['type']=='textarea'}
+  <div class="input" style="height: auto;">
+    <label for="{$item['id']}"> {$item['display_name']} </label>
+    <textarea class="textarea"  id="{$item['id']}" name="{$item['name']}"></textarea>
+  </div>
+
+  {elseif $item['type']=='radio'}
+  <div class="input">
+    <label> {$item['display_name']} </label>
+    {foreach $item['lists'] as $k=>$v}
+    {if $k==$item['checked']}
+    <input class="radio"  name="{$item['name']}" type="radio" value="{$k}" checked="checked">
+    <span style="left">{$v}</span>
+    {else}
+    <input  class="radio" name="{$item['name']}" type="radio" value="{$k}" />
+    <span style="left">{$v}</span> {/if}
+    {/foreach} </div>
+
+  {elseif $item['type']=='file'}
+  <div class="input">
+    <label> {$item['display_name']} </label>
+    <input name="{$item['name']}" id="{$item['name']}" type="file" class="validate[required,file]" size="50" />
+    <!--style="width:250px; border:solid 1px !important;" -->
+  </div>
+
+  {elseif $item['type']=='checkbox'}
+  {$checked=$item['checked']} {* ???? *}
+  <div class="input">
+    <label> {$item['display_name']} </label>
+    {foreach $item['lists'] as $k=>$v}
+    <input name="{$item['name']}" type="checkbox" value="{$k}" {$checked} class="validate[required] check" >
+    <label> {$v} </label>
+    {/foreach} </div>
+  {/if}
+  
+  {if not {$dcn}%{$config.dcn}} {/if}
+  {$dcn={$dcn}+1}
+  {/foreach}
+  
+  {if $config.self=='sites'}
+  <div>
+    <label>Select a Theme:</label>
+    <table id="theme_table" style="border-collapse:collapse" cellpadding="4" cellspacing="4" border="0" width="100%">
+      <tr> {$ck='checked="checked"'}{$count=1}
+      {foreach $themes as $v}
+        <td>{$v.link}<br />
+          <input type="radio" name="preview" id="tid_{$v.id}" value="{$v.id}" {if $count==1}{$ck}{/if} class="validate[required]" />
+          <label>{$v.name|escape:'html'}</label></td>
+          {$count=$count+1}
+        {/foreach} </tr>
+    </table>
+  </div>
+  {/if}
+  <div class="submit-buttons">
+    <div class="green-btn">
+      <input type="submit" id="add_submit" name="add_submit" value="添加 {$config.title|default:$config.self} Record!">
+      <img src="{$config.path}images/ajax-loader.gif" id="upload_loading" border="0" width="35" height="35" style="display:none;" /> </div>
+    <input type="reset" name="reset" value="Reset">
+    &nbsp; <span id="add_msg" name="msg" style="display: none"> {$config.list.wait1|default:{$smarty.config.wait1}} </span> &nbsp; </div>
+</form>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() { 
+    var this_form = $('#add_form');
+	var url = this_form.attr('action');
+	var this_submit = $('#add_submit');
+	var this_msg = $('#add_msg');
+	
+{if $config.self=='themes'}
+	var ifr = $('#iframe');
+	var res = '#upload_response';
+	this_form.validationEngine();
+	var options = {
+		target: res,
+		url: url,
+		type: this_form.attr('method'),
+		iframe: true,
+		iframeSrc: 'about:blank',
+		timeout: 120000,
+		beforeSubmit: function() {
+			if ($('#upload_loading').length>0) $('#upload_loading').show();
+			return true;
+		},
+		success: function(data) {
+			if ($('#upload_loading').length>0) $('#upload_loading').hide();
+		}
+	};
+	this_form.ajaxForm(options);
+
+{else}	
+    this_form.bind('submit', function(event) {
+        this_form.validationEngine();
+        event.preventDefault();
+        if(this_form.validationEngine({ returnIsValid:true })) {
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize()+'&action=add',
+                beforeSend: function() {
+                    this_submit.hide();
+                    this_msg.show();
+                },
+                success: function(data) {
+                    var msg = '';
+                   	if(/MDB2 Error/i.test(data)) msg = data;
+                   	else msg =  'Successfully insert this record:' + data;
+                   	msg += 'Click reset button then to add more.';
+                   	
+                    if($('div.message-succ').length)
+                        $('div.message-succ').show();
+                    else
+						$('<div></div>').addClass('message-succ').html(msg).insertBefore('#add_form').fadeIn(100);
+                    this_submit.show().attr('disabled', 'disabled');
+                    this_msg.hide();
+                    $('#div_list').load(url+'?js_reload_list=1');
+                }
+            });
+        }
+        return false;
+    });
+{/if}
+
+	$('input:reset', this_form).click( function() {
+        this_submit.attr('disabled', false); //removeAttr("disabled");
+        $('#add_form div.message-succ').fadeOut(100);
+		if($('div.message-succ').length) $('div.message-succ').fadeOut(100);
+    });
+    // reject non-digit input, not used here.
+    $('input.class').keypress( function(event) {
+        if(event.charCode && (event.charCode<48 || event.charCode>57))
+            event.preventDefault();
+    });
+	if($('.page-form div.input').size() > 4){
+		$('.page-form').removeClass('add-form');
+	}
+
+ {if  $config.self=='sites'}
+  $('#theme_table tr td a.rview').each(function() {
+	var t = $(this).attr('href');
+	$(this).qtip({
+		content: '<img src="'+t+'" title="'+t+'">',
+		show: 'mouseover',
+		hide: 'mouseout',
+		position: { corner: { target: 'topRight', tooltip: 'bottomLeft' } },
+		style: { tip: 'leftMiddle', padding: 4, textAlign: 'center', border: { width: 1, radius: 10 }, tip: 'bottomLeft', name: 'blue' }
+	});
+ });
+ {/if}	 
+
+});
+</script>

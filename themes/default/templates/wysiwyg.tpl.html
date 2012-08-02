@@ -1,0 +1,73 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{$r = $data.record}
+{$tid = $r.tid}
+{config_load file="{$config.smarty}"}
+<link href="{$config.ipath}include/akzhan-jwysiwyg/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$config.ipath}include/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="{$config.ipath}include/akzhan-jwysiwyg/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="{$config.ipath}include/akzhan-jwysiwyg/controls/wysiwyg.link.js"></script>
+<script type="text/javascript" src="{$config.ipath}include/akzhan-jwysiwyg/controls/wysiwyg.image.js"></script>
+<script type="text/javascript" src="{$config.ipath}include/akzhan-jwysiwyg/controls/wysiwyg.table.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var dt = new Date();
+	var monthname=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+	var TODAY = monthname[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
+	var url = '{$smarty.server.SCRIPT_NAME}';
+	var form = '#form_add_{$tid}';
+	var save = '#save_{$tid}';
+
+	{if {$tid}} action = '&js_edit=1';
+	{else} action = '&js_add=1';
+	{/if}
+	
+	$('#author_{$tid}').val(TODAY);
+	$wid = $('#wysiwyg_{$tid}');
+    $wid.wysiwyg({});
+	$(save).click(function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: $(form).attr('action'),
+			type: $(form).attr('method'),
+			data: $(form).serialize()+action,
+			dataType: 'json',
+			beforeSend: function(){
+				$('<img/>').attr({
+					'id': 'processing',
+					'src': '{$config.path}images/spinner.gif',
+					'width': 16,
+					'height': 16,
+					'border': 0,
+					'title': 'Processing ...'
+				}).insertAfter(save);
+				$(save).hide();
+			},
+			success: function(data){
+				if($('#processing').length) $('#processing').empty().remove();
+				if(! $(save).is(':visible')) $(save).show().attr('disabled', true);
+				$('#div_list').load(url+'?js_reload_list=1');
+			}
+		});
+	});
+});
+</script>
+<form id="form_add_{$tid}" name="form_add" method="post" action="{$smarty.server.SCRIPT_NAME}">
+  <fieldset>
+  <legend>{if {$tid}}Edit Track {$tid}: {$r.author}{else}Add Track{/if}</legend>
+  <label for="author"> Author: </label>
+  <a href="javascript: fPopCalendar('author')">
+  <input name="author" id="author_{$tid}" type="text" onFocus="this.select();" size="90" value="{$r.author}" />
+  <img src="{$config.path}images/cal2.jpg" width="14" height="14" alt="date" border="0"></a> <br />
+  <label for="notes"> Notes: </label>
+  <textarea id="notes_{$tid}" name="notes" style="width:60%;height:60px;">{$r.notes}</textarea>
+  <br />
+  <label for="wysiwyg"> Content:</label>
+  <br />
+  <textarea id="wysiwyg_{$tid}" name="wysiwyg" rows="10" cols="80">{$r.content}</textarea>
+  <input type="submit" value="Save" id="save_{$tid}" name="save" class="save" />
+  <input type="reset" value="Reset" class="reset" />
+  {if {$tid}}
+  <input type="hidden" id="tid" name="tid" value="{$tid}" />
+  {/if}
+  </fieldset>
+</form>

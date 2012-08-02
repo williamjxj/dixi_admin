@@ -1,0 +1,25 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div>Hello world</div>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+
+$('table#list_table tr.infoRow td a.view').bind('click', function(event) {
+  event.preventDefault();
+  $(event.target).closest('tr').css('background-color','yellow');
+  var t = $(event.target).attr('href');
+  $.ajax({
+	type: 'get',
+	url:  t,
+	success: function(data){
+		$('#tab1').removeClass('TabbedPanelsTabSelected');
+		$('#tab2').addClass('TabbedPanelsTabSelected');
+		$('#main1').closest('.TabbedPanelsContent').hide();
+		$('#main2').closest('.TabbedPanelsContent').show();
+		$('#main2').html(data);
+	}
+  });
+  return false;
+});
+
+});
+</script>

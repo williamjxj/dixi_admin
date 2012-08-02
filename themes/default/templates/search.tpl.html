@@ -1,0 +1,149 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{config_load file="{$config.smarty}"}
+{$dcn=1}
+<form id="search_form" name="search_form" method="post" action="{$smarty.server.SCRIPT_NAME}">
+  <fieldset>
+  <legend>Search [{$config.title|default:$config.self|upper}] Form:</legend>
+  <table border="0px">
+    <tbody>
+    
+    {foreach $search_form as $item}
+    {if $dcn % $config.dcn} 
+    <tr> {/if}
+    {if $item.type=='text'}
+      <td><label for="{$item['id']}"> {$item['display_name']} </label></td>
+      <td><input name="{$item['name']}" type="text" id="{$item['id']}" /></td>
+    {elseif $item.type=='select'}
+      <td><label for="{$item['id']}"> {$item['display_name']} </label></td>
+      <td><div class="selectWrapper"><select name="{$item['name']}" id="{$item['id']}">
+      	{if $config.self=='users'}{obj->get_level}{/if}
+      	{if $config.self=='employers'}{obj->get_payment_types_options}{/if}
+        {if $config.self=='pages'}
+        	{if $item['name']=='site_id'}{obj->get_sites_options}{/if}
+        {/if}
+        {if $config.self=='modules'}
+        	{if $item['name']=='site_id'}{obj->get_sites_options}
+		{elseif $item['name']=='division'} {obj->get_divisions_options}
+		{/if}
+        {/if}
+        {if $config.self=='contents'}
+        	{if $item['name']=='site_id'}{obj->get_sites_options}
+		{elseif $item['name']=='mid'}{obj->get_modules_options}
+		{elseif $item['name']=='division'}{obj->get_divisions_options}
+		{/if}
+        {/if}
+        {if $config.self=='resources'}
+        	{if $item['name']=='site_id'}{obj->get_sites_options}
+			{elseif $item['name']=='mid'}{obj->get_modules_options}
+			{elseif $item['name']=='type'}{obj->get_types_options}            
+		{/if}
+        {/if}
+	{if $config.self=='divisions'}{obj->get_sites_options}{/if}
+	{if $config.self=='actions'}{obj->get_keyword_selection}{/if}
+        </select></div></td>
+    {elseif $item.type=='date'}
+      <td><label for="{$item['id']}"> {$item['display_name']} </label></td>
+      <td>
+          
+		      <a href="javascript: fPopCalendar('{$item['id']}')">        
+              <div class="calendarinput">
+              <input type="text" name="{$item['name']}" id="{$item['id']}"  value="YYYY-MM-DD" onFocus="this.select();" size="{$item['size']}" />
+              <img src="{$config.path}images/calendar.png" class="calendar" alt="{$item['name']}" border="0">
+              </div>
+              </a>
+          
+      </td>        
+    {elseif $item.type=='textarea'}
+      <td><label for="{$item['id']}"> {$item['display_name']} </label></td>
+      <td><textarea id="{$item['id']}" name="{$item['name']}"></textarea></td>
+      {elseif $item.type=='radio'}
+      <td><label> {$item['display_name']} </label></td>
+      <td>{foreach $item['lists'] as $k=>$v}
+        <div class="radio">
+        {if $k == $item['checked']}
+        <input name="{$item['name']}" type="radio" value="{$k}" checked="checked">
+        <label>{$v}</label>        
+        {else}
+        <input name="{$item['name']}" type="radio" value="{$k}" />        
+        <label>{$v}</label>
+        {/if}
+        </div>
+        {/foreach} </td>
+      {elseif $item.type=='checkbox'}
+        {$checked = $item['checked']}
+      <td><label> {$item['display_name']} </label></td>
+      <td>{foreach $item['lists'] as $k=>$v}
+        <div class="checkbox">
+        <input name="{$item['name']}" type="checkbox" value="{$k}" {$checked} >
+        <label> {$v} </label>
+        </div>
+        {/foreach}
+      </td>
+      {/if}
+      {if not ($dcn % $config.dcn)} </tr> {/if}
+    {$dcn=$dcn+1}
+    {/foreach}
+    <tr>
+     </tr>
+    </tbody>
+    
+  </table>      
+      <div class="rowElem form-buttons">      
+      	<div class="green-btn">
+	        <input type="submit" id="seach_submit" name="seach_submit" value="Search {$config.title|default:$config.self} Records">
+        </div>
+        
+	<!--         {$config.list.wait1|default:{#wait1#}} -->
+                
+        <input type="reset" id="reset" name="reset" value="Reset">
+
+        &nbsp;
+        <!-- <input type="button" value="Close" onClick="if($('#div_search_2').length) $('#div_search_2').hide(); if($('#div_search_1').length)$('#div_search_1').show();" /> --> </div>
+   
+  </fieldset>
+</form>
+<script language="javascript" type="text/javascript">
+$('#search_form').bind('submit', function(event) {
+	event.preventDefault();
+	$.ajax({
+		type: $(this).attr('method'),
+		url: $(this).attr('action'),
+		data: $(this).serialize()+'&search=1',
+		beforeSend: function() {
+			$('#search_submit').hide();
+			$('#search_msg').show();
+		},
+		success: function(data) {
+			$('#div_list').hide().html(data).fadeIn(100);
+			$('#search_submit').show();
+			$('#search_msg').hide();
+		}
+	});
+	return false;
+});
+
+$('#search_form fieldset legend').click( function() {
+	$('#div_search_2').fadeOut(200);
+	$('#div_search_1').fadeIn(200).mouseover( function() {
+		$(this).css('cursor', 'hand').css('cursor', 'pointer');
+	});
+});
+$('input.class').keypress( function(event) {
+	if(event.charCode && (event.charCode<48 || event.charCode>57))
+		event.preventDefault();
+});
+
+/* $(function() {
+	$('#search_form').addClass('jqtransform');
+	$("#search_form.jqtransform").jqTransform();
+}); */
+
+{if $config.self=='contents' || $config.self=='resources'}
+  if ($('#site_id_s').length) {
+        $('#site_id_s').change(function(event) {
+                event.preventDefault();
+		$('#mid_s').load('{$smarty.server.SCRIPT_NAME}?js_get_modules=1&site_id='+$(this).val()).hide().fadeIn(100);
+        });
+  }
+{/if}
+</script>

@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document */
+
+#list_tbody tr td a.edit, #list_tbody tr td a.delete {
+    background-position: 0 2px;
+}
+#search_form tr td span {
+    position: relative;
+    top: 0;
+}
+.sidebarBox {
+    margin-top: 1px;
+}

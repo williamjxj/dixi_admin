@@ -1,0 +1,407 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{* input: $config,$pagination,$header,$data *}
+{config_load file="{$config.smarty}"}
+{$url={$smarty.server.SCRIPT_NAME}}
+{if isset($data.options) && is_array($data.options) && count($data.options)>0}{$num=2}{else}{$num=1}{/if}
+<div id="search-handler">
+  <div id="search-anim"></div>
+  <div id="SearchToggle"></div>
+</div>
+<div id="modal-overlay"></div>
+<div class="modal-window"> <a href="#" class="modal-close"></a>
+  <div class="modal-header"> <strong>Edit Record</strong> </div>
+  <div class="modal-body"> </div>
+  <div class="modal-bottom"> </div>
+</div>
+<div class="listing-heading"> <strong>{$data.self|default:{$config.header.title}|capitalize}</strong> &nbsp;
+  
+  {if !empty($pagination)}
+  
+  Page {$data.current_page}, Total {$data.total_pages} pages / {$data.total_rows} records
+  
+  {/if} </div>
+{if !empty($pagination)}
+<div class="pager"> {$pagination} </div>
+{/if}
+<div style="clear:both;"></div>
+<div align="center" class="innerform-x">
+  <table id="list_table-x">
+    <tr>
+      <td><table id="list_table" cellpadding="0" cellspacing="0">
+          <thead id="list_thead">
+            <tr class="titleRow">
+              <th>No.</th>
+              {foreach $header as $k => $v}
+              <th> <div class="titleThWrap">
+                  <div class="titleName"> <span>{$k}</span> </div>
+                  <div class="{$v}"> <a href="javascript:void(0);" onClick="$(this).sortBy('{$v}','{$data.current_page}')" class="upArrow">{$config.list.up}</a> <a href="javascript:void(0);" onClick="$(this).sortBy('{$v} desc','{$data.current_page}')" class="downArrow">{$config.list.down}</a> </div>
+                </div></th>
+              {/foreach}
+              
+              {if isset($data.options) && is_array($data.options) && count($data.options)>0}
+              <th>Options</th>
+              {/if} </tr>
+          </thead>
+          {if $data.list}
+          <tbody id="list_tbody">
+          
+          {foreach $data.list as $m}
+          <tr class="infoRow" bgcolor="{cycle values="#ffffff,#eff7ff"}" id="tr_{$m.no}"> {foreach $m as $v}
+            
+            {if isset($data.col_types) && is_array($data.col_types)}
+            
+            {$ff=0}
+            
+            {foreach $data.col_types as $x=>$y}
+            
+            {if $v@key==$x}
+            
+            {if {$data.self}=='contents' && $y=='textarea11'}
+            <td>{#start_tag#}{$v|regex_replace:"/&lt;/":"<"|regex_replace:"/&gt;/":">"}{#end_tag#}</td>
+            {elseif $y=='textarea'}
+            <td><form method="post" action="{$url}" id="tfm_{$m.no}_{$v@index}">
+                <textarea class="active" name="{$v@key}" readonly="readonly" ondblclick="$(this).removeAttr('readonly').css('border-width','2px');" onchange="$(this).update_column('tfm_{$m.no}_{$v@index}')">{$v|default:'&nbsp;'}</textarea>
+                <input type="hidden" name="id" value="{$m[{$data.pkey}]}" />
+              </form></td>
+            {elseif $y=='text'}
+            <td><form method="post" action="{$url}" id="ifm_{$m.no}_{$v@index}">
+                {if {$v@key}=='Weight'} {$cw=' class="active1"'} {else} {$cw=' class="active"'} {/if}
+                <input type="text" {$cw} name="{$v@key}" readonly="readonly" ondblclick="$(this).removeAttr('readonly').css('border-width','2px');" onchange="$(this).update_column('ifm_{$m.no}_{$v@index}')" value="{$v|default:'&nbsp;'}" />
+                <input type="hidden" name="id" value="{$m[{$data.pkey}]}" />
+              </form></td>
+            {elseif $y=='checkbox'}
+            {if ($v=='Y')} {$c = 'checked="checked"'}{else}{$c = ''} {/if}
+            <td><input type="checkbox" name="{$v@key|lower}" disabled="disabled" value="{$v}" {$c} /></td>
+            {elseif $y=='link'}
+            {if {$config.self=='themes'}}
+            <td><!--a href="{$m.PreviewFile|escape:'html'}" title="{$m.Path}/{$m.PreviewFile}" target="_blank" class="rview"><img src="resources/{$m.PreviewFile}" style="max-height:50px;max-width:110px;" />{$m.Name}, {$m.PreviewFile} </a-->
+              <a href="resources/{$m.PreviewFile}" title="{$m.Path}/{$m.PreviewFile}" target="_blank" class="rview"><img src="resources/{$m.PreviewFile}" style="max-height:50px;max-width:110px;" /> </a> </td>
+            {elseif {$data.self=='resources'}}
+            <td align="right"> {if preg_match("/(\.pdf|\.txt|\.xml|\.mid|\.sql|\.ppt)$/", $v)} <a href="{$m.Path}" title="{$v|escape:'html'}" target="_blank">{$v|escape:'html'}</a> {else} <a href="{$m.Path}/{$m.File}" title="{$m.Path}/{$m.File}" target="_blank" class="rview"><img src="{$m.Path}/{$m.File}" style="max-height:50px;max-width:110px;" /></a> {/if} </td>
+            {else}
+            <td align="right"><a href="{$v|escape:'html'}" title="{$v|escape:'html'}" target="_blank">{$v|escape:'html'}</a></td>
+            {/if}   
+            {/if}
+            {$ff=1}
+            {else}
+            {if array_key_exists($v@key, $data.col_types)}
+            {elseif $ff==0}
+            <td align="right">{$v|default:'&nbsp;'}</td>
+            {*can't use escape:'html', coz of resources->type column: < img .... /> *}
+            {$ff=1}
+            {/if}
+            {/if}
+            
+            {/foreach}
+            
+            {else}
+            <td align="right">{$v|escape:'html'|default:'&nbsp;'}</td>
+            {/if}
+            
+            {/foreach}
+            
+            {if isset($data.options) && is_array($data.options) && count($data.options)>0}
+            <td><div class="actions">{foreach $data.options as $o}
+                
+                {if $o == 'edit'} <a href="{$url}?js_edit_form=1&id={$m[{$data.pkey}]}" class="edit" title="View/Edit {$m[{$data.pkey}]}"></a>&nbsp;
+                {elseif $o == 'resources'}<a href="{$url}?id={$m[{$data.pkey}]}&js_edit_form_5=1" title="Resources {$m[{$data.pkey}]}" class="resources" id="view_{$m[{$data.pkey}]}"></a>&nbsp;
+                {elseif $o == 'view'}<a href="{$url}?id={$m[{$data.pkey}]}&js_edit_form_3=1" title="View/Edit {$m[{$data.pkey}]}" class="view" id="view_{$m[{$data.pkey}]}"></a>&nbsp;
+                {elseif $o == 'email'}<a href="{$url}?id={$m[{$data.pkey}]}&js_send_mail=1" title="Send Emails {$m[{$data.pkey}]}" class="email" id="email_{$m[{$data.pkey}]}"></a>&nbsp;
+                {elseif $o == 'contents'}<a href="{$url}?id={$m[{$data.pkey}]}&js_edit_form_3=1" title="Contents {$m[{$data.pkey}]}" class="contents" id="contents_{$m[{$data.pkey}]}"></a>&nbsp;
+                {elseif $o == 'pension'} <a href="javascript:void(0);" onclick="$(this).editForm('{$m[{$data.pkey}]}', '{$m[$data.pkey]}')" title="View Pension {$m[$data.pkey]}" class="pension"></a>&nbsp;
+                {elseif $o == 'delete'} <a href="{$url}?id={$m[{$data.pkey}]}&name={$m[{$data.pkey}]}&action=delete" class="delete" title="Delete {$m[{$data.pkey}]}"></a> {else} <a href="?id={$m[{$data.pkey}]}&name={$m[{$data.pkey}]}&action=delete" class="delete" title="Delete {$m{$data.pkey}}">Other</a> {/if}
+                {/foreach} </div></td>
+            {/if} </tr>
+          {if isset($data.options) && is_array($data.options) && count($data.options)>0}
+          {/if}
+          
+          {/foreach}
+          </tbody>
+          
+          {/if}
+        </table></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+{if !empty($pagination)}
+<div class="pager pager-bottom"> {$pagination} </div>
+{/if}
+<form action="{$config.ipath}get_csv.php" method="post" class="export-form">
+  <input type="hidden" name="from" value="{$data.self}" />
+  <input type="hidden" name="headers" value="{$header|@implode:','|upper}" />
+  <div class="green-btn export-btn">
+    <input name="xls" type="submit" value="Export to CSV File" />
+  </div>
+</form>
+<div style="clear:both;"></div>
+<script language="javascript" type="text/javascript">
+var url = '{$smarty.server.SCRIPT_NAME}';
+var divid = '{#div_list#}';
+var wait1 = '{$config.list.wait1}';
+var wait2 = '{$config.list.wait2}';
+jQuery.fn.editForm = function(id, name) {
+  $.ajax({
+    type: 'get',
+    url: url,
+    data: 'js_sid='+id,
+    success: function(data){
+    $('#tab1').removeClass('TabbedPanelsTabSelected');
+    $('#tab2').addClass('TabbedPanelsTabSelected');
+    $('#main2').closest('.TabbedPanelsContent').show();
+    $('#main1').closest('.TabbedPanelsContent').hide();
+    $('#main2').html(data).fadeIn(100);
+    }
+  });
+  return false;
+}
+jQuery.fn.sortBy= function(sort_column, current_page) {
+  var t = $(this);
+  t.find('img').attr({ 'width':'16','height':'16','border':'0','src':wait2,'alt':'processing...','title':'processing...' }).show();
+  t.parents().find('th').each(function() {
+    $(this).removeAttr('class').css('color', 'white');
+  });
+  $.get(url, { sort:sort_column,page:current_page }, function(data){
+    $(divid).html(data);
+  });
+  return false;
+}
+$('table#list_table tbody tr').hover(
+  function() {
+    $(this).css("opacity", "0.8");
+  },
+  function() {
+    $(this).css("opacity", "1.0");
+  }
+);
+$(".pager a").each(function(index) {
+  var $a = $(this);
+  $a.click(function(event) {
+    event.preventDefault();
+    //no need: var t1 = $(event.target).html(); $a.html(t1);
+    var t2 = $(event.target).attr('href');
+    $a.html(wait1);
+    $.get(url+t2, function(data){ $(divid).html(data) });
+    return false;
+  });
+  $(".qtip").hover(function(){
+     $(this).find("div.qtipBox").show(100);
+  }, function(){
+     $(this).find("div.qtipBox").hide(50);
+  });
+});
+{if {$data.sort}} 
+  var ary = new Array();
+  $('#list_thead tr.titleRow th:gt(0)').each(function(index) {
+    ary[index] = $('div:gt(0) span', $(this)).text();
+  });
+  var tno = 0;
+  var tsort = '{$data.sort}';
+  tsort = tsort.replace(/\s+desc/i, '');
+  for (var i=0;i<(ary.length-1);i++) {
+    if(tsort.toLowerCase()==ary[i].toLowerCase()) tno = ++i;
+  }
+  $('table#list_table tbody tr').each(function() {
+    var td = $(this).find('td:eq('+tno+')');
+    $(td).css('background-color', '#d8eeff');
+  }); 
+{/if}
+$("table#list_table tr.infoRow td a.delete").click(function(event) {
+  event.preventDefault();
+  $(this).closest('tr').css('background-color','#ffa');
+  var $a = $(this);
+  var name = $a.attr('href').replace(/.*name=/,'').replace(/&action=.*$/,'');
+  if( confirm('Are you sure to delete the record [id=' + name + ']?')) {
+    $.get($(this).attr('href'), function(data) {
+      $a.closest('tr').fadeOut(200);
+    });
+  }
+  return false;
+});
+$("table#list_table tr.infoRow td a.edit").click(function(event) {
+  event.preventDefault();
+  $(this).closest('tr').css('background-color','#ffa');
+  var aa = $(event.target);
+  var t = $(this).attr('href')+'&tr='+aa.closest('tr').attr('id');
+  $.ajax({
+    type: 'get',
+    url: t,
+    success: function(data){
+      $('#modal-overlay').show();
+      $('.modal-body').html(data);
+      $('.modal-window').fadeIn();
+    }
+  });
+  return false;
+});
+{if {$data.self=='contents'}}
+$('table#list_table tr.infoRow td a.view').bind('click', function(event) {
+  event.preventDefault();
+  $(event.target).closest('tr').css('background-color','#ffa');
+  var t = $(event.target).attr('href');
+  $.ajax({
+  type: 'get',
+  url:  t,
+  success: function(data){
+    $('#tab1, #tab2, #tab4, #tab5').removeClass('TabbedPanelsTabSelected');
+    $('#tab3').addClass('TabbedPanelsTabSelected');
+    $('#main1, #main2, #main4, #main5').closest('.TabbedPanelsContent').hide();
+    $('#main3').closest('.TabbedPanelsContent').show();
+    $('#main3').html(data);
+  }
+  });
+  return false;
+});
+$('table#list_table tr.infoRow td a.email').bind('click', function(event) {
+  event.preventDefault();
+  $(event.target).closest('tr').css('background-color','#ffa');
+  var t = $(event.target).attr('href');
+  $.ajax({
+  type: 'get',
+  url:  t,
+  success: function(data){
+    if(data==0) {
+	  alert('邮件成功发送, 请检查你的邮箱. Successfully sent the emails');
+	}
+	else {
+	  alert('邮件发送失败. Sent emails Failure');
+	}
+  }
+  });
+  return false;
+});
+$('table#list_table tr.infoRow td a.resources').bind('click', function(event) {
+  event.preventDefault();
+  $(event.target).closest('tr').css('background-color','#ffa');
+  var t = $(event.target).attr('href');
+  $.ajax({
+  type: 'get',
+  url:  t,
+  success: function(data){
+    $('#tab1, #tab2, #tab3, #tab4').removeClass('TabbedPanelsTabSelected');
+    $('#tab5').addClass('TabbedPanelsTabSelected');
+    $('#main1, #main2, #main3, #main4').closest('.TabbedPanelsContent').hide();
+    $('#main5').closest('.TabbedPanelsContent').show();
+    $('#main5').html(data);
+  }
+  });
+  return false;
+});
+{/if}
+{if {$data.self=='resources'}}
+$('table#list_table tr.infoRow td a.contents').bind('click', function(event) {
+  event.preventDefault();
+  $(event.target).closest('tr').css('background-color','#ffa');
+  var t = $(event.target).attr('href');
+  $.ajax({
+  type: 'get',
+  url:  t,
+  success: function(data){
+    $('#tab1, #tab2').removeClass('TabbedPanelsTabSelected');
+    $('#tab3').addClass('TabbedPanelsTabSelected');
+    $('#main1, #main2').closest('.TabbedPanelsContent').hide();
+    $('#main3').closest('.TabbedPanelsContent').show();
+    $('#main3').html(data).show();
+  }
+  });
+  return false;
+});
+{/if}
+jQuery.fn.update_column = function(tid) {
+  var form = $('#'+tid);
+  $.ajax({
+    type: form.attr('method'),
+    url: form.attr('action'),
+    data: form.serialize()+'&js_edit_column=1', 
+    dataType: 'json',
+    success: function(data) {}
+  });
+  return false;
+}
+</script>
+{if {$config.qtip}}
+<script language="javascript" type="text/javascript">
+$('#list_tbody tr.infoRow input.active,#list_tbody tr.infoRow textarea.active').qtip({
+   content: 'Double click to edit',
+   show: 'mouseover',
+   hide: 'mouseout',
+   position: { corner: { target: 'topRight', tooltip: 'bottomLeft' } },
+  style: { tip: 'leftMiddle', width: 160, padding: 1, background: '#A2D959', color: 'black', textAlign: 'center',
+    border: { width: 1, radius: 10, color: '#A2D959' },
+    tip: 'bottomLeft', name: 'dark'
+  }
+});
+$('#list_thead tr.titleRow th span').qtip({
+   content: 'Sorting by asc and desc',
+   show: 'mouseover',
+   hide: 'mouseout',
+   position: { corner: { target: 'topRight', tooltip: 'bottomLeft' } },
+   style: { tip: 'leftMiddle', width: 200, padding: 2, background: '#A2D959', color: 'black', textAlign: 'center',
+  border: { width: 1, radius: 10, color: '#A2D959' },
+  tip: 'bottomLeft', name: 'dark'
+   }
+});
+$('#list_tbody tr td a.rview').each(function() {
+  var t = $(this).attr('href');
+  $(this).qtip({
+    content: '<img src="'+t+'" title="'+t+'">',
+    show: 'mouseover',
+    hide: 'mouseout',
+    position: { corner: { target: 'topRight', tooltip: 'bottomLeft' } },
+    style: { tip: 'leftMiddle', padding: 4, textAlign: 'center', border: { width: 1, radius: 10 }, tip: 'bottomLeft', name: 'blue' }
+  });
+});
+$('.pager a').each(function(){
+    if(!parseInt($(this).text())) $(this).addClass('bigPagerButton');
+});
+$('#SearchToggle').click(function() {
+ var that = $(this);
+ var searchForm = $('#div_search_2');
+ var anim = $('#search-anim');
+ if(searchForm.html().length==0) {
+   anim.fadeIn(300);
+   searchForm.load(url+'?js_search_form=1', function(){
+    anim.fadeOut(300);
+    searchForm.show();
+    fix_search_buttons();
+      searchForm.hide();
+    
+    if(/MSIE 7.0/.test(navigator.userAgent)){
+      searchForm.show();
+    }else{
+      searchForm.slideDown();
+    }    
+    that.addClass('hide');
+  });
+ }else{
+   if(searchForm.css('display') == 'none'){
+     if(/MSIE 7.0/.test(navigator.userAgent)){
+      searchForm.show();
+     }else{
+      searchForm.slideDown();
+     }  
+     that.addClass('hide');
+   }else{
+     if(/MSIE 7.0/.test(navigator.userAgent)){
+      searchForm.hide();
+     }else{
+      searchForm.slideUp();
+     }  
+     that.removeClass('hide');
+   }
+ } 
+ }); 
+$('.modal-close, #modal-overlay').click(function(){
+  $('.modal-window').fadeOut(200, function(){
+      $('#modal-overlay').hide();
+  });
+  return false;
+});
+function fix_search_buttons(){
+  var buttons = $('#search_form .form-buttons');
+  if(buttons.length){  
+        $('.green-btn', buttons).css("margin-left", -buttons[0].offsetWidth/2);
+  }
+}
+</script>
+{/if} 

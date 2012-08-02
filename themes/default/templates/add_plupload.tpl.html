@@ -1,0 +1,126 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{config_load file="{$config.smarty}"}
+<form  class="page-form" method="post" action="javascript:void();" id="form_uploader">
+<div class="content-headline">Add Resources</div>
+
+
+  <div class="input">
+    <label for="sites"> Site: </label>
+    <div class="selectWrapper">
+    <select id="sites" name="sites" accesskey="S" style="width:{#select_width#}">
+      <option value=""> -- Select -- </option>
+      
+  {foreach $data.sites as $ds}
+    
+      <option value="{$ds[0]}">{$ds[1]}</option>
+      
+    {/foreach}
+  
+    </select>
+    </div>
+  </div>
+  <div class="input">
+    <label for="modules"> Modules: </label>
+    <div class="selectWrapper">
+    <select id="modules" name="modules" accesskey="M" style="width:{#select_width#}">
+      <option value=""> -- Select -- </option>
+    </select>
+    </div>
+  </div>
+  <!--<div class="input">
+    <label for="divisions"> Division: </label>
+    <div class="selectWrapper">
+    <select id="divisions" name="divisions" accesskey="D" style="width:{#select_width#}">
+      <option value=""> -- Select -- </option>
+      
+  {foreach $data.divisions as $dd}  
+      <option value="{$dd[0]}">{$dd[1]}</option>      
+  {/foreach}  
+    </select>
+    </div>
+  </div>-->
+  <div class="input">  
+    <label for="author">Auther:</label>
+    <input type="text" id="author" name="author" size="100"  />
+  </div>
+  <div class="input small-textarea">
+    <label for="notes">Notes:</label>  
+    <textarea name="notes" id="notes" class="textPlupload note1" rows="4" cols="80"></textarea>
+  </div>
+  <div id="uploader" class="uploaderStyle">
+    <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+  </div>
+  </fieldset>
+</form>
+<script type="text/javascript" language="javascript">
+var url = '{$config.ipath}upload.php';
+var form = '#form_uploader';
+var modules = '#modules';
+
+//resize : { width : 320, height : 240, quality : 90 },
+$(function() {
+	$(form + ' select[name=sites]').bind('change', function() {
+		$(modules).load('?js_get_modules=1&site_id='+$(this).val());
+		return false;
+	});
+	$("#uploader").pluploadQueue({
+		runtimes : 'gears,flash,silverlight,browserplus,html5',
+		url : url,
+		max_file_size : '10mb',
+		chunk_size : '1mb',
+		unique_names : true,
+		multipart_params: { 'author':'','notes':'','sites':'','modules':'','divisions':'' },
+		filters : [
+			{ title : "Image files", extensions : "jpg,gif,png" },
+			{ title : "PDF files", extensions : "pdf" },
+			{ title : "HTML files", extensions : "html,htm,xml" },
+			{ title : "PPT files", extensions : "ppt,pps" },
+			{ title : "Plain files", extensions : "txt,bak" },
+			{ title : "Excel files", extensions : "csv,xls,xlsx" }
+		],
+		flash_swf_url : '{$config.ipath}include/plupload/js/plupload.flash.swf',
+		silverlight_xap_url : '{$config.ipath}include/plupload/js/plupload.silverlight.xap',
+		init : {
+		  BeforeUpload : function(up, files) {
+			var v = $("#author").val();
+			if (v=='' || /^\s+$/.test(v)) {
+				alert("Please assign title for the download.");
+				$('#author').focus();
+				up.state = plupload.STOPPED;
+				up.trigger("StateChanged");
+			}
+			up.settings.multipart_params.author = $("#author").val();
+			up.settings.multipart_params.notes = $("#notes").val();
+			up.settings.multipart_params.sites = $("#sites").val();
+			up.settings.multipart_params.modules = $("#modules").val();
+			up.settings.multipart_params.divisions = $("#divisions").val();
+		  },
+		  FileUploaded : function(up, files, info) {
+			var obj = eval('(' + info.response + ')');
+			if(/existed/.test(obj.result)) {
+				alert(obj.result);
+				up.stop();
+			}
+			else if(/nothing/.test(obj.result)) {
+				alert(obj.result);
+				up.stop(); return false;
+			}
+			else $.post('<?=$this->url;?>',  { file: files.name, action: 'resource' });
+		  },
+		  UploadComplete: function(up,files) {
+			if($('#form_uploader div.message-succ').length)
+				$('#form_uploader div.message-succ').show();
+			else
+				$('<div></div>').addClass('message-succ').html('Successfully insert this record.').insertBefore('#form_uploader').fadeIn(100);
+
+			$('#tab2').removeClass('TabbedPanelsTabSelected');
+			$('#tab1').addClass('TabbedPanelsTabSelected');
+			$('#main2').closest('.TabbedPanelsContent').hide();
+			$('#main1').closest('.TabbedPanelsContent').show();
+			$('#div_list').load('{$smarty.server.SCRIPT_NAME}?js_reload_list=1');
+		  }
+		}
+	});
+
+});
+</script>

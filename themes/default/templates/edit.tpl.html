@@ -1,0 +1,146 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{config_load file="{$config.smarty}"}
+{$dcn=1}
+<form class="edit-form" id="{$form_id}" name="{$form_id}" method="post" action="{$smarty.server.SCRIPT_NAME}">
+  <table width="60%">
+{foreach $edit_form as $item}
+	{if dcn % $config.dcn}
+     <tr>
+     {/if}
+	{$column_value = $record[$item['name']]}
+	{if $item['readonly']}{$readonly = ' readonly="readonly" '}
+    {else}
+    {$readonly=''}
+    {/if}
+   {if $item.type=='text'}
+    <td><label>
+        {$item['display_name']}
+        </label></td>
+      <td><div class="input"><input name="{$item['name']}" type="text" value="{$column_value}" {$readonly} /></div></td>
+{elseif $item.type=='password'}
+      <td><label>
+        {$item['display_name']}
+        </label></td>
+      <td><div class="input"><input name="{$item['name']}" type="password" value="{$column_value}" /></div>
+      </td>
+      {elseif $item.type=='select'}
+      <td><label> {$item['display_name']} </label></td>
+      <td><div class="selectWrapper"><select name="{$item['name']}">
+	{if $column_value}
+		<option value="{$column_value}">{$column_value|escape:'html'}</option>
+	{/if}
+	</select></div></td>
+      {elseif $item.type=='date'}
+      <td><label>
+        {$item['display_name']}
+        </label></td>
+      <td>{if $readonly}
+
+      	<div class="input">
+	        <input type="text" name="{$item['name']}" value="{($column_value)?$column_value:'YYYY-MM-DD'}" onFocus="this.select();" size="{$item['size']}" />
+        </div>
+        {else}
+        {$did='date_'+$record[$item['name']]}
+        <a href="javascript: fPopCalendar({$did})">
+        <div class="input calendarinput"><input type="text" name="{$item['name']}" value="{($column_value)?$column_value:'YYYY-MM-DD'}"  id="{$did}" onFocus="this.select();" />
+        <img src="{$config.path}/images/calendar.png" alt="{$record[$item['name']]}" border="0" /></a>
+        </div>
+        {/if}
+      </td>
+      {elseif $item.type=='textarea'}
+      <td><label>
+        {$item['display_name']}
+        </label></td>
+      <td><div class="input"><textarea name="{$item['name']}" {$readonly} >{$column_value}</textarea></div></td>
+      {elseif $item.type=='radio'}
+      <td><label>
+        {$item['display_name']}
+        </label></td>
+      <td>
+      {foreach $item['lists'] as $k=>$v} 
+	  	{if $k==$column_value}
+        <div class="radio">
+        <input name="{$item['name']}" type="radio" value="{$k}" checked="checked" >
+        <label>
+        {$v}
+        </label>
+        </div>
+        {else}
+        <div class="radio">
+        <input name="{$item['name']}" type="radio" value="{$k}" >
+        <label>
+        {$v}
+        </label>
+        </div>
+        {/if}
+        {/foreach}
+      </td>
+      {elseif $item.type=='checkbox'}
+      	{if $column_value==$k}
+		{$checked = ' checked="checked" '}
+        {/if}
+      <td><label>
+        {$item['display_name']}
+        </label></td>
+      <td>
+      {foreach $item['lists'] as $k=>$v}
+        <input class="check" name="{$item['name']}" type="checkbox" value="{$k}" {$checked} />
+        <label>
+        {$v}
+        </label>
+        {/foreach}
+      </td>
+      {elseif $item.type=='hidden'}
+      <input type="hidden" name="{$item['name']}" value="{$column_value}" />
+      {/if}
+      {if not ($dcn % $config.dcn)} </tr> {/if}
+    {$dcn=$dcn+1}
+    {/foreach}
+    <tr>
+      <td colspan="{$config.dcn*2}" align="center">
+            <div class="submit-buttons">
+      <div class="green-btn">      
+	      <input type="submit" name="edit_submit" value="Update" />
+      </div>		
+        <input type="reset" name="reset" value="Reset" />
+        <span id="span_{$item['name']}" style="display: none">
+        {$config.list.wait1|default:{$smarty.config.wait1}} 
+        </span>
+		</div>
+		</td>
+    </tr>
+  </table>
+</form>
+<script language="javascript" type="text/javascript">
+var id = '{$form_id}';
+$('#'+id).bind('submit', function(event) {
+	event.preventDefault();
+	$.ajax({
+		type: $(this).attr('method'),
+		url: $(this).attr('action'),
+		data: $(this).serialize()+'&action=edit',
+		dataType: 'json',
+		// beforeSend: function() { $('#span_'+id).prev().hide(); $('#span_'+id).show(); },
+		success: function(data) {
+			$('.modal-window').fadeOut(200, function(){ $('#modal-overlay').hide(); });
+			var ary = eval(data);
+			var t = id.substr(id.indexOf('-')+1);
+			var r = $('#'+t);
+			for(var i=0; i<ary.length; i++) $(r).find('td:eq('+(i+1)+')').text(ary[i]);
+		}
+	});
+	return false;
+});
+$("input[value=Close]").click(function() {
+	//$(this).parents('div[class=modal-window]').fadeOut().end().prev('div[id=modal-overlay]').hide(); // not work.
+	/* 1.  $('.modal-window').fadeOut(200, function(){ $('#modal-overlay').hide(); }); return false; */
+	$('.modal-close').trigger('click');
+});
+$("input.close").click(function(){
+	var t = $(this);
+	t.closest("form").addClass("formHide");
+	$("form.formHide").parents("tr").hide();        
+});    
+$(".subForm table tr td label").closest("td").attr("align","right");
+$(".subForm table tr td input[type=radio]").closest("td").removeAttr("align");
+</script>

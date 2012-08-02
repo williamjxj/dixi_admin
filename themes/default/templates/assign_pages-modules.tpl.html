@@ -1,0 +1,134 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{*debug*}
+{config_load file="{$config.smarty}"}
+{$form='assign_form'}{$submit='assign_submit'}{$msg='assign_msg'}
+{$m1='m1'}{$m2='m2'}{$a1='a1'}{$a2='a2'}
+
+<form class="page-form" id="{$form}" name="{$form}" action="{$smarty.server.SCRIPT_NAME}" method="post">
+<div class="content-headline">{$config.header.title|default:'Assign pages -> Modules'}</div>
+<div align="center" style="width:60%">
+    <table border="0" cellspacing="0" cellpadding="2" width="60%" class="form-table">
+      <tr>
+        <td align="right" nowrap="nowrap"><label for="sites">Select Site:</label>        </td>
+        <td>
+        <div class="selectWrapper">
+        <select name="sites"  id="sites"  accesskey="S" style="width:{#select_width#}">
+            <option value="0"> -- Select -- </option>
+       {foreach $data.sites as $ds}
+            <option value="{$ds[0]}" title="{$ds[2]}"> {$ds[1]} </option>
+      {/foreach}
+          </select></div></td>
+          <td>&nbsp;</td>
+        <td align="right" nowrap="nowrap"><label for="pages">Select Component:</label>        </td>
+        <td><div class="selectWrapper"><select name="pages"  id="pages"  accesskey="C" style="width:{#select_width#}">
+            <option value=""> -- Select -- </option>
+		{if $data.pages}
+      {foreach $data.pages as $dc}
+            <option value="{$dc[0]}" title="{$dc[2]}"> {$dc[1]} </option>
+      {/foreach}
+        {/if}
+          </select></div></td>
+      </tr>
+      <tr>
+        <td align="right" valign="middle"><label for="{$m1}">Available<br />
+        	Modules:</label></td>
+        <td><div class="selectWrapper"><select name="{$m1}[]" id="{$m1}" multiple="multiple" size="30"  style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+          <option value="">Please select a module first.</option>
+        </select></div></td>
+        <td align="center" valign="middle"><label><a id="{$a1}" class="forward-green-arrow"></a></label>
+          <label><a id="{$a2}" class="back-green-arrow"></a></label></td>
+          <td align="right" valign="middle"><label for="{$m2}">Assigned<br />Modules:</label></td>
+        <td><div class="selectWrapper"><select name="{$m2}[]"  id="{$m2}" multiple="multiple" size="30"  style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+          </select></div></td>
+      </tr>
+      <tr>
+        <td colspan="5" align="center">
+         <div class="big-form-buttons">
+              <div class="green-btn">
+        <input type="submit" value="Update Modules for {$data.username}" name="{$submit}" id="{$submit}">
+        </div>
+        <input type="hidden" id="uid" name="uid" value="{$data.userid}"  />
+          &nbsp; <span id="{$msg}"  style="display: none">{$config.list.wait1}</span> &nbsp;
+          </div>
+        </td>
+      </tr>
+    </table>
+</div>
+</form>
+
+<script language="javascript" type="text/javascript">
+var form = '#{$form}';
+var url = $(form).attr('action');
+var submit = '#{$submit}';
+var msg = '#{$msg}';
+var m1 = '#{$m1}';
+var m2 = '#{$m2}';
+var a1 = '#{$a1}';
+var a2 = '#{$a2}';
+var uid = '{$data.userid}';
+var username = '{$data.username}';
+var wait1 = '{$config.list.wait1}';
+var wait2 = '{$config.list.wait2}';
+
+$('#sites').bind('change', function(e) {
+	e.preventDefault();
+	$('#pages').load(url, { 'js_get_pages':1, 'site_id':$(this).val(), uid:uid });
+	$(m1).load(url, { 'js_get_modules':1, 'site_id':$(this).val(), uid:uid });
+	$(m2)[0].innerHTML = '';
+	return false;
+});
+$('#pages').bind('change', function() {
+	// <:&lt; >:&gt;
+	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
+	$(m2).append('<option>'+wait1+'</option>');
+	$.get(url, { cid: $(this).val(), step: 1, 'site_id':$('#sites').val() }, function(data) {
+		$(m1)[0].innerHTML = '';
+		$(m1).append(data);
+	});
+	$.get(url, { cid: $(this).val(), step: 2, 'site_id':$('#sites').val() }, function(data) {
+		$(m2)[0].innerHTML = '';
+		$(m2).append(data);
+	});
+	$(a1).attr("href", "javascript:void(0);");
+	$(a2).attr("href", "javascript:void(0);");
+	return false;
+});
+$(a1).click(function() {
+	var t1 = $(m1+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m1+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m2).append(t);
+	$(submit).removeAttr("disabled");
+});
+$(a2).click(function() {
+	var t1 = $(m2+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m2+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m1).append(t);
+	$(submit).removeAttr("disabled");
+});
+$(form).submit(function(e) {
+	e.preventDefault();
+	var all = $(m2+' option').map(function() { return $(this).val(); }).get().join(",");
+	$.ajax({
+		type: $(form).attr('method'),
+		url: url,
+		data: $(form).serialize()+'&js_update=1&mids='+all,
+		beforeSend: function() {
+			$(submit).hide();
+			$(msg).show();
+		},
+		success: function(data) {
+			$(submit).show();
+			$(msg).hide();			
+		}
+	});
+	return false;
+});
+</script>

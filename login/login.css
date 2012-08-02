@@ -1,0 +1,83 @@
+/* LOGIN BOX */
+#loginbox {
+	background: url(../images/login_boxbg.jpg) no-repeat;
+	width: 310px;
+	height: 152px;
+	margin: 0 auto;
+	padding: 40px 0 0 30px;
+}
+#loginbox form .user, #loginbox form .pass, .rememfor {
+	overflow: hidden;
+}
+.userTitle, .userInput, .passTitle, .passInput, .remember {
+	float: left;
+}
+.forgot {
+	float: right;
+	margin-right: 38px;
+}
+.userTitle, .passTitle {
+	font-size: 13px;
+	font-weight: bold;
+	color: #686868;
+	width: 75px;
+	line-height: 27px;
+}
+input.userInput, input.passInput {
+	background: url(../images/login_inputbox.jpg) no-repeat;
+	width: 165px;
+	height: 27px;
+	border: 1px solid #999999;
+	font-size: 13px;
+	color: #686868;
+	padding: 0 15px;
+	line-height: 27px;
+}
+.user, .rememfor {
+	margin-bottom: 6px;
+}
+.pass {
+	margin-bottom: 12px;
+}
+.remember {
+	margin-left: 75px;
+}
+.remember, .forgot {
+	font-size: 11px;
+	color: #686868;
+}
+input.checkbox {
+	margin: 0;
+	padding: 0;
+}
+input.login {
+	background: url(../images/login_button.jpg) no-repeat;
+	width: 111px;
+	height: 30px;
+	border: 0;
+	color: #FFF;
+	font-weight: bold;
+	float: right;
+	margin-right: 38px;
+	background-position: 0 0;
+	cursor: pointer;
+}
+input:hover.login {
+	background-position: 0 -30px;
+}
+.bgpos {
+	background-position: 0 0;
+}
+.bgpos_h {
+	background-position: 0 -30px;
+}
+a.clickForgot {
+	color: #6d98ac;
+	text-decoration: underline;
+}
+a:visited.clickForgot {
+	font-style: normal;
+}
+a:hover.clickForgot {
+	color: #1ba3e3;
+}

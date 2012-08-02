@@ -1,0 +1,213 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{config_load file="{$config.smarty}"}
+{$form='assign_cr_form'}{$submit='assign_cr_submit'}{$msg='assign_cr_msg'}
+{$m0='cr_m0'}{$m1='cr_m1'}{$m2='cr_m2'}{$a1='cr_a1'}{$a2='cr_a2'}
+{$r = $data.record}
+
+<form class="page-form" id="{$form}" name="{$form}" action="{$smarty.server.SCRIPT_NAME}" method="POST">
+<div class="content-headline">{$config.header.title|default:'Assign Contents -> Resources'}</div>
+<div align="center" class="innerform-x">
+    <table border="0" cellspacing="0" cellpadding="2" width="80%" class="form-table">
+      <tr>
+        <td align="right" nowrap="nowrap"><label for="sites">Select Site:</label>
+        </td>
+        <td>        
+        <div class="selectWrapper">
+        <select name="sites" id="cr_sites" accesskey="S"  style="width:{#select_width#}">
+  {if $r}
+            <option value="{$r.site_id}" title="{$r.sname|escape:'html'|default:''}">{$r.site_id} - {$r.sname|escape:'html'} </option>
+  {else}
+            <option value=""> -- Select Site -- </option>
+  {/if}
+       {foreach $data.sites as $ds}
+            <option value="{$ds[0]}" title="{$ds[2]}"> {$ds[1]} </option>
+      {/foreach}
+          </select>
+          </div>
+          </td>
+        <td align="right" nowrap="nowrap"><label for="modules">Select Module:</label>
+        </td>
+        <td>
+        <div class="selectWrapper">
+        <select name="modules"  id="cr_modules"  accesskey="M" style="width:{#select_width#}">
+  {if $r}
+            <option value="{$r.mid}" title="{$r.mname|escape:'html'|default:''}">{$r.mid} - {$r.mname|escape:'html'} </option>
+  {else}
+            <option value=""> -- Select Module -- </option>
+  {/if}
+  {if $data.modules}
+      {foreach $data.modules as $dm}
+            <option value="{$dm[0]}" title="{$dm[2]}"> {$dm[1]} </option>
+      {/foreach}
+  {/if}
+          </select></div></td>
+        <td>&nbsp;</td>
+        <td align="right" nowrap="nowrap"><label for="divisions">Select Division:</label>
+        </td>        
+        <td  style="padding-right:30px">
+        <div class="selectWrapper">
+        <select name="divisions"  id="cr_divisions"  accesskey="D" style="width:{#select_width#}">
+  {if $r}
+            <option value="{$r.division}" title="{$r.division|escape:'html'|default:''}">{$r.division} </option>
+  {else}
+            <option value=""> -- Select Division -- </option>
+  {/if}
+		{if $data.divisions}
+      {foreach $data.divisions as $dd}
+            <option value="{$dd[0]}" title="{$dd[2]}"> {$dd[1]} </option>
+      {/foreach}
+        {/if}
+          </select>
+          </div>
+          </td>
+      </tr>
+      <tr>
+        <td align="right" valign="middle"><label for="{$m0}">Resources:</label></td>
+        <td>
+        <div class="selectWrapper">
+        <select name="{$m0}[]" id="{$m0}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+  {if $r}
+            <option value="{$r.rid}" title="{$r.file|escape:'html'|default:''}">{$r.title} </option>
+  {else}
+            <option value="">Please select a resource first.</option>
+  {/if}
+          </select>
+          </div>
+          </td>
+        <td align="right" valign="middle"><label for="{$m1}">Assigned<br />
+          Contents:</label></td>
+        <td>
+        <div class="selectWrapper">
+        <select name="{$m1}[]" id="{$m1}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+            <option value="">Applied Contents.</option>
+          </select>
+          </div>
+          </td>
+         <td align="center" valign="middle"><label><a id="{$a1}" class="forward-green-arrow"></a></label>
+          <label><a id="{$a2}" class="back-green-arrow"></a></label></td>
+        <td align="right" valign="middle"><label for="{$m2}">Availabe<br />
+          Contents:</label></td>
+        <td>
+        <div class="selectWrapper">
+        <select name="{$m2}[]"  id="{$m2}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+          </select>
+          </div>
+          </td>
+      </tr>
+      <tr>
+        <td colspan="7" align="center">
+         <div class="big-form-buttons">
+             <div class="green-btn">
+	             <input type="submit" value="Assign Contents->Resources" id="{$submit}" name="{$submit}" />    
+	         </div>
+             <input type="reset" name="reset" value="Reset" />          
+             <span id="{$msg}" name="{$msg}" style="display: none">{$config.list.wait1}</span> &nbsp;
+           </div>
+          {if $r}
+          <input type="hidden" id="id" name="id" value="{$r.id}"  />
+          {/if} </td>
+      </tr>
+    </table>
+</div>
+  </form>
+
+<script language="javascript" type="text/javascript">
+var form = '#{$form}';
+var url = $(form).attr('action');
+var submit = '#{$submit}';
+var msg = '#{$msg}';
+var m0 = '#{$m0}';
+var m1 = '#{$m1}';
+var m2 = '#{$m2}';
+var a1 = '#{$a1}';
+var a2 = '#{$a2}';
+var uid = '{$data.userid}';
+var wait1 = '{$config.list.wait1}';
+var wait2 = '{$config.list.wait2}';
+var sites = '#cr_sites';
+var modules = '#cr_modules';
+var divisions = '#cr_divisions';
+
+$(sites).bind('change', function(e) {
+	e.preventDefault(); 
+	$(modules).load(url, { 'js_get_modules':1, 'site_id':$(this).val() });
+	$(divisions).load(url, { 'js_get_divisions':1, 'site_id':$(this).val() });
+	$(m0).load(url, { 'js_get_resources_by_sid':1, 'site_id':$(this).val() });
+	$(m1).get(0).innerHTML = '';
+	$(m2)[0].innerHTML = '';
+	return false;
+});
+$(modules).bind('change', function(e) {
+  	e.preventDefault();
+	$(m0).load(url, { 'js_get_resources_by_mid':1, 'mid':$(this).val() });
+	$(m1).get(0).innerHTML = '';
+	$(m2)[0].innerHTML = '';
+	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
+	$(m2).append('<option>'+wait1+'</option>');
+	return false;
+});
+$(divisions).bind('change', function(e) {
+	e.preventDefault();
+	$(m0).load(url, { 'js_get_resources_by_division':1, 'mid':$(modules).val(), 'division':$(this).val() });
+	$(m1).get(0).innerHTML = '';
+	$(m2)[0].innerHTML = '';
+	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
+	$(m2).append('<option>'+wait1+'</option>');
+	return false;
+});
+
+$(m0).click(function(e) {
+	e.preventDefault();
+	$.get(url, { rid: $(m0+' option:selected').val(), step: 1, site_id: $(sites).val() }, function(data) {
+		$(m1)[0].innerHTML = '';
+		$(m1).append(data);
+	});
+	$.get(url, { rid: $(m0+' option:selected').val(), step: 2, site_id: $(sites).val() }, function(data) {
+		$(m2)[0].innerHTML = '';
+		$(m2).append(data);
+	});
+	$(a1).attr("href", "javascript:void(0);");
+	$(a2).attr("href", "javascript:void(0);");
+	return false;
+});
+
+$(a1).click(function() {
+	var t1 = $(m1+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m1+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m2).append(t);
+	$(submit).removeAttr("disabled");
+});
+$(a2).click(function() {
+	var t1 = $(m2+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m2+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m1).append(t);
+	$(submit).removeAttr("disabled");
+});
+
+$(form).submit(function(e) {
+	e.preventDefault();
+	var all = $(m1+' option').map(function() { return $(this).val(); }).get().join(",");
+	$.ajax({
+		type: $(form).attr('method'),
+		url: url,
+		data: 'rid='+$(m0+' option:selected').val()+'&js_update=1&mids='+all,
+		beforeSend: function() {
+			$(submit).hide();
+			$(msg).show();
+		},
+		success: function(data) {
+			$(submit).show();
+			$(msg).hide();			
+		}
+	});
+	return false;
+});
+</script>

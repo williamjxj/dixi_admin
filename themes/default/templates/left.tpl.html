@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<base target="mainFrame">
+<link href="{$config.path}css/pams-style.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="{$config.path}js/jquery-1.5.1.min.js"></script>
+<script language="javascript" type="text/javascript" src="{$config.path}js/pams-js.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+ jQuery.set_path = function(str) {
+   var t=$('h1', window.parent.frames[0].document.body);
+   var path="{$config.header.title|default:'基督教素里华人宣道会一家团契'} - " + str;
+   t.html(path);
+ }
+ $.set_path('Contents');
+ $('ul.navList li:eq(0)').addClass('active');
+ $('ul.navList li a').click(function(){
+	$.set_path($(this).text());
+ 	$('ul.navList li').removeAttr('class');
+	$(this).parent().addClass('active');
+ });
+});
+</script>
+</head>
+<body>
+<div class="sidebarBox" id="left_{$config.browser_id}"> <br />
+  <div class="sidebar-box">
+    <div class="side-head"> 内容管理界面 </div>
+    <div class="inner noPadding">
+      <div class="navTitle nonActiveTitle">
+        <p>内容部分</p>
+      </div>
+      <ul class="navList">
+        {foreach $config.cores as $key => $value}
+        <li><a href="{$value}">{$key}</a></li>
+        {/foreach}
+      </ul>
+      <div class="navTitle nonActiveTitle">
+        <p>管理部分</p>
+      </div>
+      <ul class="navList">
+        {foreach $config.manages as $key => $value}
+        <li><a href="{$value}">{$key}</a></li>
+        {/foreach}
+      </ul>
+      <div class="navTitle nonActiveTitle">
+        <p>辅助工具</p>
+      </div>
+      <ul class="navList">
+        {foreach $config.tools as $key => $value}
+        <li><a href="{$value}">{$key}</a></li>
+        {/foreach}
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>

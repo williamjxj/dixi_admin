@@ -1,0 +1,177 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+{config_load file="{$config.smarty}"}
+{$r = $data.record}
+{$cid=$r.cid}
+{$elm='elm_'+{$cid}}
+<form class="page-form" id="form_{$cid}" name="form_{$cid}" method="POST" action="{$smarty.server.SCRIPT_NAME}" target="iframe_tinymce">
+  <div class="content-headline">
+    <div class="headline-options">
+      <label for="contents"> Contents: </label>
+      <div class="selectWrapper">
+        <select id="contents" name="contents" accesskey="L"  style="width:{#select_width#}">
+          <option value="{$cid}"> {$cid} - {$r.linkname|default:' -- Select -- '} </option>
+          
+	    {foreach $data.contents as $dc}
+        
+          <option value="{$dc[0]}">{$dc[0]} - {$dc[1]}</option>
+          
+      {/foreach}
+      
+        </select>
+      </div>
+    </div>
+    Edit Content {$r.linkname} </div>
+  <div class="input">
+    <label for="sites_{$cid}"> Site: </label>
+    <div class="selectWrapper">
+      <select id="sites_{$cid}" name="sites" accesskey="S" style="width:{#select_width#}">
+        <option value="{$r.site_id}"> {$r.sname} </option>
+        
+      
+  {foreach $data.sites as $ds}
+    
+      
+        <option value="{$ds[0]}">{$ds[1]}</option>
+        
+      
+    {/foreach}
+  
+    
+      </select>
+    </div>
+  </div>
+  <div class="input">
+    <label for="modules_{$cid}"> Module: </label>
+    <div class="selectWrapper">
+      <select id="modules_{$cid}" name="modules" accesskey="M" style="width:{#select_width#}">
+        <option value="{$r.mid}"> {$r.mname} </option>
+        
+  {foreach $data.modules as $dm}
+    
+      
+        <option value="{$dm[0]}">{$dm[1]}</option>
+        
+      
+    {/foreach}
+    
+      </select>
+    </div>
+  </div>
+  <div class="input textfield">
+    <label for="input_linkname_3"> Link Name: </label>
+    <span id="sprytextfield1">
+    <input type="text" id="input_linkname_3" name="input_linkname_3" size="90"  value="{$r.linkname}" />
+    <span class="textfieldRequiredMsg">A value is required.</span></span> </div>
+  <div class="input small-textarea">
+    <label for="input_notes_3"> Notes:</label>
+    <span id="sprytextarea1">
+    <textarea class="notes" name="input_notes_3" id="input_notes_3" cols="60">{$r.notes}</textarea>
+    <span class="textareaRequiredMsg">A value is required.</span></span> </div>
+  <div class="input textfield">
+    <label for="input_title_3"> Author: </label>
+    <span id="sprytextfield3">
+    <input type="text" id="input_title_3" name="input_title_3" size="90"  value="{$r.author}" />
+    <span class="textfieldRequiredMsg">A value is required.</span></span> </div>
+  <div class="input mce_editor">
+    <label for="elm_{$cid}"> HTML:</label>
+    <br />
+    <textarea name="elm_{$cid}" id="elm_{$cid}" style="width: 60%; height: 50%" accesskey="C">{$r.content}</textarea>
+    <div class="editor-options"> <a href="javascript:;" onMouseDown="tinyMCE.get(elm_{$cid}).show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get(elm_{$cid}).hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get(elm_{$cid}).execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get(elm_{$cid}).getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get(elm_{$cid}).selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get(elm_{$cid}).selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get(elm_{$cid}).selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
+  </div>
+  <div class="submit-buttons">
+    <div class="green-btn">
+      <input type="submit" value="Save" name="edit_submit" class="save" />
+    </div>
+    <input type="reset" value="Reset" class="reset" />
+    <input type="hidden" id="id" name="id" value="{$cid}" />
+  </div>
+</form>
+<!--no need any more, just keep here, will remove later.-->
+<iframe id="iframe_tinymce" name="iframe_tinymce" src="about:blank" frameborder="0" style="width:0;height:0;border:0px solid #fff;"></iframe>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+  var cid = '{$cid}';
+  var url = '{$smarty.server.SCRIPT_NAME}';
+  var form = '#form_'+cid;
+  var site = '#sites_'+cid;
+  var module = '#modules_'+cid;
+  var division = '#divisions_'+cid;  
+  var elm = 'elm_'+cid;  
+  //alert(elm+','+site+','+module+','+division);
+
+  $(form + ' select[name=sites]').bind('change', function() {
+	$(module).load(url+'?js_get_modules=1&site_id='+$(this).val());
+	return false;
+  });
+  
+  var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+  var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1");
+  $('#input_title_3').change(function() {
+	var t = $('#input_title_3').val();
+	t = t.replace(/\s+/g, '_').replace(/\'/g,'').replace(/\"/g,'').replace(/,/g,'').replace(/\./g,'') + '.html';
+  });
+  
+ jQuery.init_tinyMCE = function(WYSIWYG) {
+  return tinyMCE.init({
+	mode : "exact",
+	theme : "advanced",
+	elements : WYSIWYG,
+	plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+	theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+	theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "left",
+	theme_advanced_statusbar_location : "bottom",
+	theme_advanced_resizing : true,
+	content_css : "{$config.ipath}include/tinymce/examples/css/content.css",
+	template_external_list_url : "{$config.ipath}include/tinymce/examples/lists/template_list.js",
+	external_link_list_url : "{$config.ipath}include/tinymce/examples/lists/link_list.js",
+	external_image_list_url : "{$config.ipath}include/tinymce/examples/lists/image_list.js",
+	media_external_list_url : "{$config.ipath}include/tinymce/examples/lists/media_list.js"
+  });
+ };
+
+ jQuery.init_tinyMCE(elm);
+ 
+ // cid DOES dynamic changes !
+ $('#contents').bind('change', function(e) {
+	e.preventDefault();
+	var cid = '{$cid}';
+	var elm = 'elm_'+cid;
+	if (!$(form).is(':visible')) {
+		$(form).show('fast');
+	}
+	var ed = tinyMCE.get(elm);
+	if(ed) { ed.setProgressState(1)};
+	$.ajax({
+		type: 'get',
+		url: url,
+		data: 'js_get_record=1&cid='+$(this).val(),
+		dataType: 'json',
+		success: function(data){
+			if(ed) {
+				ed.setProgressState(0);
+				ed.setContent(data.content);
+			}
+			else {
+				tinyMCE.get(elm).setContent(data.content);
+			}
+			
+			$(site + " option[value='"+data.site_id+"']").attr('selected', 'selected');
+			$(module + " option[value='"+data.mid+"']").attr('selected', 'selected');
+			$(division + " option[value='"+data.division+"']").attr('selected', 'selected');
+
+			$('#input_linkname_3').val(data.linkname);
+			$('#input_title_3').val(data.author).show('fast').attr('readonly',true);
+			$('#input_notes_3').val(data.notes);
+			$('#id').val(data.cid);
+		}
+	})
+ });
+
+});
+
+</script>

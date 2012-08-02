@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="{$config.layout.header}"}
+<body class="{#class#}">
+<div id="border">
+  <div id="border_shadow">
+    <div id="container"> {include file="{$config.layout.title}"}
+      <div id="whiteBody">
+        <div id="contentBody_wrap"> {include file="{$config.layout.navigator}"}
+          {include file=$template} </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footerBorder"></div>
+{*include file="{$config.layout.footer}"*}
+</body>
+</html>

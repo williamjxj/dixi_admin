@@ -1,0 +1,229 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{config_load file="{$config.smarty}"}
+{$form='assign_rc_form'}{$submit='assign_rc_submit'}{$msg='assign_rc_msg'}
+{$m0='rc_m0'}{$m1='rc_m1'}{$m2='rc_m2'}{$a1='rc_a1'}{$a2='rc_a2'}
+{$r = $data.record}
+
+<form class="page-form" id="{$form}" name="{$form}" action="{$smarty.server.SCRIPT_NAME}" method="POST">    
+<div class="content-headline">{$config.header.title|default:'Assign Resources -> Contents'}</div>
+<div align="center" class="innerform-x">
+    <table border="0" cellspacing="0" cellpadding="2" width="80%"  class="form-table">
+      <tr>
+        <td align="right" nowrap="nowrap"><label for="rc_sites">Select Site:</label>
+        </td>
+        <td>
+        <div class="selectWrapper">
+        <select name="sites" id="rc_sites" accesskey="S" style="width:{#select_width#}">
+  {if $r}
+            <option value="{$r.site_id}" title="{$r.sname|escape:'html'|default:''}">{$r.site_id} - {$r.sname|escape:'html'} </option>
+  {else}
+            <option value=""> -- Select Site -- </option>
+  {/if}
+       {foreach $data.sites as $ds}
+            <option value="{$ds[0]}" title="{$ds[2]}"> {$ds[1]} </option>
+      {/foreach}
+          </select>
+          </div>
+          </td>
+        <td align="right" nowrap="nowrap"><label for="modules">Select Module:</label>
+        </td>
+        <td>
+        <div class="selectWrapper">
+        <select name="modules"  id="rc_modules"  accesskey="M" style="width:{#select_width#}">
+  {if $r}
+            <option value="{$r.mid}" title="{$r.mname|escape:'html'|default:''}">{$r.mid} - {$r.mname|escape:'html'} </option>
+  {else}
+            <option value=""> -- Select Module -- </option>
+  {/if}
+  {if $data.modules}
+      {foreach $data.modules as $dm}
+            <option value="{$dm[0]}" title="{$dm[2]}"> {$dm[1]} </option>
+      {/foreach}
+  {/if}
+          </select>
+          </div>
+          </td>
+        <td>&nbsp;</td>
+        <td align="right" nowrap="nowrap"><label for="divisions">Select Division:</label>
+        </td>
+        <td style="padding-right:30px">
+        <div class="selectWrapper">
+        <select name="divisions"  id="rc_divisions"  accesskey="D" style="width:{#select_width#}">
+  {if $r}
+            <option value="{$r.division}" title="{$r.division|escape:'html'|default:''}">{$r.division} </option>
+  {else}
+            <option value=""> -- Select Division -- </option>
+  {/if}
+		{if $data.divisions}
+      {foreach $data.divisions as $dd}
+            <option value="{$dd[0]}" title="{$dd[2]}"> {$dd[1]} </option>
+      {/foreach}
+        {/if}
+          </select>
+          </div>
+          </td>
+      </tr>
+      <tr>
+        <td align="right" valign="middle"><label for="{$m0}">Contents:</label></td>
+        <td>
+        <div class="selectWrapper">
+        <select name="{$m0}[]" id="{$m0}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+  {if $r}
+            <option value="{$r.cid}" title="{$r.file|escape:'html'|default:''}">{$r.author|escape:'html'} </option>
+  {else}
+            <option value="">Please select a content first.</option>
+  {/if}
+          </select>
+          </div>
+          </td>
+        <td align="right" valign="middle"><label for="{$m1}">Assigned<br />
+          Resources:</label></td>
+        <td>
+        <div class="selectWrapper">
+        <select name="{$m1}[]" id="{$m1}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+        {if $data.resources1}
+  {foreach $data.resources1 as $dc}
+          <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[1]} - {$dc[2]}</option>
+    {/foreach}
+		{else}        
+            <option value="">Assigned Resources.</option>
+           {/if}
+          </select>
+          </div>
+          </td>
+           <td align="center" valign="middle"><label><a id="{$a1}" class="forward-green-arrow"></a></label>
+          <label><a id="{$a2}" class="back-green-arrow"></a></label></td>
+        <td align="right" valign="middle"><label for="{$m2}">Availabe<br />
+          Resources:</label></td>
+        <td>
+        <div class="selectWrapper">
+        <select name="{$m2}[]"  id="{$m2}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
+        {if $data.resources2}
+  {foreach $data.resources2 as $dc}
+          <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[1]} - {$dc[2]}</option>
+    {/foreach}
+		{else}        
+            <option value="">Available Resources.</option>
+         {/if}
+          </select>
+          </div>
+          </td>
+      </tr>
+      <tr>
+        <td colspan="7" align="center">
+       	  <div class="big-form-buttons">
+              <div class="green-btn">
+               <input type="submit" value="Assign Resources->Contents" id="{$submit}" name="{$submit}" />
+               </div>
+              <input type="reset" name="reset" value="Reset" />
+          </div>
+          <span id="{$msg}" name="{$msg}" style="display: none">{$config.list.wait1}</span> &nbsp;
+          {if $r}
+          <input type="hidden" id="id" name="id" value="{$r.id}"  />
+          {/if} </td>
+      </tr>
+    </table>
+  </div>
+</form>
+
+<script language="javascript" type="text/javascript">
+var form = '#{$form}';
+var url = $(form).attr('action');
+var submit = '#{$submit}';
+var msg = '#{$msg}';
+var m0 = '#{$m0}';
+var m1 = '#{$m1}';
+var m2 = '#{$m2}';
+var a1 = '#{$a1}';
+var a2 = '#{$a2}';
+var uid = '{$data.userid}';
+var wait1 = '{$config.list.wait1}';
+var wait2 = '{$config.list.wait2}';
+var sites = '#rc_sites';
+var modules = '#rc_modules';
+var divisions = '#rc_divisions';
+
+$(sites).bind('change', function(e) {
+	e.preventDefault(); 
+	$(modules).load(url, { 'js_get_modules':1, 'site_id':$(this).val() });
+	$(divisions).load(url, { 'js_get_divisions':1, 'site_id':$(this).val() });
+	$(m0).load(url, { 'js_get_contents_by_sid':1, 'site_id':$(this).val() });
+	$(m1).get(0).innerHTML = '';
+	$(m2)[0].innerHTML = '';
+	return false;
+});
+$(modules).bind('change', function(e) {
+	e.preventDefault();
+	$(m0).load(url, { 'js_get_contents_by_mid':1, 'mid':$(this).val() });
+	$(m1).get(0).innerHTML = '';
+	$(m2)[0].innerHTML = '';
+	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
+	$(m2).append('<option>'+wait1+'</option>');
+	return false;
+});
+if($(divisions).length) {
+  $(divisions).bind('change', function(e) {
+	e.preventDefault();
+	$(m0).load(url, { 'js_get_contents_by_division':1, 'mid':$(modules).val(), 'division':$(this).val() });
+	$(m1).get(0).innerHTML = '';
+	$(m2)[0].innerHTML = '';
+	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
+	$(m2).append('<option>'+wait1+'</option>');
+	return false;
+  });
+}
+$(m0).click(function(e) {
+	e.preventDefault();
+	$.get(url, { cid: $(m0+' option:selected').val(), step: 3, site_id: $(sites).val() }, function(data) {
+		$(m1)[0].innerHTML = '';
+		$(m1).append(data);
+	});
+	$.get(url, { cid: $(m0+' option:selected').val(), step: 4, site_id: $(sites).val() }, function(data) {
+		$(m2)[0].innerHTML = '';
+		$(m2).append(data);
+	});
+	$(a1).attr("href", "javascript:void(0);");
+	$(a2).attr("href", "javascript:void(0);");
+	return false;
+});
+
+$(a1).click(function() {
+	var t1 = $(m1+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m1+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m2).append(t);
+	$(submit).removeAttr("disabled");
+});
+$(a2).click(function() {
+	var t1 = $(m2+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m2+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m1).append(t);
+	$(submit).removeAttr("disabled");
+});
+
+$(form).submit(function(e) {
+	e.preventDefault();
+	var all = $(m1+' option').map(function() { return $(this).val(); }).get().join(",");
+	$.ajax({
+		type: $(form).attr('method'),
+		url: url,
+		data: 'cid='+$(m0+' option:selected').val()+'&js_update=1&mids='+all,
+		beforeSend: function() {
+			$(submit).hide();
+			$(msg).show();
+		},
+		success: function(data) {
+			$(submit).show();
+			$(msg).hide();			
+		}
+	});
+	return false;
+});
+</script>

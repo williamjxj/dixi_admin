@@ -1,0 +1,167 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{$m1='cr1'}{$m2='cr2'}{$a1='ra1'}{$a2='ra2'}
+{$r = $data.record}
+{$cid = $r.cid}
+<div align="center">
+  <label for="rcontents"> Contents: </label>
+  <select id="rcontents" name="rcontents" accesskey="L" style="width:500px">
+  {if $r}
+    
+    <option value="{$cid}" title="{$r.author|escape:'html'|default:''}">{$cid} - {$r.linkname|escape:'html'} </option>
+    
+  {else}
+  
+    <option value=""> -- Select -- </option>
+    
+  {/if}
+  {foreach $data.contents as $dc}
+    
+    <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[0]} - {$dc[1]}</option>
+    
+    {/foreach}
+  
+  </select>
+</div>
+<form id="rform_{$cid}" name="form_{$cid}" method="POST" action="{$smarty.server.SCRIPT_NAME}" target="iframe_resources">
+  <fieldset>
+  <legend>Edit Content [{$r.sname} -> {$r.mname} -> {$r.linkname}]</legend>
+  <table border="1" cellspacing="0" cellpadding="2" width="60%">
+    <tr>
+      <td colspan="5"><label> Content: </label>
+        <input type="text" name="content" class="inputTitle" value="{$r.linkname}" title="{$r.author}" size="60" />
+        <label> Site: </label>
+        <input type="text" name="site" class="inputTitle" value="{$r.sname}" />
+        <label> Component: </label>
+        <input type="text" name="component" class="inputTitle" value="{$r.cname}" />
+        <label> Module: </label>
+        <input type="text" name="module" class="inputTitle" value="{$r.mname}" />
+        <label> Division: </label>
+        <input type="text" name="division" class="inputTitle" value="{$r.division}" /></td>
+    </tr>
+    <tr>
+      <td align="right" valign="middle"><label for="{$m1}">Available<br />
+        Resources:</label></td>
+      <td><select name="{$m1}[]"  id="{$m1}" multiple="multiple" size="30" style="min-width:400px; width:500px;">
+          
+  {foreach $data.resources1 as $dc}
+          
+          <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[1]} - {$dc[2]}</option>
+          
+    {/foreach}
+        
+        </select></td>
+      <td align="center" valign="middle"><label><a id="{$a1}">&nbsp;==>&nbsp;</a></label>
+        <br />
+        <br />
+        <label><a id="{$a2}">&nbsp;<==&nbsp;</a></label></td>
+      <td align="right" valign="middle"><label for="{$m2}">Applied<br />
+        Resources:</label></td>
+      <td><select name="{$m2}[]"  id="{$m2}" multiple="multiple" size="30" style="min-width:400px; width:500px;">
+          
+  {foreach $data.resources2 as $dc}
+
+          <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[1]} - {$dc[2]}</option>
+
+    {/foreach}      
+
+        </select></td>
+    </tr>
+    <tr>
+      <td colspan="5" align="center"><input type="submit" value="Update Resources for {$r.linkname}" name="submit_resources" id="submit_resources" disabled="disabled">
+        &nbsp; <span id="rmsg"  style="display: none">{$config.list.wait1}</span> &nbsp;
+        <input type="hidden" id="cr_id" name="cr_id" value="{$cid}"  />
+      </td>
+    </tr>
+  </table>
+  </fieldset>
+</form>
+<iframe id="iframe_resources" name="iframe_resources" src="about:blank" frameborder="0" style="width:0;height:0;border:0px solid #fff;"></iframe>
+
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+  var cid = '{$cid}';
+  var url = '{$smarty.server.SCRIPT_NAME}';
+  var form = $('#submit_resources').closest('form');
+  var m1 = '#{$m1}';
+  var m2 = '#{$m2}';
+  var a1 = '#{$a1}';
+  var a2 = '#{$a2}';
+  var submit = '#submit_resources';
+  var msg = '#rmsg';
+  var wait1 = '{$config.list.wait1}';
+  var wait2 = '{$config.list.wait2}';
+  
+ $('#rcontents').bind('change', function(e) {
+	e.preventDefault();
+	var cid = $(e.target).val();
+	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
+	$(m2).append('<option>'+wait1+'</option>');
+
+	$.ajax({
+		type: 'get',
+		url: $(form).attr('action'),
+		data: 'js_get_record=1&cid='+cid,
+		dataType: 'json',
+		success: function(data){
+			$('legend', form).html('Edit Content ['+data.sname+' -&gt; '+data.mname+' -&gt; '+data.linkname+']');
+			$(":input[name='content']", form).val(data.linkname).attr('title', data.author);
+			$(":input[name='site']", form).val(data.sname);
+			$(":input[name='component']", form).val(data.sname);
+			$(":input[name='module']", form).val(data.mname);
+			$(":input[name='division']", form).val(data.division);
+			$('#cr_id').val(data.cid);
+		}
+	})
+	$.get(url, {cid: $(this).val(), step: 1}, function(data) {
+		$(m1)[0].innerHTML = '';
+		$(m1).append(data);
+	});
+	$.get(url, {cid: $(this).val(), step: 2}, function(data) {
+		$(m2)[0].innerHTML = '';
+		$(m2).append(data);
+	});
+	$(a1).attr("href", "javascript:void(0);");
+	$(a2).attr("href", "javascript:void(0);");
+	return false;
+ });
+
+$(a1).click(function() {
+	var t1 = $(m1+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m1+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m2).append(t);
+	$(submit).removeAttr("disabled");
+});
+$(a2).click(function() {
+	var t1 = $(m2+" option:selected");
+	var t = '';
+	for (i=0; i<t1.length; i++) {
+		t += '<option value="' + $(t1[i]).val() + '">' + $(t1[i]).text() + '</option>'+"\n";
+		$(m2+' option[value='+$(t1[i]).val()+']').empty().remove();
+	}
+	$(m1).append(t);
+	$(submit).removeAttr("disabled");
+});
+$(form).submit(function() {
+	var all = $(m2+' option').map(function() {return $(this).val();}).get().join(",");
+	$.ajax({
+		type: $(form).attr('method'),
+		url: url,
+		data: $(form).serialize()+'&js_update=1&mids='+all,
+		beforeSend: function() {
+			$(submit).hide();
+			$(msg).show();
+		},
+		success: function(data) {
+			$(submit).show();
+			$(msg).hide();			
+		}
+	});
+	return false;
+});
+
+});
+</script>
