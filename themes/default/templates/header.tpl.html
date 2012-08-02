@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <base target="mainFrame">
-<link href="{$config.path}css/pams-style.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="{$config.path}js/jquery-1.5.1.min.js"></script>
-<script language="javascript" type="text/javascript" src="{$config.path}js/cookie.js"></script>
-<script language="javascript" type="text/javascript" src="{$config.ipath}include/jquery-sticky-notes/script/jquery-ui-1.7.2.custom.min.js"></script>
-<script language="javascript" type="text/javascript" src="include/jquery-sticky-notes/script/jquery.stickynotes.js"></script>
-<link rel="stylesheet" href="{$config.ipath}include/jquery-sticky-notes/css/jquery.stickynotes.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="{$config.path}css/style.css" />
+<link rel="stylesheet" type="text/css" href="include/jquery-sticky-notes/css/jquery.stickynotes.css" />
+<script type="text/javascript" src="includejs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="include/js/cookie.js"></script>
+<script type="text/javascript" src="include/jquery-sticky-notes/script/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="include/jquery-sticky-notes/script/jquery.stickynotes.js"></script>
 </head>
 <body>
 <div id="header_{$config.browser_id}">
   <div id="header">
       <div id="upper">
-        <span class="pamslogo1"></span>
+        <span class="logo1"></span>
         <div id="navLinks">
           <ul>
             {foreach $config.top as $entry}
