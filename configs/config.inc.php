@@ -20,7 +20,13 @@ $config = array(
 		'meta_defaultrobots' => 'index,follow',
 		'meta_robots' => '',
 	),
-	'dcn' => 2,     // search, edit, add forms need.
+	'js' => array(
+		'jquery' => 'jquery-1.7.2.min.js',
+		'jquery-ui' => '',
+		'bootstrap' => '',
+		'fancybox'  => '',
+	),
+	'dcn' => 2,     //search, edit, add forms need.
 	'calender' => true, //most common used in almost each app, 'search' is a basic function.
 	'qtip' => true, //each app needs help.
 	'list' => get_list_defs(),
