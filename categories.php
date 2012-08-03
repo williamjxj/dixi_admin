@@ -9,10 +9,9 @@ require_once("config.inc.php");
 require_once("ListAdvanced.inc.php");
 global $config;
 
-
 $config['tabs'] = array('1'=>'ç±»åˆ«åˆ—è¡¨', '2'=>'æ·»åŠ ç±»åˆ«');
 
-class PagesClass extends ListAdvanced
+class CategoriesClass extends ListAdvanced
 {
   var $url, $self, $session;
   public function __construct() {
@@ -120,8 +119,8 @@ class PagesClass extends ListAdvanced
 	return array(
 		array(
 		  'type' => 'text',
-		  'display_name' => 'Page Name:',
-		  'id' => 'component_nname',
+		  'display_name' => 'À¸Ä¿Ãû³Æ :',
+		  'id' => 'name',
 		  'name' => 'name',
 		),
 		array(
@@ -131,6 +130,7 @@ class PagesClass extends ListAdvanced
 		  'name' => 'description',
 		  'size' => INPUT_SIZE+10,
 		),
+/*
 		array(
 		  'type' => 'text',
 		  'display_name' => 'URL:',
@@ -144,6 +144,7 @@ class PagesClass extends ListAdvanced
 		  'name' => 'cid',
 		  'call_func' => 'get_categories_options',
 		),      
+*/
 	  );
   }
 
@@ -159,22 +160,22 @@ class PagesClass extends ListAdvanced
 
 }
 
-$page = new PagesClass();
-if(! $page->check_access()) {
-  $page->set_breakpoint();
+$category = new CategoriesClass();
+if(! $category->check_access()) {
+  $category->set_breakpoint();
   echo "<script>if(window.opener){window.opener.location.href='".LOGIN."';} else{window.parent.location.href='".LOGIN."';}</script>";exit;
 }
-$page->get_table_info();
-$page->set_default_config(array('calender'=>true,'jvalidate'=>true));
+$category->get_table_info();
+$category->set_default_config(array('calender'=>true,'jvalidate'=>true));
 
 if (isset($_GET['pid'])) {
 	switch($_GET['step']) {
 	case 1:
-		$page->select_pages($_GET['pid']);
+		$category->select_pages($_GET['pid']);
 		break;
 	case 2:
 		$uid = isset($_GET['uid']) ? $_GET['uid'] : $this->userid;
-		$page->select_users_pages($uid);
+		$category->select_users_pages($uid);
 		break;
 	default:
 		break;
@@ -184,44 +185,44 @@ elseif(isset($_POST['update'])) {
 	$ac->update_pages();
 }
 elseif(isset($_GET['js_search_form'])) {
-	$ary = $page->get_search_form_settings();
-	$page->assign('search_form', $ary);	
-	$page->assign('config', $config);
-	$page->display($config['templs']['search']);
+	$ary = $category->get_search_form_settings();
+	$category->assign('search_form', $ary);	
+	$category->assign('config', $config);
+	$category->display($config['templs']['search']);
 }
 elseif(isset($_GET['js_edit_form'])) {
-	$ary = $page->get_edit_form_settings();
-	$record = $page->get_record($_GET['id']);
-	$page->assign('record', $record);	
-	if(isset($_GET['tr'])) $page->assign('form_id', 'ef_'.$_GET['id'].'-'.$_GET['tr']);
-	else $page->assign('form_id', 'ef_'.$_GET['id']);
-	$page->assign('edit_form', $ary);	
-	$page->assign('config', $config);
-	$page->display($config['templs']['edit']);
+	$ary = $category->get_edit_form_settings();
+	$record = $category->get_record($_GET['id']);
+	$category->assign('record', $record);	
+	if(isset($_GET['tr'])) $category->assign('form_id', 'ef_'.$_GET['id'].'-'.$_GET['tr']);
+	else $category->assign('form_id', 'ef_'.$_GET['id']);
+	$category->assign('edit_form', $ary);	
+	$category->assign('config', $config);
+	$category->display($config['templs']['edit']);
 }
 elseif(isset($_GET['js_add_form'])) {
-	$ary = $page->get_add_form_settings();
-	$page->assign('add_form', $ary);	
-	$page->assign('config', $config);
-	$page->display($config['templs']['add']);
+	$ary = $category->get_add_form_settings();
+	$category->assign('add_form', $ary);	
+	$category->assign('config', $config);
+	$category->display($config['templs']['add']);
 }
 elseif(isset($_POST['js_edit_column'])) {
-	$ret = $page->update_column(array('updatedby'=>$page->username));
+	$ret = $category->update_column(array('updatedby'=>$category->username));
 	echo json_encode($ret);
 }
 elseif(isset($_REQUEST['action'])) {
 	switch($_REQUEST['action']) {
 		case 'edit':
-		  $ary = $page->get_edit_form_settings();
-		  echo json_encode($page->edit_table($ary));
+		  $ary = $category->get_edit_form_settings();
+		  echo json_encode($category->edit_table($ary));
 			break;
 		case 'delete':
-			$page->delete($_GET['id']);
+			$category->delete($_GET['id']);
 			break;
 		case 'add':
-			$last_pid = $page->create(array('createdby'=>$page->username, 'updatedby'=>$page->username, 'created'=>'NOW()'));
-                        $query = "UPDATE pages AS p, (SELECT name FROM categories WHERE cid=".$_POST['cid']." ) AS s SET p.sname = s.name WHERE pid=".$last_pid;
-                        $affected = $page->mdb2->exec($query);
+			$last_pid = $category->create(array('createdby'=>$category->username, 'updatedby'=>$category->username, 'created'=>'NOW()'));
+                        $query = "UPDATE category AS p, (SELECT name FROM categories WHERE cid=".$_POST['cid']." ) AS s SET p.sname = s.name WHERE pid=".$last_pid;
+                        $affected = $category->mdb2->exec($query);
                         if (PEAR::isError($affected)) {
                                 die($affected->getMessage().': ' . $query . ". line: " . __LINE__);
                         }
@@ -231,45 +232,45 @@ elseif(isset($_REQUEST['action'])) {
 	}
 }
 else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort'])) || isset($_GET['page']) || isset($_GET['js_reload_list']) ) {
-	if(isset($_POST['search'])) $page->parse();
+	if(isset($_POST['search'])) $category->parse();
 
-	$data = $page->list_all();
+	$data = $category->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $page->get_header($page->get_mappings());
+	$header = $category->get_header($category->get_mappings());
 
-	$pagination = $page->draw( $data['current_page'], $data['total_pages'] );
+	$pagination = $category->draw( $data['current_page'], $data['total_pages'] );
 	
-	$page->assign('config', $config);
-	$page->assign('header', $header);
-	$page->assign('data', $data);
-	$page->assign("pagination", $pagination);
-	$tpl = $page->get_html_template();
-	$page->display($tpl); // not use display, should use AJAX.
+	$category->assign('config', $config);
+	$category->assign('header', $header);
+	$category->assign('data', $data);
+	$category->assign("pagination", $pagination);
+	$tpl = $category->get_html_template();
+	$category->display($tpl); // not use display, should use AJAX.
 }
 // default: list data.
 else {
-	if (isset($_SESSION[$page->self][$page->session['sql']])) $_SESSION[$page->self][$page->session['sql']] = '';
+	if (isset($_SESSION[$category->self][$category->session['sql']])) $_SESSION[$category->self][$category->session['sql']] = '';
 
-	$total_rows = $page->get_total_rows($page->get_count_sql());
+	$total_rows = $category->get_total_rows($category->get_count_sql());
 
-	$_SESSION[$page->self][$page->session['rows']] = $total_rows < 1 ? 1 : $total_rows;
+	$_SESSION[$category->self][$category->session['rows']] = $total_rows < 1 ? 1 : $total_rows;
 	
-	$data = $page->list_all();
+	$data = $category->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $page->get_header($page->get_mappings());
+	$header = $category->get_header($category->get_mappings());
 
-	$pagination = $page->draw( $data['current_page'], $data['total_pages'] );
+	$pagination = $category->draw( $data['current_page'], $data['total_pages'] );
 	
-	$tpl = $page->get_html_template();
+	$tpl = $category->get_html_template();
 
-	$page->assign('config', $config);
-	$page->assign('header', $header);
-	$page->assign('data', $data);
-	$page->assign("pagination", $pagination);
+	$category->assign('config', $config);
+	$category->assign('header', $header);
+	$category->assign('data', $data);
+	$category->assign("pagination", $pagination);
 
-	$page->assign("template", $tpl);
-	$page->display($config['templs']['main']);
+	$category->assign("template", $tpl);
+	$category->display($config['templs']['main']);
 }
 ?>
