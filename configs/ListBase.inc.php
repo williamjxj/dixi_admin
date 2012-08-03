@@ -414,10 +414,10 @@ echo $query;
 	$res = $this->mdb2->query($sql);
 
 	if (PEAR::isError($res)) {
-		$this->print_array($res->getMessage().' line: ['.__LINE__.']'.$sql);
+		$this->print_array($res->getMessage().'file['. __FILE__ .'], line['.__LINE__.']: '.$sql);
 	}
 
-	if($line_flag) echo "\t<option value=''> --- Select --- </option>\n";
+	if($line_flag) echo "\t<option value=''> --- «Î—°‘Ò --- </option>\n";
 
 	while ($row=$res->fetchRow()) {
 		echo "\t".'<option value="'.$row[0].'" title="'.(isset($row[2])?htmlspecialchars($row[2]):$row[1]).'">'.$this->format_option($row)."</option>\n";
