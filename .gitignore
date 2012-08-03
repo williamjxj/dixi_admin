@@ -6,3 +6,4 @@ logs/
 cache/
 include/
 themes/images/
+test*

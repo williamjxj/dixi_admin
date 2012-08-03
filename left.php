@@ -1,6 +1,6 @@
 <?php
 session_start();
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 define('SITEROOT', './');
 require_once(SITEROOT.'/configs/setting.inc.php');

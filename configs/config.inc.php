@@ -1,6 +1,7 @@
 <?php
 // all based on SITEROOT: './'.
 //header('Content-Type: text/html; charset=UTF-8');
+
 $config = array(
 	'debug' => true, // usd by smarty templates as well as php; control to write logfile: admin.log.
 	'path' => SITEROOT, //default.
@@ -14,9 +15,9 @@ $config = array(
 		'main' => 'main.tpl.html',
 	),
 	'header' => array(
-		'title' => 'µ×Ï¸,ÕæÏà,»¹Ô­ÕæÏà,·´Ó³Êµ¼ÊÇé¿ö',
-		'description' => 'µ×Ï¸,ÕæÏà,»¹Ô­ÕæÏà,·´Ó³Êµ¼ÊÇé¿ö',
-		'keywords' => 'µ×Ï¸,ÕæÏà,»¹Ô­ÕæÏà,·´Ó³Êµ¼ÊÇé¿ö',
+		'title' => 'åº•ç»†,çœŸç›¸,è¿˜åŽŸçœŸç›¸,åæ˜ å®žé™…æƒ…å†µ',
+		'description' => 'åº•ç»†,çœŸç›¸,è¿˜åŽŸçœŸç›¸,åæ˜ å®žé™…æƒ…å†µ',
+		'keywords' => 'åº•ç»†,çœŸç›¸,è¿˜åŽŸçœŸç›¸,åæ˜ å®žé™…æƒ…å†µ',
 		'meta_content' => 'text/html; charset=utf-8',
 		'meta_defaultrobots' => 'index,follow',
 		'meta_robots' => '',
@@ -94,24 +95,6 @@ function browser_ID() {
 	return $id;
 }
 
-//$months => get_months();
-function get_months() {
-	return array(
-		'01' => 'Ò»ÔÂ',
-		'02' => '¶þÔÂ',
-		'03' => 'ÈýÔÂ',
-		'04' => 'ËÄÔÂ',
-		'05' => 'ÎåÔÂ',
-		'06' => 'ÁùÔÂ',
-		'07' => 'ÆßÔÂ',
-		'08' => '°ËÔÂ',
-		'09' => '¾ÅÔÂ',
-		'10' => 'Ê®ÔÂ',
-		'11' => 'Ê®Ò»ÔÂ',
-		'12' => 'Ê®¶þÔÂ'
-	); 
-}
-
 //$error => get_errors();
 function get_errors() {
 	array(
@@ -123,4 +106,22 @@ function get_errors() {
 		'105' => 'Usrname is required.',
 	);
 }
+
+function get_months() {
+	return array(
+		'01' => 'ä¸€æœˆ',
+		'02' => 'äºŒæœˆ',
+		'03' => 'ä¸‰æœˆ',
+		'04' => 'å››æœˆ',
+		'05' => 'äº”æœˆ',
+		'06' => 'å…­æœˆ',
+		'07' => 'ä¸ƒæœˆ',
+		'08' => 'å…«æœˆ',
+		'09' => 'ä¹æœˆ',
+		'10' => 'åæœˆ',
+		'11' => 'åä¸€æœˆ',
+		'12' => 'åäºŒæœˆ'
+	); 
+}
+
 ?>

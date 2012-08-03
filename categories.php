@@ -3,15 +3,12 @@
 session_start();
 define('SITEROOT', './');
 //error_reporting(E_ALL);
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-ini_set('include_path',ini_get('include_path').PATH_SEPARATOR.SITEROOT.'configs/'.PATH_SEPARATOR.SITEROOT.'include/');
-require_once("setting.inc.php");
-require_once("config.inc.php");
-require_once("ListAdvanced.inc.php");
-global $config;
-
-$config['tabs'] = array('1'=>'类别列表', '2'=>'添加类别');
+//ini_set('include_path',ini_get('include_path').PATH_SEPARATOR.SITEROOT.'configs/'.PATH_SEPARATOR.SITEROOT.'include/');
+require_once(SITEROOT.'/configs/setting.inc.php');
+require_once(SITEROOT.'/configs/config.inc.php');
+require_once(SITEROOT.'/configs/ListAdvanced.inc.php');
 
 class CategoryClass extends ListAdvanced
 {
@@ -141,7 +138,6 @@ class CategoryClass extends ListAdvanced
 	);
   }
 
-
   private function get_category_options() {
 	$sql = "SELECT cid, name, description FROM " . $this->table . " where active='Y' ORDER BY name";
 	return 	$this->get_select_options($sql);
@@ -155,10 +151,29 @@ class CategoryClass extends ListAdvanced
 	return 	$this->get_select_options($sql);
   }
   
+  // parse_ini 不支持多国字体。
+  function get_header() {
+  	return array(
+		CID => 'cid',
+		'名称' => 'name',
+		'链接地址' => 'curl',
+		'频率' => 'frequency',
+		'标签' => 'tag',
+		'状态' => 'active',
+		'描述' => 'description',
+		'创建' => 'created,createdby',
+		'更新' => 'updated,updatedby',
+	);
+  }  
 }
 
 //////////////////////////////////////////
 
+global $config;
+$config['tabs'] = array('1'=>'类别列表', '2'=>'添加类别');
+
+//$t = parse_ini_string(file_get_contents(SITEROOT."configs/register_list.ini"), true);
+//$t = parse_ini_file(SITEROOT."configs/register_list.ini", true);
 
 $cate = new CategoryClass();
 
@@ -240,7 +255,7 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 	$data = $cate->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $cate->get_header($cate->get_mappings());
+	$header = $cate->get_header(); //$cate->get_mappings();
 
 	$pagination = $cate->draw( $data['current_page'], $data['total_pages'] );
 	
@@ -262,7 +277,7 @@ else {
 	$data = $cate->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $cate->get_header($cate->get_mappings());
+	$header = $cate->get_header(); //$cate->get_mappings();
 
 	$pagination = $cate->draw( $data['current_page'], $data['total_pages'] );
 	
