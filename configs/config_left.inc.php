@@ -1,6 +1,4 @@
 <?php
-// all based on SITEROOT: './'.
-//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 $config = array(
 	'debug' => true, // usd by smarty templates as well as php.
@@ -29,7 +27,6 @@ function get_cores() {
 		'邮件' => 'emails.php',
 	);
 }
-
 function get_supports() {
 	return array(
 		'注册信息' => 'login_info.php',
