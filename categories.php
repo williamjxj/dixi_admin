@@ -43,7 +43,6 @@ class CategoryClass extends ListAdvanced
 		  'id' => 'tag_s',
 		  'name' => 'tag',
 		  'call_func' => 'get_tag_options',
-		  'db_type' => 'int',
 		),
 		array(
 			'type' => 'text',
