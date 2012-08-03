@@ -63,6 +63,7 @@ class ListBase extends BaseClass
   	if (count($this->ini_array)==0) {
 		if (file_exists($map_file)) {
 			$this->ini_array = parse_ini_file($map_file, true);
+			echo "<pre>"; print_r($this->ini_array); echo "</pre>";
 		}
 		else {
 			die('No MAPPINGS FILE: ['.$map_file.']: ' . __FILE__ .'->'. __LINE__);
