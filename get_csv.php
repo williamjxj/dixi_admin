@@ -3,6 +3,7 @@ session_start();
 ob_start(); //Turn on output buffering.
 
 define('SITEROOT', './');
+require_once(SITEROOT.'/configs/setting.inc.php');
 require_once(SITEROOT.'configs/base.inc.php');
 
 $mdb2 = BaseClass::pear_connect_admin();
@@ -33,5 +34,7 @@ if (isset($_POST['xls']) && isset($_POST['from'])) {
 		}
 	}
 }
-
+else {
+	header("Location: login.php");
+}
 ?>

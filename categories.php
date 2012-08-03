@@ -3,7 +3,6 @@
 session_start();
 define('SITEROOT', './');
 error_reporting(E_ALL);
-echo "<pre>"; print_r($_SESSION); echo "</pre>";
 //echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 //ini_set('include_path',ini_get('include_path').PATH_SEPARATOR.SITEROOT.'configs/'.PATH_SEPARATOR.SITEROOT.'include/');
