@@ -138,17 +138,25 @@ class CategoryClass extends ListAdvanced
 	);
   }
 
-  private function get_category_options() {
+  function get_category_options() {
 	$sql = "SELECT cid, name, description FROM " . $this->table . " where active='Y' ORDER BY name";
 	return 	$this->get_select_options($sql);
   }
-  private function get_frequency_options() {
+  function get_frequency_options() {
 	$sql = "SELECT distinct frequency FROM " . $this->table . " ORDER BY frequency";
-	return 	$this->get_select_options($sql);
+	$res = $this->mdb2->query($sql);
+	echo "\t<option value=''> --- 请选择 --- </option>\n";
+	while ($row=$res->fetchRow()) {
+		echo "\t".'<option value="'.$row[0].'" title="'.$row[0].'">'.htmlspecialchars($row[0])."</option>\n";
+	}
   }
-  private function get_tag_options() {
+  function get_tag_options() {
 	$sql = "SELECT distinct tag FROM " . $this->table . " ORDER BY tag";
-	return 	$this->get_select_options($sql);
+	$res = $this->mdb2->query($sql);
+	echo "\t<option value=''> --- 请选择 --- </option>\n";
+	while ($row=$res->fetchRow()) {
+		echo "\t".'<option value="'.$row[0].'" title="'.$row[0].'">'.htmlspecialchars($row[0])."</option>\n";
+	}
   }
   
   // parse_ini 不支持多国字体。
