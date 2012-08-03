@@ -56,14 +56,13 @@ class ListBase extends BaseClass
   // get [section] from [configs/register_list.ini].
   function get_mappings($section=NULL, $map_file=NULL)
   {
-  	if(! $section) $section = $this->self;
+  	if(! $section) $section = strtolower($this->self);
 	if(! $map_file) $map_file = MAP_FILE;
 	if(isset($this->map_file)) $map_file = $this->map_file;
 	
   	if (count($this->ini_array)==0) {
 		if (file_exists($map_file)) {
 			$this->ini_array = parse_ini_file($map_file, true);
-print_r($this->ini_array);
 		}
 		else {
 			die('No MAPPINGS FILE: ['.$map_file.']: ' . __FILE__ .'->'. __LINE__);
