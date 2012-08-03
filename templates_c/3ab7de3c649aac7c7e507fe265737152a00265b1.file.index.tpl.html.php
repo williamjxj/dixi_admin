@@ -1,24 +1,24 @@
-<?php /* Smarty version Smarty-3.0.4, created on 2012-08-03 05:53:19
+<?php /* Smarty version Smarty-3.0.4, created on 2012-08-03 09:08:09
          compiled from "./themes/default/templates/index.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:1735721799501b4b2f5223e5-67607665%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8873501bf7696403e4-74638907%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3ab7de3c649aac7c7e507fe265737152a00265b1' => 
     array (
       0 => './themes/default/templates/index.tpl.html',
-      1 => 1343965220,
+      1 => 1344008536,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1735721799501b4b2f5223e5-67607665',
+  'nocache_hash' => '8873501bf7696403e4-74638907',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo (isset($_smarty_tpl->getVariable('config')->value['header']['title']) ? $_smarty_tpl->getVariable('config')->value['header']['title'] : null);?>

@@ -1,8 +1,9 @@
 <?php
-// ÂÒÂëÎÊÌâ
+// ä¹±ç é—®é¢˜
 session_start();
 define('SITEROOT', './');
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 ini_set('include_path',ini_get('include_path').PATH_SEPARATOR.SITEROOT.'configs/'.PATH_SEPARATOR.SITEROOT.'include/');
 require_once("setting.inc.php");
@@ -10,7 +11,7 @@ require_once("config.inc.php");
 require_once("ListAdvanced.inc.php");
 global $config;
 
-$config['tabs'] = array('1'=>'Àà±ğÁĞ±í', '2'=>'Ìí¼ÓÀà±ğ');
+$config['tabs'] = array('1'=>'ç±»åˆ«åˆ—è¡¨', '2'=>'æ·»åŠ ç±»åˆ«');
 
 class CategoryClass extends ListAdvanced
 {
@@ -25,7 +26,7 @@ class CategoryClass extends ListAdvanced
 	return array(
 		array(
 		  'type' => 'select',
-		  'display_name' => 'Àà±ğÃû³Æ:',
+		  'display_name' => 'ç±»åˆ«åç§°:',
 		  'id' => 'cid_s',
 		  'name' => 'cid',
 		  'call_func' => 'get_category_options',
@@ -33,7 +34,7 @@ class CategoryClass extends ListAdvanced
 		),
 		array(
 		  'type' => 'select',
-		  'display_name' => 'ÆµÂÊ:',
+		  'display_name' => 'é¢‘ç‡:',
 		  'id' => 'frequency_s',
 		  'name' => 'frequency',
 		  'call_func' => 'get_frequency_options',
@@ -41,7 +42,7 @@ class CategoryClass extends ListAdvanced
 		),
 		array(
 		  'type' => 'select',
-		  'display_name' => '±êÇ©:',
+		  'display_name' => 'æ ‡ç­¾:',
 		  'id' => 'tag_s',
 		  'name' => 'tag',
 		  'call_func' => 'get_tag_options',
@@ -49,31 +50,31 @@ class CategoryClass extends ListAdvanced
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Á´½ÓµØÖ·:',
+			'display_name' => 'é“¾æ¥åœ°å€:',
 			'id' => 'url_s',
 			'name' => 'url',
 		),
 		array(
 			'type' => 'date',
-			'display_name' => '´´½¨ÈÕÆÚ:',
+			'display_name' => 'åˆ›å»ºæ—¥æœŸ:',
 			'id' => 'created_s',
 			'name' => 'created',
 			'size' => INPUT_SIZE,
 		),
 		array(
 			'type' => 'text',
-			'display_name' => '´´½¨Õß:',
+			'display_name' => 'åˆ›å»ºè€…:',
 			'id' => 'createdby_s',
 			'name' => 'createdby',
 		),			
 		array(
 			'type' => 'radio',
-			'display_name' => '×´Ì¬:',
+			'display_name' => 'çŠ¶æ€:',
 			'name' => 'active',
 			'lists' => array(
-				'N' => '½ûÖ¹',
-				'Y' => '»î¶¯',
-				'A' => 'ËùÓĞ',
+				'N' => 'ç¦æ­¢',
+				'Y' => 'æ´»åŠ¨',
+				'A' => 'æ‰€æœ‰',
 			),
 			'checked' => 'A',
 			'ignore' => 'A',
@@ -85,27 +86,27 @@ class CategoryClass extends ListAdvanced
 	return array(
 		array(
 			'type' => 'text',
-			'display_name' => 'Àà±ğÃû³Æ:',
+			'display_name' => 'ç±»åˆ«åç§°:',
 			'name' => 'name',
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Á´½ÓµØÖ·:',
+			'display_name' => 'é“¾æ¥åœ°å€:',
 			'id' => 'url_s',
 			'name' => 'url',
 		),
 		array(
 			'type' => 'textarea',
-			'display_name' => 'ÃèÊö:',
+			'display_name' => 'æè¿°:',
 			'name' => 'description',
 		),
 		array(
 			'type' => 'radio',
-			'display_name' => '×´Ì¬:',
+			'display_name' => 'çŠ¶æ€:',
 			'name' => 'active',
 			'lists' => array(
-				'N' => '½ûÖ¹',
-				'Y' => '»î¶¯',
+				'N' => 'ç¦æ­¢',
+				'Y' => 'æ´»åŠ¨',
 			),
 		),
 		array(
@@ -120,20 +121,20 @@ class CategoryClass extends ListAdvanced
 	return array(
 		array(
 		  'type' => 'text',
-		  'display_name' => 'Àà±ğÃû³Æ:',
+		  'display_name' => 'ç±»åˆ«åç§°:',
 		  'id' => 'name',
 		  'name' => 'name',
 		),
 		array(
 		  'type' => 'textarea',
-		  'display_name' => 'ÃèÊö:',
+		  'display_name' => 'æè¿°:',
 		  'id' => 'description',
 		  'name' => 'description',
 		  'size' => INPUT_SIZE+10,
 		),
 		array(
 		  'type' => 'text',
-		  'display_name' => 'Á´½ÓµØÖ·:',
+		  'display_name' => 'é“¾æ¥åœ°å€:',
 		  'id' => 'url',
 		  'name' => 'url',
 		),

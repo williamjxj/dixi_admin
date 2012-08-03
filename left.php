@@ -1,6 +1,6 @@
 <?php
 session_start();
-//echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 define('SITEROOT', './');
 require_once(SITEROOT.'/configs/setting.inc.php');
@@ -15,6 +15,17 @@ if(isset($_COOKIE['admin']['path']) && (!empty($_COOKIE['admin']['path'])))
 else 
 	$config['path'] = SITEROOT.'themes/default/';
 
+$config['这实在让人难以理解'] = '这实在让人难以理解';
+
+	$header = array(
+		'title' => '底细,真相,还原真相,反映实际情况',
+		'description' => '底细,真相,还原真相,反映实际情况',
+		'keywords' => '底细,真相,还原真相,反映实际情况',
+		);
+		echo "<pre>";
+print_r($config);
+print_r($header);
+		echo "</pre>";
 $smarty = new Smarty();
 $smarty->assign("config", $config);
 

@@ -1,24 +1,24 @@
-<?php /* Smarty version Smarty-3.0.4, created on 2012-08-03 05:53:19
+<?php /* Smarty version Smarty-3.0.4, created on 2012-08-03 08:51:22
          compiled from "./themes/default/templates/left.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:1901982529501b4b2f9eac12-56219779%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17781501bf37a829747-54438351%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'e2e0f32a2bfd875856705e73b26897d2ccbf8475' => 
     array (
       0 => './themes/default/templates/left.tpl.html',
-      1 => 1343965226,
+      1 => 1344009078,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1901982529501b4b2f9eac12-56219779',
+  'nocache_hash' => '17781501bf37a829747-54438351',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php $_smarty_tpl->smarty->loadPlugin('Smarty_Internal_Debug'); Smarty_Internal_Debug::display_debug($_smarty_tpl); ?><!DOCTYPE HTML>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <base target="mainFrame">

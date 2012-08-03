@@ -21,7 +21,7 @@
             {if is_array($entry)}{$entry@key}
             {else}
             {if $entry@key=='Logout'}
-            <li><a onclick="parent.document.location.href='{$entry}'" href="javascript:void(0);">{$entry@key}</a></li>
+            <li><a onClick="parent.document.location.href='{$entry}'" href="javascript:void(0);">{$entry@key}</a></li>
             {else}
             <li><a href="{$entry}">{$entry@key}</a></li>
             {/if}
@@ -29,9 +29,9 @@
             {/foreach}
             <li>
               <select id="changeTheme">
-                <option value="default"> - Select Theme （选择） - </option>
-                <option value="default"> Default </option>
-                <option value="theme1" id="topt1">Theme 1</option>
+                <option value="default"> - 选择网页主题韵律 - </option>
+                <option value="default"> 缺省 </option>
+                <option value="theme1" id="topt1">主题韵律1</option>
               </select>
             </li>
           </ul>

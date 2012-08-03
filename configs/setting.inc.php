@@ -4,7 +4,7 @@ defined('SITEROOT') or define('SITEROOT', '/');
 defined('DEBUG') or define('DEBUG', true);
 
 //
-define("LOGIN", SITEROOT."admin/login1.php"); // entry point.
+define("LOGIN", SITEROOT."login.php"); // entry point.
 define('ADMIN_USER', 'admin_users');
 
 // DB

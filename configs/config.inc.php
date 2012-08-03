@@ -1,5 +1,6 @@
 <?php
 // all based on SITEROOT: './'.
+//header('Content-Type: text/html; charset=UTF-8');
 $config = array(
 	'debug' => true, // usd by smarty templates as well as php; control to write logfile: admin.log.
 	'path' => SITEROOT, //default.
