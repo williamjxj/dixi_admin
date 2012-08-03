@@ -58,6 +58,20 @@ class LevelsClass extends ListAdvanced
 			'name' => 'createdby',
 		),			
 	);
+	
+	function get_header() {
+		return array(
+			'IID' => 'iid',
+			'栏目' => 'category',
+			'名称' => 'name',
+			'链接地址' => 'iurl',
+			'频率' => 'frequency',
+			'标签' => 'tag',
+			'状态' => 'active',
+			'描述' => 'description',
+			'创建' => 'created,createdby',
+			'更新' => 'updated,updatedby',
+		);
   }
 
   function get_edit_form_settings() {

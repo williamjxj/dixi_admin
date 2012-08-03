@@ -2,7 +2,8 @@
 // 乱码问题
 session_start();
 define('SITEROOT', './');
-//error_reporting(E_ALL);
+error_reporting(E_ALL);
+echo "<pre>"; print_r($_SESSION); echo "</pre>";
 //echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 //ini_set('include_path',ini_get('include_path').PATH_SEPARATOR.SITEROOT.'configs/'.PATH_SEPARATOR.SITEROOT.'include/');
@@ -43,7 +44,6 @@ class CategoryClass extends ListAdvanced
 		  'id' => 'tag_s',
 		  'name' => 'tag',
 		  'call_func' => 'get_tag_options',
-		  'db_type' => 'int',
 		),
 		array(
 			'type' => 'text',
@@ -162,7 +162,7 @@ class CategoryClass extends ListAdvanced
   // parse_ini 不支持多国字体。
   function get_header() {
   	return array(
-		CID => 'cid',
+		'CID' => 'cid',
 		'名称' => 'name',
 		'链接地址' => 'curl',
 		'频率' => 'frequency',
