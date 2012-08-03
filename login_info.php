@@ -46,6 +46,22 @@ class LoginInfoClass extends ListAdvanced
 		),
 	);
   }
+
+  function get_header() {
+  	return array(
+		'UID' => 'uid',
+		'链接地址' => 'ip',
+		'浏览器类型' => 'browser',
+		'用户名' => 'username',
+		'session' => 'session',
+		'总次数' => 'count',
+		'最近登录时间' => 'login_time',
+		'退出状态' => 'logout',
+		'最近退出时间' => 'logout_time',
+		'有效期' => 'expired',
+	);
+  }  
+
 }
 $log = new LoginInfoClass();
 if(! $log->check_access()) {
@@ -66,7 +82,7 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 	$data = $log->list_all();
 	$data['options'] = array(DELETE);
 	
-	$header = $log->get_header($log->get_mappings());
+	$header = $log->get_header(); //$log->get_mappings());
 
 	$pagination = $log->draw( $data['current_page'], $data['total_pages'] );
 	
@@ -96,7 +112,7 @@ else {
 	$data = $log->list_all();
 	$data['options'] = array(DELETE);
 	
-	$header = $log->get_header($log->get_mappings());
+	$header = $log->get_header(); //$log->get_mappings());
 
 	$pagination = $log->draw( $data['current_page'], $data['total_pages'] );
 	

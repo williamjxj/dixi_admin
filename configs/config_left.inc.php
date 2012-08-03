@@ -29,7 +29,7 @@ function get_cores() {
 }
 function get_supports() {
 	return array(
-		'注册信息' => 'login_info.php一月',
+		'注册信息' => 'login_info.php',
 		'管理操作' => 'actions.php',
 		'日志' => 'read_log.php',
 		'维护记录' => 'reports.php',
