@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('SITEROOT', '/admin/'); //getcwd():c:/projects/admin/
+define('SITEROOT', './'); //getcwd():c:/projects/admin/
 require_once(SITEROOT.'/configs/setting.inc.php');
 //require_once(SITEROOT.'/configs/config_left.inc.php');
 
