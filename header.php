@@ -1,8 +1,8 @@
 <?php
 session_start();
-define('SITEROOT', './'); //getcwd():c:/projects/admin/
+define('SITEROOT', '/admin/'); //getcwd():c:/projects/admin/
 require_once(SITEROOT.'/configs/setting.inc.php');
-require_once(SITEROOT.'/configs/config_left.inc.php');
+//require_once(SITEROOT.'/configs/config_left.inc.php');
 
 define('SMARTY_DIR', SITEROOT.'/include/Smarty-3.0.4/libs/');
 require_once(SMARTY_DIR . 'Smarty.class.php');
