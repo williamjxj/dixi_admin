@@ -285,6 +285,8 @@ class ListAdvanced extends ListBase
       }
     }
 	$query = "UPDATE " . $this->table_array['table_name'] . "  SET " . $sql . $sql1;
+	
+	echo __FILE__.'['.__LINE__.']'.$query."<br>\n";
 
 	$affected = $this->mdb2->exec($query);
 	if (PEAR::isError($affected)) {

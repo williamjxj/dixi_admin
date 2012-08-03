@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
 require_once("base.inc.php");
 
 class ListBase extends BaseClass
@@ -56,26 +58,30 @@ class ListBase extends BaseClass
   // get [section] from [configs/register_list.ini].
   function get_mappings($section=NULL, $map_file=NULL)
   {
-  	if(! $section) $section = $this->self;
+  	if(! $section) $section = strtolower($this->self);
 	if(! $map_file) $map_file = MAP_FILE;
 	if(isset($this->map_file)) $map_file = $this->map_file;
 	
   	if (count($this->ini_array)==0) {
 		if (file_exists($map_file)) {
 			$this->ini_array = parse_ini_file($map_file, true);
-			echo "<pre>"; print_r($this->ini_array); echo "</pre>";
+			//echo "<pre>"; print_r($this->ini_array); echo "</pre>";
 		}
 		else {
 			die('No MAPPINGS FILE: ['.$map_file.']: ' . __FILE__ .'->'. __LINE__);
 		}
 	}
 
-	if(array_key_exists($section, $this->ini_array))
-		return $this->ini_array[$section];
+	if($section) {
+		if(array_key_exists($section, $this->ini_array))
+			return $this->ini_array[$section];
+		else {
+			$this->print_array($this->ini_array);
+			return;
+		}
+	}
 	else {
-		return;
-		$this->print_array($this->ini_array);
-		die("$section not exists: [".$section.'], ['.$this->self.'], ['.$map_file.']: ' . __FILE__ .'->'. __LINE__);
+		die("Section not exists: [".$this->self.'], ['.$map_file.']: ' . __FILE__ .'->'. __LINE__);
 	}
   }
 
@@ -99,7 +105,7 @@ class ListBase extends BaseClass
    * Division = division
    * Address = address, city, province, postalcode "=>" [display_name=sort_column: Address=address]
    */
-  function get_header($section_info)
+  function get_header($section_info=NULL)
   {
 	// 'new_key'=>'new key': replace '_' with ' '.
     $nk = ''; $th_ary = array();
@@ -279,7 +285,8 @@ class ListBase extends BaseClass
 	$res = $this->mdb2->query($query);
 	if (PEAR::isError($this->mdb2)) die($this->mdb2->getMessage().' [line '.__LINE__.']: '. $query);     
 
- //echo $query;
+	echo __FILE__.'['.__LINE__.']'.$query."<br>\n";
+
 	$h = $res->getColumnNames();
 	if (PEAR::isError($h)) {
 		die($h->getMessage().' [line '.__LINE__.']: '. $query);
