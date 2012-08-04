@@ -123,7 +123,7 @@ class KeywordClass extends ListAdvanced
 //////////////////////////////////////////
 
 global $config;
-$config['tabs'] = array('1'=>'关键词列表', '2'=>'添加关键词');
+$config['tabs'] = array('1'=>'关键词列表', '2'=>'添加关键词', '3'=>'上载包含关键词的文件');
 
 $kw = new KeywordClass();
 

@@ -19,7 +19,7 @@ function init() {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>PAMS LOG FILE</title>
+<title>底细,真相 LOG FILE</title>
 <script language="javascript" type="text/javascript" src="include/jquery-1.6.4.js"></script>
 <script language="javascript" type="text/javascript" src="include/doTimeout.js"></script>
 <script language="javascript" type="text/javascript">

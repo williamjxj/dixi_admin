@@ -569,8 +569,8 @@ body#b_login h1 a,
 .userNavs { float: right; }
 .userNavs select { padding: 2px; border: 1px solid #cdcdcd; color: #686868; }
 .userNavs select option { font-size: 12px; color: 686868; }
-.pamsLogo, .linkWrap { float: left; }
-.pamsLogo { margin-right: 12px; }
+.dixiLogo, .linkWrap { float: left; }
+.dixiLogo { margin-right: 12px; }
 .linkWrap { overflow: hidden; margin: 0 12px; }
 .linkTitle, .linkDrop { float: left; }
 .linkTitle { padding-top: 4px; }
@@ -612,7 +612,7 @@ body#b_login h1 a,
 	background-color: #4c87c0;
 	color: #FFF;
 }
-.pamsLogo { background: url(../images/logo.png) no-repeat; width: 61px; height: 27px; }
+.dixiLogo { background: url(../images/logo.png) no-repeat; width: 61px; height: 27px; }
 .psptLogo_wrap { width: 950px; margin-left: auto; margin-right: auto; height: 94px; position: static; }
 .psptLogo { width: 352px; height: 69px; background: url(../images/pensionSpace-PT_logo.jpg) no-repeat; margin-top: 8px; position: absolute; }
 .psptLogo { width: 352px; height: 69px; display: block; cursor: pointer; }
