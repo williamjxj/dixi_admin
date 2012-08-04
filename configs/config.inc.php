@@ -6,6 +6,7 @@ $config = array(
 	'debug' => true, // usd by smarty templates as well as php; control to write logfile: admin.log.
 	'path' => SITEROOT, //default.
 	'smarty' => SITEROOT.'/configs/smarty.ini',
+	'ipath' => SITEROOT.'include/',
 	'layout' => array(
 		'header' => 'header.tpl.html',  
 		'title' => 'title.tpl.html',
@@ -33,7 +34,7 @@ $config = array(
 	'qtip' => true, //each app needs help.
 	'list' => get_list_defs(),
 	'templs' => get_templs(),
-	'browser_id' => browser_ID()
+	'browser_id' => browser_ID(),
 );
 
 // The following function are only used by __this__ file.

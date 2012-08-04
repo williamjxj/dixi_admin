@@ -15,11 +15,8 @@
   <div class="modal-bottom"> </div>
 </div>
 <div class="listing-heading"> <strong>{$data.self|default:{$config.header.title}|capitalize}</strong> &nbsp;
-  
   {if !empty($pagination)}
-  
   Page {$data.current_page}, Total {$data.total_pages} pages / {$data.total_rows} records
-  
   {/if} </div>
 {if !empty($pagination)}
 <div class="pager"> {$pagination} </div>
@@ -235,39 +232,22 @@ $("table#list_table tr.infoRow td a.edit").click(function(event) {
   });
   return false;
 });
+
 {if {$data.self=='contents'}}
 $('table#list_table tr.infoRow td a.view').bind('click', function(event) {
   event.preventDefault();
   $(event.target).closest('tr').css('background-color','#ffa');
   var t = $(event.target).attr('href');
   $.ajax({
-  type: 'get',
-  url:  t,
-  success: function(data){
-    $('#tab1, #tab2, #tab4, #tab5').removeClass('TabbedPanelsTabSelected');
-    $('#tab3').addClass('TabbedPanelsTabSelected');
-    $('#main1, #main2, #main4, #main5').closest('.TabbedPanelsContent').hide();
-    $('#main3').closest('.TabbedPanelsContent').show();
-    $('#main3').html(data);
-  }
-  });
-  return false;
-});
-$('table#list_table tr.infoRow td a.email').bind('click', function(event) {
-  event.preventDefault();
-  $(event.target).closest('tr').css('background-color','#ffa');
-  var t = $(event.target).attr('href');
-  $.ajax({
-  type: 'get',
-  url:  t,
-  success: function(data){
-    if(data==0) {
-	  alert('邮件成功发送, 请检查你的邮箱. Successfully sent the emails');
-	}
-	else {
-	  alert('邮件发送失败. Sent emails Failure');
-	}
-  }
+	  type: 'get',
+	  url:  t,
+	  success: function(data){
+		$('#tab1, #tab2, #tab4, #tab5').removeClass('TabbedPanelsTabSelected');
+		$('#tab3').addClass('TabbedPanelsTabSelected');
+		$('#main1, #main2, #main4, #main5').closest('.TabbedPanelsContent').hide();
+		$('#main3').closest('.TabbedPanelsContent').show();
+		$('#main3').html(data);
+	  }
   });
   return false;
 });
@@ -276,34 +256,35 @@ $('table#list_table tr.infoRow td a.resources').bind('click', function(event) {
   $(event.target).closest('tr').css('background-color','#ffa');
   var t = $(event.target).attr('href');
   $.ajax({
-  type: 'get',
-  url:  t,
-  success: function(data){
-    $('#tab1, #tab2, #tab3, #tab4').removeClass('TabbedPanelsTabSelected');
-    $('#tab5').addClass('TabbedPanelsTabSelected');
-    $('#main1, #main2, #main3, #main4').closest('.TabbedPanelsContent').hide();
-    $('#main5').closest('.TabbedPanelsContent').show();
-    $('#main5').html(data);
-  }
+	  type: 'get',
+	  url:  t,
+	  success: function(data){
+		$('#tab1, #tab2, #tab3, #tab4').removeClass('TabbedPanelsTabSelected');
+		$('#tab5').addClass('TabbedPanelsTabSelected');
+		$('#main1, #main2, #main3, #main4').closest('.TabbedPanelsContent').hide();
+		$('#main5').closest('.TabbedPanelsContent').show();
+		$('#main5').html(data);
+	  }
   });
   return false;
 });
 {/if}
+
 {if {$data.self=='resources'}}
 $('table#list_table tr.infoRow td a.contents').bind('click', function(event) {
   event.preventDefault();
   $(event.target).closest('tr').css('background-color','#ffa');
   var t = $(event.target).attr('href');
   $.ajax({
-  type: 'get',
-  url:  t,
-  success: function(data){
-    $('#tab1, #tab2').removeClass('TabbedPanelsTabSelected');
-    $('#tab3').addClass('TabbedPanelsTabSelected');
-    $('#main1, #main2').closest('.TabbedPanelsContent').hide();
-    $('#main3').closest('.TabbedPanelsContent').show();
-    $('#main3').html(data).show();
-  }
+	  type: 'get',
+	  url:  t,
+	  success: function(data){
+		$('#tab1, #tab2').removeClass('TabbedPanelsTabSelected');
+		$('#tab3').addClass('TabbedPanelsTabSelected');
+		$('#main1, #main2').closest('.TabbedPanelsContent').hide();
+		$('#main3').closest('.TabbedPanelsContent').show();
+		$('#main3').html(data).show();
+	  }
   });
   return false;
 });
@@ -320,10 +301,11 @@ jQuery.fn.update_column = function(tid) {
   return false;
 }
 </script>
+
 {if {$config.qtip}}
 <script language="javascript" type="text/javascript">
 $('#list_tbody tr.infoRow input.active,#list_tbody tr.infoRow textarea.active').qtip({
-   content: 'Double click to edit',
+   content: '双击鼠标进行编辑',
    show: 'mouseover',
    hide: 'mouseout',
    position: { corner: { target: 'topRight', tooltip: 'bottomLeft' } },
@@ -333,7 +315,7 @@ $('#list_tbody tr.infoRow input.active,#list_tbody tr.infoRow textarea.active').
   }
 });
 $('#list_thead tr.titleRow th span').qtip({
-   content: 'Sorting by asc and desc',
+   content: '升序或降序进行排序',
    show: 'mouseover',
    hide: 'mouseout',
    position: { corner: { target: 'topRight', tooltip: 'bottomLeft' } },
@@ -405,4 +387,4 @@ function fix_search_buttons(){
   }
 }
 </script>
-{/if} 
+{/if}

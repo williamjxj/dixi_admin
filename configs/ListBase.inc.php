@@ -20,7 +20,6 @@ class ListBase extends BaseClass
 	$this->username = $_SESSION[PACKAGE]['username'];
 	$this->userid = $_SESSION[PACKAGE]['userid'];
 
-	$config['ipath'] = SITEROOT.'include/';
 	if(isset($_COOKIE[$this->project]['path']) && (!empty($_COOKIE[$this->project]['path'])))
 		$config['path'] = SITEROOT.'themes/'.$_COOKIE[$this->project]['path'].'/';
 	else 

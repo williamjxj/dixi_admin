@@ -136,23 +136,7 @@ $kw->get_table_info();
 
 $kw->set_default_config(array('calender'=>true,'jvalidate'=>true));
 
-if (isset($_GET['kid'])) {
-	switch($_GET['step']) {
-	case 1:
-		$kw->select_pages($_GET['kid']);
-		break;
-	case 2:
-		$uid = isset($_GET['uid']) ? $_GET['uid'] : $this->userid;
-		$kw->select_users_pages($uid);
-		break;
-	default:
-		break;
-	}
-}
-elseif(isset($_POST['update'])) {
-	$ac->update_pages();
-}
-elseif(isset($_GET['js_search_form'])) {
+if(isset($_GET['js_search_form'])) {
 	$ary = $kw->get_search_form_settings();
 	$kw->assign('search_form', $ary);	
 	$kw->assign('config', $config);

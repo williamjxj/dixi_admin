@@ -12,6 +12,7 @@ if(isset($_COOKIE['admin']['path']) && (!empty($_COOKIE['admin']['path'])))
 	$config['path'] = SITEROOT.'themes/'.$_COOKIE['admin']['path'].'/';
 else 
 	$config['path'] = SITEROOT.'themes/default/';
+$config['ipath'] = SITEROOT.'include/';
 
 $smarty = new Smarty();
 $smarty->assign("config", $config);
