@@ -77,7 +77,8 @@ class ListBase extends BaseClass
 		if(array_key_exists($section, $this->ini_array))
 			return $this->ini_array[$section];
 		else {
-			$this->print_array($this->ini_array);
+			echo "register_list.ini文件中没有入口项 ->" . $section;
+			//$this->print_array($this->ini_array);
 			return;
 		}
 	}
@@ -244,30 +245,30 @@ class ListBase extends BaseClass
 
   function list_all()
   {
-  if (isset($_SESSION[$this->self][$this->session['sql']]) && !empty($_SESSION[$this->self][$this->session['sql']])) {
-	$query = $_SESSION[$this->self][$this->session['sql']];
-	$ary = $this->get_magic_sql_1($this->get_mappings());
-  }
-  else {
-    $section_info = $this->get_mappings();
-    list($query, $ary) = $this->get_config($section_info);
-  }
-
-  $page = isset($_GET['page']) ? $_GET['page'] : 1;
-  $total_pages = ceil($_SESSION[$this->self][$this->session['rows']]/ROWS_PER_PAGE);
-  if ( $page > $total_pages ) $page = $total_pages;
-  $row_no = ((int)$page-1)*ROWS_PER_PAGE;
-
-  if (preg_match("/limit /i", $query)) {
-    $query = preg_replace("/limit.*$/i", '', $query);
-  }
-
-  if (! preg_match("/order by/i", $query)) {
-	if(isset( $this->table_array['primary_key'])) {
-		$primary_key = $this->table_array['primary_key'];
-		$query .= " order by " . $primary_key . " desc "; // default is primary_key.
+	if (isset($_SESSION[$this->self][$this->session['sql']]) && !empty($_SESSION[$this->self][$this->session['sql']])) {
+		$query = $_SESSION[$this->self][$this->session['sql']];
+		$ary = $this->get_magic_sql_1($this->get_mappings());
 	}
-  }
+	else {
+		$section_info = $this->get_mappings();
+		list($query, $ary) = $this->get_config($section_info);
+	}
+	
+	$page = isset($_GET['page']) ? $_GET['page'] : 1;
+	$total_pages = ceil($_SESSION[$this->self][$this->session['rows']]/ROWS_PER_PAGE);
+	if ( $page > $total_pages ) $page = $total_pages;
+	$row_no = ((int)$page-1)*ROWS_PER_PAGE;
+	
+	if (preg_match("/limit /i", $query)) {
+		$query = preg_replace("/limit.*$/i", '', $query);
+	}
+	
+	if (! preg_match("/order by/i", $query)) {
+		if(isset( $this->table_array['primary_key'])) {
+			$primary_key = $this->table_array['primary_key'];
+			$query .= " order by " . $primary_key . " desc "; // default is primary_key.
+		}
+	}
 
 	if (isset($_GET['sort'])) {
 		$new_order = $_GET['sort'];
@@ -340,7 +341,7 @@ class ListBase extends BaseClass
   {
 	//if (preg_match("/(\s|,|\t)/", $str)) return 'N/A'; //only include 'space' or ','.
 	if (empty($str) || preg_match("/^\s+$/",$str)) return 'N / A'; //only has 'space'.
-  	$s = '';
+	$s = '';
 	if(preg_match("/^\d+$/", $str) && $flag) { //gwl can't format.
 		$s = number_format($str);
 	}
@@ -349,7 +350,7 @@ class ListBase extends BaseClass
 		// $s = preg_replace("/\s+00:00:00/", '', $str);
 		$s = trim(str_replace("00:00:00", '', $str));
 	}
-  	else if (preg_match("/\w/", $str)) {
+	else if (preg_match("/\w/", $str)) {
 		$s = htmlspecialchars(ucwords(strtolower($str)));
 		if(preg_match("/,\s*$/", $s)) $s = preg_replace("/,\s*$/", '', $s);
 	}
@@ -509,6 +510,31 @@ class ListBase extends BaseClass
 	return 	$this->get_select_array($sql);
   }
 
+
+/////////////////////////
+
+  function get_keyword_options() {
+	$sql = "SELECT kid, name, description FROM " . $this->table . " where active='Y' ORDER BY name";
+	return 	$this->get_select_options($sql);
+  }
+  function get_frequency_options() {
+	$sql = "SELECT distinct frequency FROM " . $this->table . " ORDER BY frequency";
+	$res = $this->mdb2->query($sql);
+	echo "\t<option value=''> --- 请选择 --- </option>\n";
+	while ($row=$res->fetchRow()) {
+		echo "\t".'<option value="'.$row[0].'" title="'.$row[0].'">'.htmlspecialchars($row[0])."</option>\n";
+	}
+  }
+  function get_tag_options() {
+	$sql = "SELECT distinct tag FROM " . $this->table . " ORDER BY tag";
+	$res = $this->mdb2->query($sql);
+	echo "\t<option value=''> --- 请选择 --- </option>\n";
+	while ($row=$res->fetchRow()) {
+		echo "\t".'<option value="'.$row[0].'" title="'.$row[0].'">'.htmlspecialchars($row[0])."</option>\n";
+	}
+  }
+
+//////////////////////////
   function select_assigned_modules($pid, $site_id)
   {
   	
