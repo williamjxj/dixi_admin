@@ -1,6 +1,7 @@
 <?php
 session_start();
 define('SITEROOT', '.');
+require_once(SITEROOT.'/configs/setting.inc.php');
 require_once(SITEROOT.'/configs/base.inc.php');
 
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -135,11 +136,11 @@ function get_sname_from_sid($site_id, $mdb2)
 }
 
 
-  function get_mname_from_mid($mid, $mdb2)
-  {
-  	$sql = "SELECT name FROM modules WHERE mid=".$mid;
+function get_mname_from_mid($mid, $mdb2)
+{
+	$sql = "SELECT name FROM modules WHERE mid=".$mid;
 	$mname = $mdb2->queryOne($sql);
 	return $mname;
-  }
+}
 
 ?>
