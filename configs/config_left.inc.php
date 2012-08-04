@@ -24,7 +24,6 @@ function get_cores() {
 		'正文内容' => 'contents.php',
 		'模块' => 'modules.php',
 		'资源' => 'resources.php',
-		'邮件' => 'emails.php',
 	);
 }
 function get_supports() {
@@ -34,8 +33,6 @@ function get_supports() {
 		'日志' => 'read_log.php',
 		'维护记录' => 'reports.php',
 		'跟踪' => 'tracks.php',
-		'团契' => 'divisions.php',
-		'Stickynotes' => 'stickynotes.php',
 	);
 }
 function get_manages() {
@@ -45,7 +42,6 @@ function get_manages() {
 		'普通用户' => 'common_users.php',
 		'站点管理' => 'sites.php',
 		'网页' => 'pages.php',
-		'网页韵律' => 'themes.php',
 	);
 }
 

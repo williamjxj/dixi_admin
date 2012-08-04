@@ -6,4 +6,5 @@ logs/
 cache/
 include/
 themes/images/
-test*
+test/*
+bak/
