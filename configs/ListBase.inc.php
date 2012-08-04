@@ -17,6 +17,8 @@ class ListBase extends BaseClass
 	$this->coltypes_array = array();
 	$this->html = '';
 	$this->ary1 = array('users', 'sites', 'levels');
+	$this->username = $_SESSION[PACKAGE]['username'];
+	$this->userid = $_SESSION[PACKAGE]['userid'];
 
 	$config['ipath'] = SITEROOT;
 	if(isset($_COOKIE[$this->project]['path']) && (!empty($_COOKIE[$this->project]['path'])))

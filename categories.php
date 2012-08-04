@@ -122,17 +122,17 @@ class CategoryClass extends ListAdvanced
 		  'name' => 'name',
 		),
 		array(
+		  'type' => 'text',
+		  'display_name' => '链接地址:',
+		  'id' => 'curl',
+		  'name' => 'curl',
+		),
+		array(
 		  'type' => 'textarea',
 		  'display_name' => '描述:',
 		  'id' => 'description',
 		  'name' => 'description',
 		  'size' => INPUT_SIZE+10,
-		),
-		array(
-		  'type' => 'text',
-		  'display_name' => '链接地址:',
-		  'id' => 'url',
-		  'name' => 'url',
 		),
 	);
   }
@@ -275,6 +275,7 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 }
 // default: list data.
 else {
+echo "<pre>"; print_r($_SESSION); echo "</pre>";
 	if (isset($_SESSION[$cate->self][$cate->session['sql']])) $_SESSION[$cate->self][$cate->session['sql']] = '';
 
 	$total_rows = $cate->get_total_rows($cate->get_count_sql());

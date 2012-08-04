@@ -11,7 +11,7 @@ global $config;
 
 $config['tabs'] = array('1'=>'栏目列表', '2'=>'添加栏目');
 
-class LevelsClass extends ListAdvanced
+class ItemsClass extends ListAdvanced
 {
   var $url, $self, $session;
   public function __construct() {
@@ -58,12 +58,13 @@ class LevelsClass extends ListAdvanced
 			'name' => 'createdby',
 		),			
 	);
+  }
 	
 	function get_header() {
 		return array(
 			'IID' => 'iid',
-			'栏目' => 'category',
-			'名称' => 'name',
+			'类别' => 'category',
+			'项目' => 'name',
 			'链接地址' => 'iurl',
 			'频率' => 'frequency',
 			'标签' => 'tag',
@@ -97,7 +98,7 @@ class LevelsClass extends ListAdvanced
 		),
 		array(
 			'type' => 'hidden',
-			'name' => 'name',
+			'name' => 'iid',
 		)
 	);
   }
@@ -107,9 +108,22 @@ class LevelsClass extends ListAdvanced
 		array(
 		  'type' => 'text',
 		  'display_name' => '栏目名称:',
-		  'id' => 'level_name',
+		  'id' => 'name',
 		  'name' => 'name',
 		  'size' => INPUT_SIZE+10,
+		),
+		array(
+		  'type' => 'select',
+		  'display_name' => '属于哪个类别：',
+		  'id' => 'cid',
+		  'name' => 'cid',
+		  'call_func' => 'get_category_options',
+		),      
+		array(
+		  'type' => 'text',
+		  'display_name' => '链接地址:',
+		  'id' => 'iurl',
+		  'name' => 'iurl',
 		),
 		array(
 		  'type' => 'textarea',
@@ -118,60 +132,69 @@ class LevelsClass extends ListAdvanced
 		  'name' => 'description',
 		  'size' => INPUT_SIZE+10,
 		),
-	  );
+	 );
   }
+  
+  function get_category_options() {
+	$sql = "SELECT cid, name, description FROM categories where active='Y' ORDER BY name";
+	return 	$this->get_select_options($sql);
+  }
+  
 }
 
-$level = new LevelsClass();
-if(! $level->check_access()) {
-  $level->set_breakpoint();
+//////////////////////////////////////////////////
+
+
+$item = new ItemsClass();
+if(! $item->check_access()) {
+  $item->set_breakpoint();
   echo "<script>if(window.opener){window.opener.location.href='".LOGIN."';} else{window.parent.location.href='".LOGIN."';}</script>";exit;
 }
-$level->get_table_info();
-$level->set_default_config(array('calender'=>true,'jvalidate'=>true));
+$item->get_table_info();
+$item->set_default_config(array('calender'=>true,'jvalidate'=>true));
 
 if(isset($_GET['js_search_form'])) {
-	$ary = $level->get_search_form_settings();
-	$level->assign('search_form', $ary);	
-	$level->assign('config', $config);
-	$level->display($config['templs']['search']);
+	$ary = $item->get_search_form_settings();
+	$item->assign('search_form', $ary);	
+	$item->assign('config', $config);
+	$item->display($config['templs']['search']);
 }
 elseif(isset($_GET['js_edit_form'])) {
-	$ary = $level->get_edit_form_settings();
-	$record = $level->get_record($_GET['id']);
-	$level->assign('record', $record);	
+	$ary = $item->get_edit_form_settings();
+	$record = $item->get_record($_GET['id']);
+	$item->assign('record', $record);	
 
-        if(isset($_GET['tr'])) $level->assign('form_id', 'ef_'.$_GET['id'].'-'.$_GET['tr']);
-        else $level->assign('form_id', 'ef_'.$_GET['id']);
+        if(isset($_GET['tr'])) $item->assign('form_id', 'ef_'.$_GET['id'].'-'.$_GET['tr']);
+        else $item->assign('form_id', 'ef_'.$_GET['id']);
 
-	$level->assign('edit_form', $ary);	
-	$level->assign('config', $config);
-	$level->display($config['templs']['edit']);
+	$item->assign('edit_form', $ary);	
+	$item->assign('config', $config);
+	$item->display($config['templs']['edit']);
 }
 elseif(isset($_GET['js_add_form'])) {
-	$ary = $level->get_add_form_settings();
-	$level->assign('add_form', $ary);	
-	$level->assign('config', $config);
-	$level->display($config['templs']['add']);
+	$ary = $item->get_add_form_settings();
+	$item->assign('add_form', $ary);	
+	$item->assign('config', $config);
+	$item->display($config['templs']['add']);
 }
 
 elseif(isset($_POST['js_edit_column'])) {
-	$ret = $level->update_column(array('updatedby'=>$level->username));
+	$ret = $item->update_column(array('updatedby'=>$item->username));
 	echo json_encode($ret);
 }
 elseif(isset($_REQUEST['action'])) {
 	switch($_REQUEST['action']) {
 		case 'edit':
-		  $ary = $level->get_edit_form_settings();
-		  echo json_encode($level->edit_table($ary));
+		  $ary = $item->get_edit_form_settings();
+		  echo json_encode($item->edit_table($ary));
 			break;
 		case 'delete':
-			$level->delete($_GET['id']);
+			$item->delete($_GET['id']);
 			break;
 			/* action:add, description:...., level:2*/
 		case 'add':
-			$level->create(array('createdby'=>$level->username,
-								 'updatedby'=>$level->username,
+			$item->create(array('createdby'=>$item->username,
+								 'updatedby'=>$item->username,
 								 'created'=>'NOW()'
 						));
 			break;    
@@ -180,46 +203,46 @@ elseif(isset($_REQUEST['action'])) {
 	}
 }
 else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort'])) || isset($_GET['page']) || isset($_GET['js_reload_list']) ) {
-	if(isset($_POST['search'])) $level->parse();
+	if(isset($_POST['search'])) $item->parse();
 
-	$data = $level->list_all();
+	$data = $item->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $level->get_header($level->get_mappings());
+	$header = $item->get_header($item->get_mappings());
 
-	$pagination = $level->draw( $data['current_page'], $data['total_pages'] );
+	$pagination = $item->draw( $data['current_page'], $data['total_pages'] );
 	
-	$level->assign('config', $config);
+	$item->assign('config', $config);
 
-	$level->assign('header', $header);
-	$level->assign('data', $data);
-	$level->assign("pagination", $pagination);
-	$tpl = $level->get_html_template();
-	$level->display($tpl); // not use display, should use AJAX.
+	$item->assign('header', $header);
+	$item->assign('data', $data);
+	$item->assign("pagination", $pagination);
+	$tpl = $item->get_html_template();
+	$item->display($tpl); // not use display, should use AJAX.
 }
 else {
-	if (isset($_SESSION[$level->self][$level->session['sql']]))
-		$_SESSION[$level->self][$level->session['sql']] = '';
+	if (isset($_SESSION[$item->self][$item->session['sql']]))
+		$_SESSION[$item->self][$item->session['sql']] = '';
 
-	$total_rows = $level->get_total_rows($level->get_count_sql());
+	$total_rows = $item->get_total_rows($item->get_count_sql());
 
-	$_SESSION[$level->self][$level->session['rows']] = $total_rows < 1 ? 1 : $total_rows;
+	$_SESSION[$item->self][$item->session['rows']] = $total_rows < 1 ? 1 : $total_rows;
 	
-	$data = $level->list_all();
+	$data = $item->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $level->get_header($level->get_mappings());
+	$header = $item->get_header($item->get_mappings());
 
-	$pagination = $level->draw( $data['current_page'], $data['total_pages'] );
+	$pagination = $item->draw( $data['current_page'], $data['total_pages'] );
 	
-	$tpl = $level->get_html_template();
+	$tpl = $item->get_html_template();
 
-	$level->assign('config', $config);
-	$level->assign('header', $header);
-	$level->assign('data', $data);
-	$level->assign("pagination", $pagination);
+	$item->assign('config', $config);
+	$item->assign('header', $header);
+	$item->assign('data', $data);
+	$item->assign("pagination", $pagination);
 
-	$level->assign("template", $tpl);
-	$level->display($config['templs']['main']);
+	$item->assign("template", $tpl);
+	$item->display($config['templs']['main']);
 }
 ?>

@@ -23,7 +23,7 @@ class ListAdvanced extends ListBase
 	
 	if(strcmp($type, 'string')==0) $sql .= " = '".$id ."'";	
 	else $sql .= " = ".$id;
-	
+	echo $sql;
 	$result = $this->mdb2->query($sql);
 	if($hash_flag)
 		$row = $result->fetchRow(MDB2_FETCHMODE_ASSOC);
@@ -231,10 +231,12 @@ class ListAdvanced extends ListBase
         }
       }
     }
-	if($this->self=='sites') { //sites' themes are dynamic, so can used 'radio' on sites.php. directly add in add.tpl.html.
-		$sql1 .= 'tid,';
-		$sql2 .= intval($_POST['preview']).',';
+	// patch for items:
+	if ($this->self=='items' && isset($_POST['category']) && !empty($_POST['category'])) {
+		$sql1 .= 'category,';
+		$sql2 .= "'" . $_POST['category'] . "',";
 	}
+
     if(is_array($extra_ary) && count($extra_ary)>0) {
       $str1='';$str2='';
       foreach($extra_ary as $k=>$v) {
@@ -252,7 +254,7 @@ class ListAdvanced extends ListBase
     $sql2 = substr($sql2, 0, -1);      
 
     $query = "INSERT INTO ".$this->table_array['table_name']."(".$sql1.") VALUES(".$sql2.");";
-	// echo $query;
+	echo $query;
 
     $affected = $this->mdb2->exec($query);
     if (PEAR::isError($affected)) {

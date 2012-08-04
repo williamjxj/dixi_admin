@@ -71,9 +71,9 @@ $(form).submit(function(event){
 	}
 	return false;
 });
-if( $.cookie("demo[username]") && $.cookie("demo[userpass]") ) {
-	$('#username').val($.cookie("demo[username]"));
-	$('#password').val($.cookie("demo[userpass]"));	
+if( $.cookie("dixitruth_admin[username]") && $.cookie("dixitruth_admin[userpass]") ) {
+	$('#username').val($.cookie("dixitruth_admin[username]"));
+	$('#password').val($.cookie("dixitruth_admin[userpass]"));	
 	$('#rememberme').attr('checked', true);
 }
 else {

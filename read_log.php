@@ -1,7 +1,7 @@
 <?php
 // http://tekkie.flashbit.net/php/tail-functionality-in-php
 // full path to text file
-define("TEXT_FILE", FLOG);
+define("TEXT_FILE", './logs/admin.log');
 // number of lines to read from the end of file
 define("LINES_COUNT", 30);
 

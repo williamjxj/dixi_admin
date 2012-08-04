@@ -3,7 +3,7 @@
 {if $config.self=='themes'}
 <script language="javascript" type="text/javascript" src="{$config.path}js/jquery.form.js"></script>
 {/if}
-<link type="text/css" rel="stylesheet" href="http://cdat.com/admin/themes/default/css/pams-style.css">
+<link type="text/css" rel="stylesheet" href="./themes/default/css/pams-style.css">
 <style type="text/css">
 .message-succ {
 	font-family: "Courier New", Courier, monospace;
@@ -34,7 +34,11 @@
   {if $item['type']=='text'}
   <div class="input input-{$item['name']}">
     <label for="{$item['id']}">{$item['display_name']} </label>
-    <input name="{$item['name']}" type="text" id="{$item['id']}" class="validate[required]" />
+    {if preg_match('/url/', $item['name'])} 
+    <input name="{$item['name']}" type="text" id="{$item['id']}" />
+    {else}
+    *** <input name="{$item['name']}" type="text" id="{$item['id']}" class="validate[required]" />
+    {/if}
   </div>
 
   {elseif $item['type']=='password'}
@@ -52,7 +56,7 @@
     <div class="selectWrapper">
       <select name="{$item['name']}" id="{$item['id']}" class="validate[required]">          
     {if $config.self=='users'}{obj->get_level}
-	{elseif $config.self=='sites'}{obj->get_level}
+	{elseif $config.self=='items'}{obj->get_category_options}
 	{elseif $config.self=='pages'}{obj->get_sites_options}
 	{elseif $config.self=='modules'}{obj->get_sites_options}
 	{elseif $config.self=='divisions'}{obj->get_sites_options}
@@ -136,59 +140,41 @@ $(document).ready(function() {
 	var this_submit = $('#add_submit');
 	var this_msg = $('#add_msg');
 	
-{if $config.self=='themes'}
-	var ifr = $('#iframe');
-	var res = '#upload_response';
+this_form.bind('submit', function(event) {
 	this_form.validationEngine();
-	var options = {
-		target: res,
-		url: url,
-		type: this_form.attr('method'),
-		iframe: true,
-		iframeSrc: 'about:blank',
-		timeout: 120000,
-		beforeSubmit: function() {
-			if ($('#upload_loading').length>0) $('#upload_loading').show();
-			return true;
-		},
-		success: function(data) {
-			if ($('#upload_loading').length>0) $('#upload_loading').hide();
-		}
-	};
-	this_form.ajaxForm(options);
-
-{else}	
-    this_form.bind('submit', function(event) {
-        this_form.validationEngine();
-        event.preventDefault();
-        if(this_form.validationEngine({ returnIsValid:true })) {
-            $.ajax({
-                type: $(this).attr('method'),
-                url: $(this).attr('action'),
-                data: $(this).serialize()+'&action=add',
-                beforeSend: function() {
-                    this_submit.hide();
-                    this_msg.show();
-                },
-                success: function(data) {
-                    var msg = '';
-                   	if(/MDB2 Error/i.test(data)) msg = data;
-                   	else msg =  'Successfully insert this record:' + data;
-                   	msg += 'Click reset button then to add more.';
-                   	
-                    if($('div.message-succ').length)
-                        $('div.message-succ').show();
-                    else
-						$('<div></div>').addClass('message-succ').html(msg).insertBefore('#add_form').fadeIn(100);
-                    this_submit.show().attr('disabled', 'disabled');
-                    this_msg.hide();
-                    $('#div_list').load(url+'?js_reload_list=1');
-                }
-            });
-        }
-        return false;
-    });
-{/if}
+	event.preventDefault();
+	var $data = this_form.serialize()+'&action=add';
+	{if  $config.self=='items'}
+		$data += '&category='+$('#cid').find('option:selected').text();
+		alert($data);
+	{/if}
+	if(this_form.validationEngine({ returnIsValid:true })) {
+		$.ajax({
+			type: $(this).attr('method'),
+			url: $(this).attr('action'),
+			data: $data,
+			beforeSend: function() {
+				this_submit.hide();
+				this_msg.show();
+			},
+			success: function(data) {
+				var msg = '';
+				if(/MDB2 Error/i.test(data)) msg = data;
+				else msg =  'Successfully insert this record:' + data;
+				msg += 'Click reset button then to add more.';
+				
+				if($('div.message-succ').length)
+					$('div.message-succ').show();
+				else
+					$('<div></div>').addClass('message-succ').html(msg).insertBefore('#add_form').fadeIn(100);
+				this_submit.show().attr('disabled', 'disabled');
+				this_msg.hide();
+				$('#div_list').load(url+'?js_reload_list=1');
+			}
+		});
+	}
+	return false;
+});
 
 	$('input:reset', this_form).click( function() {
         this_submit.attr('disabled', false); //removeAttr("disabled");
@@ -204,7 +190,7 @@ $(document).ready(function() {
 		$('.page-form').removeClass('add-form');
 	}
 
- {if  $config.self=='sites'}
+ {if  $config.self=='items' || $config.self=='categories'}
   $('#theme_table tr td a.rview').each(function() {
 	var t = $(this).attr('href');
 	$(this).qtip({
