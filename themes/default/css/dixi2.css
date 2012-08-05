@@ -236,13 +236,14 @@ form#login_form .user input, form#login_form .pass input {
 #add_form fieldset {
 	border: 1px solid #d8e9f4;
 }
-#main1 form#search_form input, .selectWrapper, .modal-window input, .modal-window textarea {
+
+#main1 .selectWrapper, .modal-window input, .modal-window textarea {
 	border:2px solid #859bba;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	color:#48586c;
-	padding:4px 7px;
+	/*padding:4px 7px;*/
 	width:250px;
 	background: #fff;
 }
@@ -974,13 +975,6 @@ body #list_table tr td a, body #list_table tr td img {
 }
 #SearchToggle.hide {
 	background: url(../images/searchToggle.png) 0 -32px;
-}
-#search_form input {
-	border:2px solid #738eb7;
-	border-radius: 5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius: 5px;
-	padding:5px;
 }
 #modal-overlay {
 	width:100%;

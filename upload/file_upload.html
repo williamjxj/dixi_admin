@@ -22,10 +22,13 @@
 <!-- script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script-->
 <script type="text/javascript" src="include/js/jquery.form.js"></script>
 <form action="upload/process-cn.php" method="post" enctype="multipart/form-data" id="upload_form">
-  <input type="file" name="keywords_file">
-  <br>
-  <input type="submit" value="关键词文件上载">
-  （每个关键词一行）
+  <div class="content-headline"><i class="icon-gift"></i> 上载包含关键词的文件:</div>
+  <input type="file" name="keywords_file" size="30">
+  <div class="submit-buttons">
+    <div class="green-btn">
+      <input type="submit" value="关键词文件上载">
+      </div>（每个关键词一行） 
+  </div>
 </form>
 <div class="progress">
   <div class="bar"></div >
