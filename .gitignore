@@ -4,7 +4,6 @@ templates_c/*
 resources/
 logs/
 cache/
-include/
 themes/images/
 test/*
 bak/
