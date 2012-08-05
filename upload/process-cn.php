@@ -1,14 +1,9 @@
 <?php
 session_start();
 define('SITEROOT', '../');
-require_once(SITEROOT.'/configs/setting.inc.php');
-require_once(SITEROOT.'/configs/base.inc.php');
+require_once(SITEROOT.'/configs/mini-app.php');
 
-header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-
-$mdb2 = BaseClass::pear_connect_admin();
+$mdb2 = pear_connect_admin();
 
 if(! isset($_FILES['keywords_file']['size']) || $_FILES['keywords_file']['size']==0 ) {
 	echo "无法识别此文件，退出。";
@@ -29,24 +24,6 @@ if ($fname) {
   $text = "";
   $num = 0;
 
-/*
-  if(!(feof($fp))) {
-	  $num++;
-	  $str = trim(fgets($fp));
-	  if ($encoding != false) {
-		  $str = iconv($encoding, 'UTF-8', $str);
-		  if ($str != "" and $str != NULL) {
-			  $text = $str;
-		  }
-	  }
-	  else {
-		  $str = mb_convert_encoding ( $str, 'UTF-8','Unicode');
-		  if ($str != "" and $str != NULL) {
-			  $text = $str;
-		  }
-	  }
-  }
-  */
   $count1 = 0; $count2 = 0; $count3 = 0;
   while(!(feof($fp))) {
 	  $str = '';

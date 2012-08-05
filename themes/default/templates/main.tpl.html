@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="{$config.path}css/style.css" />
 <link rel="stylesheet" type="text/css" href="{$config.path}css/dixi1.css" />
 <link rel="stylesheet" type="text/css" href="{$config.path}css/dixi2.css" />
+<link rel="stylesheet" type="text/css" href="{$config.ipath}bootstrap/css/bootstrap.css" />
 <script type="text/javascript" src="{$config.path}js/jquery-1.5.1.min.js"></script>
 {if {$config.tabs} and is_array($config.tabs)}
 <link rel="stylesheet" type="text/css" href="{$config.ipath}SpryAssets/SpryTabbedPanels.css" />
@@ -63,7 +64,7 @@
 <div id="TabbedPanels1" class="TabbedPanels">	    
   <ul class="TabbedPanelsTabGroup">
     {foreach $config.tabs as $k=>$v}
-    <li class="TabbedPanelsTab" tabindex="{$k}" id="tab{$k}">{$v}</li>
+    <li class="TabbedPanelsTab" tabindex="{$k}" id="tab{$k}"><i class="icon-forward"></i>&nbsp;{$v}</li>
     {/foreach}    
 
     <li class="qmark" onClick="window.open('{$config.path}help.html#{$config.self}', 'help','height=260,width=600,scrollbars=1,resizable=1');" style="cursor:help">&nbsp;&nbsp;<img src="{$config.path}images/help.png" border="0" width="16px" height="16px" title="Help for {$config.self}"/></li>
