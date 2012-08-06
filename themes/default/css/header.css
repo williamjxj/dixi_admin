@@ -1,0 +1,34 @@
+@charset "utf-8";
+/* CSS Document */
+#userNav {
+	font-size: 13px;
+	color: #686868;
+	margin: 19px 10px 0 0;
+	float: right;
+}
+#userNav a {
+	font-size: 13px;
+	color: #3f87ff;
+	text-decoration:none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#user-info {
+	float:right;
+	color:#a0d3ff;
+	top:15px;
+	right:34px;
+	font-size:12px;
+	position:absolute;
+}
+#user-info span {
+	color:#fff;
+	font-weight:bold;
+	background: none !important;
+	bprder:none !important;
+}
+.dixilogo {
+  background: url(../images/new/logo.jpg) no-repeat left top transparent;
+  float: left;
+  height: 81px;
+  width: 981px;  
+}

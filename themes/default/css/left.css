@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+/* <i class="icon-list-alt"></i>*/
+
+.navList {
+	display:none;
+}
+#navLinks ul {
+	padding-top: 6px;
+	float: left;
+}
+#navLinks ul li {
+	margin: 0 10px;
+	display: inline;
+}
+#navLinks ul li a {
+	font-size: 13px;
+	color: #3f87ff;
+	text-decoration:none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#navLinks ul li a:hover {
+	color: #38687e;
+}
+
+.sidebarBox {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.sidebarBox .welcome {
+	background: url(../images/new/icon-time.png) no-repeat;
+	background-position: 0 8px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #fff;
+	padding: 7px 0 7px 25px;
+	margin-left: 16px;
+	line-height: 1.5em;
+}
+.sidebarBox .welcome span {
+	font-weight: bold;
+	font-size: 12px;
+}
+.sidebarBox .navTitle {
+	background: url(../images/side-ul-head.jpg) 0 0 no-repeat;
+	color:#000;
+	font-size:13px;
+	padding:10px 15px 11px;
+	font-weight:bold;
+	cursor:pointer;
+}
+.sidebarBox .activeTitle {
+	background: url(../images/side-ul-head.jpg) 0 -43px no-repeat;
+	color:#000;
+}
+.sidebarBox div:hover.nonActiveTitle {
+	background-color: #123343;
+}
+.sidebarBox ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.sidebarBox ul li {
+	font-size:12px;
+	border-bottom:1px solid #eef0f2;
+	padding:10px 15px;
+	background:url(../images/sidemenu-bullet.jpg) 220px 13px no-repeat;
+}
+.sidebarBox ul li a {
+	text-decoration:none;
+	color:#48586c;
+}
+.sidebarBox ul li.active {
+	background: url("../images/sideba-active-tab.png") no-repeat scroll -1px 0 transparent;
+	border: medium none;
+	width: 227px;
+}
+#ie7 ul li.active, #ie8 ul li.active {
+	width:239px !important;
+}
+.sidebarBox ul li.active a, .sidebarBox ul li.active a:hover {
+	color:#fff;
+	text-shadow: 1px 1px 1px #50812f;
+}
+.sidebarBox ul li a:hover {
+	color:#3f87ff;
+	text-decoration:underline;
+}
+.sidebar-box {
+	margin:0 0 18px 14px;
+	width:243px;
+}
+.sidebar-box .side-head {
+	width:243px;
+	height:36px;
+	height:10px;
+	background: url(../images/side-box-head.jpg) 0 0 no-repeat;
+	font-size:12px !important;
+	color:#fff;
+	text-shadow: 1px 1px 1px #23477b;
+	font-weight:bold;
+	color:#fff;
+	padding:12px 9px 14px;
+	font-size:12px;
+}
+#ie7 .sidebar-box .side-head, #ie8 .sidebar-box .side-head {
+	padding-bottom:12px
+}
+.sidebar-box .inner {
+	border:2px solid #738eb7;
+	border-top:none;
+	border-radius: 0px 0px 5px 5px;
+	-moz-border-radius:0px 0px 5px 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	padding:20px 15px;
+	background:#fff;
+}
+.sidebarBox {
+	background: url(../images/sidebar-bg.png) 273px 0 repeat-y;
+}
+

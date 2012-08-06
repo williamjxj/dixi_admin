@@ -169,9 +169,9 @@ class ListBase extends BaseClass
 	}
 
 	$acy = array('module'=>'', 'contents'=>'', 'resources'=>'');
-	if (isset($_SESSION['admin']['userlevel']) && $_SESSION['admin']['userlevel']!=1) {
-		$userlevel = " WHERE level = " . $_SESSION['admin']['userlevel'];
-		$al = $this->get_sites_by_level($_SESSION['admin']['userlevel']);
+	if (isset($_SESSION['dixitruth_admin']['userlevel']) && $_SESSION['dixitruth_admin']['userlevel']!=1) {
+		$userlevel = " WHERE level = " . $_SESSION['dixitruth_admin']['userlevel'];
+		$al = $this->get_sites_by_level($_SESSION['dixitruth_admin']['userlevel']);
 		if(count($al)>0) {
 			$str = implode(',', $al);
 			$acy['module'] = " AND m.site_id IN ($str) ";
@@ -233,7 +233,7 @@ class ListBase extends BaseClass
 		if (isset($userlevel)) $query .= $userlevel;
 	}
 	elseif ($this->self=='pages') {
-                $al = $this->get_sites_by_level($_SESSION['admin']['userlevel']);
+                $al = $this->get_sites_by_level($_SESSION['dixitruth_admin']['userlevel']);
 		if(count($al)>0) {
 			$usersites = " WHERE site_id IN (" . implode(',',$al) . ")";
 			$query .= $usersites;

@@ -96,7 +96,7 @@ function process_form($mdb2, $rdir)
 	$h = array();
 	$h['author'] = $mdb2->escape(trim($_POST['author']));
 	$h['notes'] = $_POST['notes']?$mdb2->escape(trim($_POST['notes'])):'';
-	$h['uploader'] = isset($_SESSION['admin']['username']) ? $_SESSION['admin']['username'] : 'admin';
+	$h['uploader'] = isset($_SESSION['dixitruth_admin']['username']) ? $_SESSION['dixitruth_admin']['username'] : 'admin';
 
 	$site_id = $_POST['sites'];
 	$mid = $_POST['modules'];
@@ -107,7 +107,7 @@ function process_form($mdb2, $rdir)
 	$h['size'] = (int)$_FILES['file']['size'];
 
 	$query = "INSERT INTO resources(file,type,size,path,author,notes,createdby, created, updatedby, site_id,mid,division,sname,mname) VALUES(
-	  '".$h['file']."', '".$h['type']."', ".$h['size'].", '".$rdir."', '".$h['author']."', '".$h['notes']."', '".$_SESSION['admin']['username']."', NOW(), '".$admin."', ".$site_id.", ".$mid.", '". $division . "', '".get_sname_from_sid($site_id, $mdb2)."', '".get_mname_from_mid($mid, $mdb2)."')";
+	  '".$h['file']."', '".$h['type']."', ".$h['size'].", '".$rdir."', '".$h['author']."', '".$h['notes']."', '".$_SESSION['dixitruth_admin']['username']."', NOW(), '".$admin."', ".$site_id.", ".$mid.", '". $division . "', '".get_sname_from_sid($site_id, $mdb2)."', '".get_mname_from_mid($mid, $mdb2)."')";
 
 	$affected = $mdb2->exec($query);
 	if (PEAR::isError($affected)) {

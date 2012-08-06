@@ -1,7 +1,7 @@
 <?php
 session_start();
 define('SITEROOT', '../');
-require_once(SITEROOT.'/configs/mini-app.php');
+require_once(SITEROOT.'/configs/mini-app.inc.php');
 
 $mdb2 = pear_connect_admin();
 

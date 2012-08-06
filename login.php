@@ -1,38 +1,29 @@
 <?php
 session_start();
 define('SITEROOT', './');
-include_once(SITEROOT.'configs/setting.inc.php');
-include_once(SITEROOT.'configs/config.inc.php');
-require_once(SITEROOT.'configs/base.inc.php');
+require_once(SITEROOT.'configs/mini-app.inc.php');
 
-global $config;
-if(isset($_COOKIE['admin']['path']) && (!empty($_COOKIE['admin']['path'])))
-	$config['path'] = SITEROOT.'themes/'.$_COOKIE['admin']['path'].'/';
-else 
-	$config['path'] = SITEROOT.'themes/default/';
-
-class Login extends BaseClass
+class Login
 {
 	var $project;
 	function __construct(){
-		parent::__construct();
-		$this->project = PACKAGE;
-		$this->base = $config['path'];
+		$this->project = 'dixitruth_admin';
+		$this->path = SITEROOT.'login/';
+		$this->mdb2 = pear_connect_admin();
 	}
 	public function initial() {
-		global $config;
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?=$config['header']['title'];?></title>
-<link rel="stylesheet" type="text/css" href="login/login.css"/>
-<link rel="stylesheet" type="text/css" href="include/validationEngine/validationEngine.jquery.css" />
-<script type="text/javascript" src="include/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="include/js/cookie.js"></script>
-<script type="text/javascript" src="include/validationEngine/jquery.validationEngine-en.js"></script>
-<script type="text/javascript" src="include/validationEngine/jquery.validationEngine.js"></script>
+<title>底细,真相,还原真相,反映实际情况</title>
+<link rel="stylesheet" type="text/css" href="<?=$this->path;?>login.css"/>
+<link rel="stylesheet" type="text/css" href="<?=SITEROOT;?>include/validationEngine/validationEngine.jquery.css" />
+<script type="text/javascript" src="<?=SITEROOT;?>include/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="<?=SITEROOT;?>include/js/cookie.js"></script>
+<script type="text/javascript" src="<?=SITEROOT;?>include/validationEngine/jquery.validationEngine-en.js"></script>
+<script type="text/javascript" src="<?=SITEROOT;?>include/validationEngine/jquery.validationEngine.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 var form = $('#login_form');
@@ -84,12 +75,11 @@ $('#username').select().focus();
 </script>
 </head>
 <body>
-    <div id="upper">
-        <div class="dixilogo"></div>
-    </div>
-    <div class="headerText">
-        <h1><?=$config['header']['title'];?></h1>
-    </div>
+<div>
+<div class="dixilogo"></div><br>
+<div class="headerText">
+  <h1>底细,真相,还原真相,反映实际情况</h1>
+</div>
 <div id="div_login">
   <form id="login_form" action="<?=$_SERVER['PHP_SELF'];?>" method="post">
     <div class="user">
@@ -100,17 +90,16 @@ $('#username').select().focus();
       <label class="passTitle" for="password">口令：</label>
       <input class="validate[required,length[4,20]] passInput" type="password" id="password" name="password" />
     </div>
-      <div class="rememberLoginWrap">
-          <div class="rememfor">
-              <label class="remember" for="rememberme">
-              <input id="rememberme" name="rememberme" type="checkbox" value="" class="checkbox" />
-              Remember me</label>
-          </div>
-          <div class="loginButton">
-              <input type="submit" id="submit" value="Login" />
-              <span id="msg" name="msg" style="display: none"><?=$config['list']['wait1'];?></span>
-          </div>
+    <div class="rememberLoginWrap">
+      <div class="rememfor">
+        <label class="remember" for="rememberme">
+        <input id="rememberme" name="rememberme" type="checkbox" value="" class="checkbox" />
+        Remember me</label>
       </div>
+      <div class="loginButton">
+        <input type="submit" id="submit" value="Login" />
+        <span id="msg" name="msg" style="display: none"> <img src="<?=$this->path;?>images/spinner.gif" width="16" height="16" border="0"> </span> </div>
+    </div>
   </form>
 </div>
 <?
@@ -122,7 +111,7 @@ $('#username').select().focus();
 		$password =  $_POST['password'];
 		$rememberme = isset($_POST['rememberme']) ? true : false;
 
-		$query = "SELECT * FROM ". ADMIN_USER . " WHERE username='".$username."' AND password='".$password."'";
+		$query = "SELECT * FROM admin_users WHERE username='".$username."' AND password='".$password."'";
 		
 		$res = $this->mdb2->query($query);
 		if (PEAR::isError($res)) {
@@ -155,7 +144,7 @@ $('#username').select().focus();
 	function update_login_info($username, $uid)  {
 		$ip = $this->get_real_ip();
 		$browser = $this->get_browser();
-		$session = $this->get_session();
+		$session = session_id();
 		$query = "insert into login_info(uid,ip,browser,username,session,count,login_time,logout,logout_time, expired)
 		  values(".$uid.", '".$ip."', '".$this->mdb2->escape($browser)."', '".$username."', '".$session."', 1, NULL, 'N', '', NOW() + INTERVAL 10 HOUR)
 		  on duplicate key update

@@ -5,6 +5,8 @@ define("TEXT_FILE", './logs/admin.log');
 // number of lines to read from the end of file
 define("LINES_COUNT", 30);
 
+define('SITEROOT', './');
+
 if(isset($_GET['js_refresh'])) {
 	get_output();
 }
@@ -19,9 +21,9 @@ function init() {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>底细,真相 LOG FILE</title>
-<script language="javascript" type="text/javascript" src="include/jquery-1.6.4.js"></script>
-<script language="javascript" type="text/javascript" src="include/doTimeout.js"></script>
+<title>底细,真相 日志文件</title>
+<script language="javascript" type="text/javascript" src="<?=SITEROOT;?>include/js/jquery-1.7.2.min.js"></script>
+<script language="javascript" type="text/javascript" src="<?=SITEROOT;?>include/js/doTimeout.js"></script>
 <script language="javascript" type="text/javascript">
 $(document).ready(function() {
 	$('#refresh').click(function() {
