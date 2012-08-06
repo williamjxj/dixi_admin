@@ -3,12 +3,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <base target="mainFrame">
-<link rel="stylesheet" type="text/css" href="{$config.path}css/dixi2.css" />
+<link rel="stylesheet" type="text/css" href="{$config.path}css/header.css" />
+<link rel="stylesheet" type="text/css" href="{$config.ipath}bootstrap/css/bootstrap.min.css" />
 <script type="text/javascript" src="{$config.ipath}js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="{$config.ipath}js/cookie.js"></script>
 </head>
 <body>
 <div id="header_{$config.browser_id}">
+  <div class="dixilogo"></div>
+  <div id="userNav">
+    <i class="icon-share"></i><a onclick="parent.document.location.href=this.href;return false;" href="login.php?logout=1">注销</a>
+  </div>
+  <div id="user-info"><i class="icon-check"></i>&nbsp;欢迎 <span> {$smarty.session.dixitruth_admin.username} </span>, 
+  <i class="icon-time"></i>&nbsp;当前时间:<span> {$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'} </span></div>
 </div>
 <script language="javascript" type="text/javascript">
 $(function() {

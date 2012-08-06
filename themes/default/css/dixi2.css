@@ -20,202 +20,7 @@ ul{
 .clearfix {
 	display: block;
 }
-#upper {
-	font-family: Arial, Helvetica, sans-serif;
-	height: 64px;
-	overflow: hidden;
-	background: url(../images/new/header-bg.jpg) repeat-x;
-}
 
-.navList {
-	display:none;
-}
-.dixilogo {
-  background: url(../images/new/logo.png) no-repeat left top transparent;
-  float: left;
-  height: 81px;
-  width: 981px;  
-}
-#navLinks ul {
-	padding-top: 6px;
-	float: left;
-}
-#navLinks ul li {
-	margin: 0 10px;
-	display: inline;
-}
-#navLinks ul li a, #userNav a {
-	font-size: 13px;
-	color: #3f87ff;
-	text-decoration:none;
-	font-family: Arial, Helvetica, sans-serif;
-}
-#navLinks ul li a:hover {
-	color: #38687e;
-}
-#userNav {
-	font-size: 13px;
-	color: #686868;
-	margin: 19px 10px 0 0;
-	float: right;
-}
-.headerText {
-	background: url(../images/new/title-bg.jpg) repeat-x;
-	background-position: 0 0;
-	overflow: hidden;
-}
-.headerText .headerTextOption {
-	margin: 0;
-	padding: 0;
-}
-.headerText select {
-	width: 192px;
-	margin-left: 4px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #686868;
-}
-.headerText table {
-	font-family: Arial, Helvetica, sans-serif;
-}
-.headerText table h1, .headerText h1 {
-	font-size: 18px;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px 0;
-}
-.headerText h1 {
-	margin: 0;
-}
-#div_login {
-	background: url(../images/new/login-box.png) no-repeat;
-	width: 366px;
-	height: 190px;
-	margin: 150px auto 0 auto;
-}
-form#login_form {
-	width: 290px;
-	margin: 0 auto;
-	padding-top: 43px;
-}
-form#login_form .user {
-	margin-bottom: 4px;
-}
-form#login_form .user, form#login_form .pass {
-	overflow: hidden;
-}
-form#login_form .user label, form#login_form .pass label {
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: #656565;
-	margin-top: 10px;
-	float: left;
-}
-form#login_form .user input, form#login_form .pass input {
-	width: 178px;
-	height: 28px;
-	line-height: 28px;
-	padding: 0 15px;
-	border: 1px solid #999999;
-	float: right;
-	color: #406e85;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	font-size: 12px;
-}
-.rememberLoginWrap {
-	margin: 15px 0 0 80px;
-	overflow: hidden;
-}
-.rememberLoginWrap .rememfor {
-	float: left;
-}
-.rememberLoginWrap .rememfor label input#rememberme {
-	width: 13px;
-	height: 13px;
-	margin: 0;
-	padding: 0;
-}
-.rememberLoginWrap .loginButton {
-	float: right;
-}
-.rememberLoginWrap .loginButton input#submit {
-	background: url(../images/new/sign-in-btn.png) no-repeat;
-	background-position: 0 0;
-	width: 92px;
-	height: 30px;
-	border: 0;
-	cursor: pointer;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #fff;
-}
-.rememberLoginWrap .loginButton input:hover#submit {
-	background-position: 0 -30px;
-}
-.sidebarBox {
-	font-family: Arial, Helvetica, sans-serif;
-}
-.sidebarBox .welcome {
-	background: url(../images/new/icon-time.png) no-repeat;
-	background-position: 0 8px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #fff;
-	padding: 7px 0 7px 25px;
-	margin-left: 16px;
-	line-height: 1.5em;
-}
-.sidebarBox .welcome span {
-	font-weight: bold;
-	font-size: 12px;
-}
-.sidebarBox .navTitle {
-	background: url(../images/side-ul-head.jpg) 0 0 no-repeat;
-	color:#000;
-	font-size:13px;
-	padding:10px 15px 11px;
-	font-weight:bold;
-	cursor:pointer;
-}
-.sidebarBox .activeTitle {
-	background: url(../images/side-ul-head.jpg) 0 -43px no-repeat;
-	color:#000;
-}
-.sidebarBox div:hover.nonActiveTitle {
-	background-color: #123343;
-}
-.sidebarBox ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-.sidebarBox ul li {
-	font-size:12px;
-	border-bottom:1px solid #eef0f2;
-	padding:10px 15px;
-	background:url(../images/sidemenu-bullet.jpg) 220px 13px no-repeat;
-}
-.sidebarBox ul li a {
-	text-decoration:none;
-	color:#48586c;
-}
-.sidebarBox ul li.active {
-	background: url("../images/sideba-active-tab.png") no-repeat scroll -1px 0 transparent;
-	border: medium none;
-	width: 227px;
-}
-#ie7 ul li.active, #ie8 ul li.active {
-	width:239px !important;
-}
-.sidebarBox ul li.active a, .sidebarBox ul li.active a:hover {
-	color:#fff;
-	text-shadow: 1px 1px 1px #50812f;
-}
-.sidebarBox ul li a:hover {
-	color:#3f87ff;
-	text-decoration:underline;
-}
 #div_search_1 {
 	display:none;
 	font-size: 12px;
@@ -715,35 +520,6 @@ input:hover#close {
 #navLinks {
 	margin-top:0px;
 }
-.sidebar-box {
-	margin:0 0 18px 14px;
-	width:243px;
-}
-.sidebar-box .side-head {
-	width:243px;
-	height:36px;
-	height:10px;
-	background: url(../images/side-box-head.jpg) 0 0 no-repeat;
-	font-size:12px !important;
-	color:#fff;
-	text-shadow: 1px 1px 1px #23477b;
-	font-weight:bold;
-	color:#fff;
-	padding:12px 9px 14px;
-	font-size:12px;
-}
-#ie7 .sidebar-box .side-head, #ie8 .sidebar-box .side-head {
-	padding-bottom:12px
-}
-.sidebar-box .inner {
-	border:2px solid #738eb7;
-	border-top:none;
-	border-radius: 0px 0px 5px 5px;
-	-moz-border-radius:0px 0px 5px 5px;
-	-webkit-border-radius: 0px 0px 5px 5px;
-	padding:20px 15px;
-	background:#fff;
-}
 .headerTextOption {
 	border:2px solid #738eb7;
 	border-radius: 5px;
@@ -757,9 +533,6 @@ input:hover#close {
 }
 .noPadding {
 	padding:0 !important;
-}
-.sidebarBox {
-	background: url(../images/sidebar-bg.png) 273px 0 repeat-y;
 }
 #sidebarToggle {
 	background: url(../images/sidebar-toggle.png) 0 0 no-repeat;
@@ -1279,20 +1052,6 @@ body form .big-form-buttons {
 	background-position:0 -32px;
 	width:40px;
 	height:28px;
-}
-#user-info {
-	float:right;
-	color:#a0d3ff;
-	top:15px;
-	right:34px;
-	font-size:12px;
-	position:absolute;
-}
-#user-info span {
-	color:#fff;
-	font-weight:bold;
-	background: none !important;
-	bprder:none !important;
 }
 .add-form {
 	border:none;

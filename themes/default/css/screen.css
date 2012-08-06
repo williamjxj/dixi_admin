@@ -612,7 +612,7 @@ body#b_login h1 a,
 	background-color: #4c87c0;
 	color: #FFF;
 }
-.dixiLogo { background: url(../images/logo.png) no-repeat; width: 61px; height: 27px; }
+.dixilogo { background: url(../images/new/logo.png) no-repeat; width: 61px; height: 27px; }
 .psptLogo_wrap { width: 950px; margin-left: auto; margin-right: auto; height: 94px; position: static; }
 .psptLogo { width: 352px; height: 69px; background: url(../images/pensionSpace-PT_logo.jpg) no-repeat; margin-top: 8px; position: absolute; }
 .psptLogo { width: 352px; height: 69px; display: block; cursor: pointer; }
