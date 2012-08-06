@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+#leftNav_wrap a {
+  margin-bottom: 1px;
+} 
+fieldset {
+  padding: 1em;
+  font:80%/1 sans-serif;
+}
+label {
+  float:left;
+  width:25%;
+  margin-right:0.5em;
+  padding-top:0.2em;
+  text-align:right;
+  font-weight:bold;
+}	
+fieldset {
+  border:1px solid green ;
+}
+legend {
+  padding: 0.2em 0.5em;
+  border:1px solid green;
+  color:green;
+  font-size:90%;
+  text-align:right;
+}
+fieldset legend {
+  text-decoration:underline;
+  cursor:pointer;
+  cursor:hand;
+}
+input:focus, textarea:focus, select:focus{
+  background-color: lightyellow;
+}
+input {
+	size: 20;
+	text-align:right;
+}
+.focusField{  
+	border:solid 2px #73A6FF;  
+	background:#EFF5FF;  
+	color:#000;  
+}  
+.idleField{  
+	background:#EEE;  
+	color: #6F6F6F;  
+	border: solid 2px #DFDFDF;  
+} 
+table.tab_manage_mod tbody tr:hover{
+	background-color: #e1eafe;
+}
+tbody tr th span{
+	border-bottom-color:#0000CC;
+	border-bottom-style:dotted;
+	border-bottom-width:medium;
+}
+.tha{
+	font-weight:bolder;
+	color:red;
+}
+#search1 {
+	margin-left: auto;
+	margin-right: auto;/*text-align:center;*/
+}
