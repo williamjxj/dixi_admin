@@ -1,8 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {config_load file="{$config.smarty}"}
-{if $config.self=='themes'}
-<script type="text/javascript" src="{$config.ipath}js/jquery.form.js"></script>
-{/if}
 <link type="text/css" rel="stylesheet" href="./themes/default/css/dixi2.css">
 <style type="text/css">
 .message-succ {
@@ -47,7 +44,7 @@
     <label for="{$item['id']}"> {$item['display_name']} </label>
     <div class="selectWrapper">
       <select name="{$item['name']}" id="{$item['id']}" class="validate[required]">          
-    {if $config.self=='users'}{obj->get_level}
+    {if $config.self=='users' || $config.self=='sites'}{obj->get_level}
 	{elseif $config.self=='items'}{obj->get_category_options}
 	{elseif $config.self=='pages'}{obj->get_sites_options}
 	{elseif $config.self=='modules'}{obj->get_sites_options}
@@ -104,20 +101,6 @@
   {$dcn={$dcn}+1}
   {/foreach}
   
-  {if $config.self=='sites'}
-  <div>
-    <label>Select a Theme:</label>
-    <table id="theme_table" style="border-collapse:collapse" cellpadding="4" cellspacing="4" border="0" width="100%">
-      <tr> {$ck='checked="checked"'}{$count=1}
-      {foreach $themes as $v}
-        <td>{$v.link}<br />
-          <input type="radio" name="preview" id="tid_{$v.id}" value="{$v.id}" {if $count==1}{$ck}{/if} class="validate[required]" />
-          <label>{$v.name|escape:'html'}</label></td>
-          {$count=$count+1}
-        {/foreach} </tr>
-    </table>
-  </div>
-  {/if}
   <div class="submit-buttons">
     <div class="green-btn">
       <input type="submit" id="add_submit" name="add_submit" value="添加 {$config.title|default:$config.self} Record!">

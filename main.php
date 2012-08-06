@@ -9,7 +9,7 @@ if (is_file($filename)) {
 	unlink($filename);
 }
 else {
-	$file = 'contents.php';
+	$file = 'keywords.php';
 }
 
 header('Location: '.$file);

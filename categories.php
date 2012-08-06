@@ -275,7 +275,6 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 }
 // default: list data.
 else {
-echo "<pre>"; print_r($_SESSION); echo "</pre>";
 	if (isset($_SESSION[$cate->self][$cate->session['sql']])) $_SESSION[$cate->self][$cate->session['sql']] = '';
 
 	$total_rows = $cate->get_total_rows($cate->get_count_sql());

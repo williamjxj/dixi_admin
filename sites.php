@@ -10,7 +10,7 @@ require_once("ListAdvanced.inc.php");
 global $config;
 
 
-$config['tabs'] = array('1'=>'List Sites', '2'=>'Add Site'); //'3'=>'Assign Sites');
+$config['tabs'] = array('1'=>'站点列表', '2'=>'添加底细真相子站点');
 
 
 class SitesClass extends ListAdvanced
@@ -166,25 +166,7 @@ class SitesClass extends ListAdvanced
 		}
 		return true;
 	}
-	function get_default_theme_name($tid)
-	{
-		$sql = "SELECT name FROM themes WHERE tid=".$tid;
-		$name = $this->mdb2->queryOne($sql);
-		return $name;
-	}
-	
-	function get_themes() {
-		$ary = array();
-		$sql = "SELECT tid, name, description, path, filename FROM themes ORDER BY tid";
-		$res = $this->mdb2->query($sql);
-		while($row = $res->fetchRow(MDB2_FETCHMODE_ASSOC)) {
-			array_push($ary, array(
-				'id'=>$row['tid'], 'name'=>$row['name'], 'desc'=>$row['description'], 
-				'link'=>'<a href="default/front/preview/'.$row['filename'].'" title="' . $row['name'].'" class="rview"><img src="default/front/preview/'. $row['filename'] .'" style="max-height:50px;max-width:110px;" /> </a>',
-			));
-		}
-		return $ary;
-	}
+
 }
 
 $site = new SitesClass();
@@ -236,8 +218,6 @@ elseif(isset($_GET['js_add_form'])) {
 	$site->assign('add_form', $ary);
 	$site->assign('config', $config);
 	
-	$site->assign('themes', $site->get_themes());
-	
 	$site->display($config['templs']['add']);
 }
 elseif(isset($_POST['js_edit_column'])) {
@@ -255,11 +235,6 @@ elseif(isset($_REQUEST['action'])) {
 			break;
 		case 'add':
 			$site->create(array('createdby'=>$site->username, 'updatedby'=>$site->username, 'created'=>'NOW()'));
-			$dest = preg_replace("/\s+/", '_', $_POST['name']);
-			$src = $site->get_default_theme_name($_POST['preview']);
-			// after insert data, clone templates structures to new site. // >/dev/null 2>&1
-			system(SITEROOT."bin/copy_theme.sh $src $dest >>error_log 2>&1", $retval);
-			echo $retval;			
 			break;
 		default:
 			break;

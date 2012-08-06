@@ -71,10 +71,7 @@
             {if ($v=='Y')} {$c = 'checked="checked"'}{else}{$c = ''} {/if}
             <td><input type="checkbox" name="{$v@key|lower}" disabled="disabled" value="{$v}" {$c} /></td>
             {elseif $y=='link'}
-            {if {$config.self=='themes'}}
-            <td><!--a href="{$m.PreviewFile|escape:'html'}" title="{$m.Path}/{$m.PreviewFile}" target="_blank" class="rview"><img src="resources/{$m.PreviewFile}" style="max-height:50px;max-width:110px;" />{$m.Name}, {$m.PreviewFile} </a-->
-              <a href="resources/{$m.PreviewFile}" title="{$m.Path}/{$m.PreviewFile}" target="_blank" class="rview"><img src="resources/{$m.PreviewFile}" style="max-height:50px;max-width:110px;" /> </a> </td>
-            {elseif {$data.self=='resources'}}
+            {if {$data.self=='resources'}}
             <td align="right"> {if preg_match("/(\.pdf|\.txt|\.xml|\.mid|\.sql|\.ppt)$/", $v)} <a href="{$m.Path}" title="{$v|escape:'html'}" target="_blank">{$v|escape:'html'}</a> {else} <a href="{$m.Path}/{$m.File}" title="{$m.Path}/{$m.File}" target="_blank" class="rview"><img src="{$m.Path}/{$m.File}" style="max-height:50px;max-width:110px;" /></a> {/if} </td>
             {else}
             <td align="right"><a href="{$v|escape:'html'}" title="{$v|escape:'html'}" target="_blank">{$v|escape:'html'}</a></td>
@@ -301,7 +298,6 @@ jQuery.fn.update_column = function(tid) {
   return false;
 }
 </script>
-
 {if {$config.qtip}}
 <script language="javascript" type="text/javascript">
 $('#list_tbody tr.infoRow input.active,#list_tbody tr.infoRow textarea.active').qtip({

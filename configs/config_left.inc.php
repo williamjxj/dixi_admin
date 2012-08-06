@@ -17,7 +17,7 @@ function get_site() {
 		'网页' => 'pages.php',
 		'模块' => 'modules.php',
 		'正文内容' => 'contents.php',
-		'资源' => 'reources.php',
+		'资源' => 'resources.php',
 	);
 }
 function get_core() {

@@ -10,7 +10,7 @@ require_once("ListAdvanced.inc.php");
 global $config;
 
 
-$config['tabs'] = array('1'=>'List  Pages', '2'=>'Add  Page'); //, '3'=>'Assign Pages'
+$config['tabs'] = array('1'=>'网页列表', '2'=>'添加网页');
 
 class PagesClass extends ListAdvanced
 {
