@@ -35,7 +35,7 @@ function get_support() {
 		'管理操作' => 'actions.php',
 		'日志' => 'read_log.php',
 		'维护记录' => 'reports.php',
-		'跟踪' => 'tracks.php',
+		'跟踪与记录' => 'tracks.php',
 		'Notes' => 'notes.php',
 	);
 }
@@ -43,7 +43,7 @@ function get_manage() {
 	return array(
 		'管理用户' => 'users.php',
 		'管理用户组' => 'levels.php',
-		'普通用户' => 'common_user.php',
+		'普通用户' => 'common_users.php',
 		'网页韵律' => 'themes.php',
 	);
 }

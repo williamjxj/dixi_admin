@@ -10,7 +10,7 @@ require_once("ListAdvanced.inc.php");
 global $config;
 
 
-$config['tabs'] = array('1'=>'List Modules', '2'=>'Add Module', '3'=>'Pages - Modules');
+$config['tabs'] = array('1'=>'模块列表', '2'=>'添加模块', '3'=>'网页模块匹配');
 
 
 class ModulesClass extends ListAdvanced

@@ -11,7 +11,7 @@ global $config;
 
 
 // $config['tabs'] = array('1'=>'List Resources', '2'=>'Add Resources', '3'=>'Resources - Contents');
-$config['tabs'] = array('1'=>'List Resources', '2'=>'Add Resources');
+$config['tabs'] = array('1'=>'资源列表', '2'=>'添加资源');
 $config['plupload'] = true;
 
 class ResourcesClass extends ListAdvanced

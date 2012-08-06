@@ -9,7 +9,7 @@ require_once("config.inc.php");
 require_once("ListAdvanced.inc.php");
 global $config;
 
-$config['tabs'] = array('1'=>'ÁĞ±í', '2'=>'Ìí¼Ó', '3'=> '¸üĞÂ', '4'=>'Ä£¿éÕıÎÄÆ¥Åä');
+$config['tabs'] = array('1'=>'åˆ—è¡¨', '2'=>'æ·»åŠ ', '3'=> 'æ›´æ–°', '4'=>'æ¨¡å—æ­£æ–‡åŒ¹é…');
 $config['WYSIWYG'] = true;
 
 class ContentsClass extends ListAdvanced
@@ -492,7 +492,7 @@ class ContentsClass extends ListAdvanced
 
     // by default send_email_flag='N', means this content is not sent email yet.
     if($row['send_email_flag']=='Y') {
-	  echo "¸ÃĞÅÏ¢ÒÑ¾­·¢ËÍ¹ıÁË,Çë²»ÒªÖØ¸´·¢ËÍ. This content have already sent as email, no sending email anymore.";
+	  echo "è¯¥ä¿¡æ¯å·²ç»å‘é€è¿‡äº†,è¯·ä¸è¦é‡å¤å‘é€. This content have already sent as email, no sending email anymore.";
 	  return false;
 	}
 
@@ -501,17 +501,17 @@ class ContentsClass extends ListAdvanced
                 "\nIP: " . $_SERVER["REMOTE_ADDR"] .
                 "\n\nDate: " . date("Y-m-d h:i:s");
 	 */
-	$message = "ÓÊ¼şÀ´×Ô http://surreyonefamily.ca ";
-	$message .= "\nÈÕÆÚ: " . date("Y-m-d h:i:s");
+	$message = "é‚®ä»¶æ¥è‡ª http://surreyonefamily.ca ";
+	$message .= "\næ—¥æœŸ: " . date("Y-m-d h:i:s");
     $message .= $row['content'];
 
     $siteEmails = $this->get_emails($cid);
     // echo "<pre>";print_r($siteEmails); echo "</pre>";
 	// $siteEmails = "williamjxj@hotmail.com,jxjwilliam@gmail.com";
-    $emailTitle = 'ËØÀï»ªÈËĞûµÀ»áÒ»¼ÒÍÅÆõ';
+    $emailTitle = 'ç´ é‡Œåäººå®£é“ä¼šä¸€å®¶å›¢å¥‘';
 
     if(! mail($siteEmails, $emailTitle, $message, 'admin@surreyonefamil.ca'))
-      echo 'ÓÊ¼şÃ»ÓĞ³É¹¦·¢ËÍ.';
+      echo 'é‚®ä»¶æ²¡æœ‰æˆåŠŸå‘é€.';
 	  
 	// After sent, set flag='Y' means no re-send.
 	$query = "UPDATE contents SET send_email_flag = 'Y' WHERE cid = " . $cid;

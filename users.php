@@ -224,7 +224,7 @@ if(! $user->check_access()) {
   echo "<script>if(window.opener){window.opener.location.href='".LOGIN."';} else{window.parent.location.href='".LOGIN."';}</script>";exit;
 }
 // ListBase.php: when construct, 'path','self','title' already set up.
-$user->set_default_config(array('jvalidate' => true,'tabs' => array('1' => 'List Users', '2' => 'Add User')));
+$user->set_default_config(array('jvalidate' => true,'tabs' => array('1' => '管理用户列表', '2' => '添加管理用户')));
 $user->get_table_info();
 
 if(isset($_GET['js_search_form'])) {

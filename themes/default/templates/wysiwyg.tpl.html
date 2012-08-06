@@ -3,11 +3,12 @@
 {$tid = $r.tid}
 {config_load file="{$config.smarty}"}
 <link href="{$config.ipath}jwysiwyg/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="{$config.ipath}jquery-1.6.4.js"></script>
+<script type="text/javascript" src="{$config.ipath}js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="{$config.ipath}jwysiwyg/jquery.wysiwyg.js"></script>
 <script type="text/javascript" src="{$config.ipath}jwysiwyg/controls/wysiwyg.link.js"></script>
 <script type="text/javascript" src="{$config.ipath}jwysiwyg/controls/wysiwyg.image.js"></script>
 <script type="text/javascript" src="{$config.ipath}jwysiwyg/controls/wysiwyg.table.js"></script>
+<script type="text/javascript" src="{$config.ipath}jquery-qtip/jquery.qtip-2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	var dt = new Date();
@@ -21,7 +22,7 @@ $(document).ready(function() {
 	{else} action = '&js_add=1';
 	{/if}
 	
-	$('#author_{$tid}').val(TODAY);
+	$('#title_{$tid}').val(TODAY);
 	$wid = $('#wysiwyg_{$tid}');
     $wid.wysiwyg({});
 	$(save).click(function(e) {
@@ -53,15 +54,15 @@ $(document).ready(function() {
 </script>
 <form id="form_add_{$tid}" name="form_add" method="post" action="{$smarty.server.SCRIPT_NAME}">
   <fieldset>
-  <legend>{if {$tid}}Edit Track {$tid}: {$r.author}{else}Add Track{/if}</legend>
-  <label for="author"> Author: </label>
-  <a href="javascript: fPopCalendar('author')">
-  <input name="author" id="author_{$tid}" type="text" onFocus="this.select();" size="90" value="{$r.author}" />
+  <legend>{if {$tid}}Edit Track {$tid}: {$r.title}{else}Add Track{/if}</legend>
+  <label for="title"> 标题: </label>
+  <a href="javascript: fPopCalendar('title_{$tid}')">
+  <input name="title" id="title_{$tid}" type="text" onFocus="this.select();" size="90" value="{$r.title}" />
   <img src="{$config.path}images/cal2.jpg" width="14" height="14" alt="date" border="0"></a> <br />
-  <label for="notes"> Notes: </label>
+  <label for="notes"> 注释: </label>
   <textarea id="notes_{$tid}" name="notes" style="width:60%;height:60px;">{$r.notes}</textarea>
   <br />
-  <label for="wysiwyg"> Content:</label>
+  <label for="wysiwyg"> 正文:</label>
   <br />
   <textarea id="wysiwyg_{$tid}" name="wysiwyg" rows="10" cols="80">{$r.content}</textarea>
   <input type="submit" value="Save" id="save_{$tid}" name="save" class="save" />

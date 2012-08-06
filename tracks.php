@@ -215,7 +215,7 @@ $tk = new TracksClass() or die("Can't generate the instance.");
   echo "<script>if(window.opener){window.opener.location.href='".LOGIN."';} else{window.parent.location.href='".LOGIN."';}</script>";exit;
 }*/
 $tk->get_table_info();
-$config['tabs'] = array('1'=>'List Tracks',  '2'=>'Add Track', '3'=> 'Update Tracks');
+$config['tabs'] = array('1'=>'跟踪与记录列表',  '2'=>'添加跟踪与记录', '3'=> '更新跟踪与记录');
 $tk->set_default_config(array('WYSIWYG'=>true,'calender'=>true));
 
 if(isset($_REQUEST['action'])) {

@@ -10,7 +10,7 @@ require_once("ListAdvanced.inc.php");
 global $config;
 
 
-$config['tabs'] = array('1'=>'List User Groups', '2'=>'Add User Group');
+$config['tabs'] = array('1'=>'用户组列表', '2'=>'添加用户组');
 
 
 class LevelsClass extends ListAdvanced
