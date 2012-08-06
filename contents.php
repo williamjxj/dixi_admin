@@ -9,7 +9,7 @@ require_once("config.inc.php");
 require_once("ListAdvanced.inc.php");
 global $config;
 
-$config['tabs'] = array('1'=>'List', '2'=>'Add', '3'=> 'Update', '4'=>'Module - Contents');
+$config['tabs'] = array('1'=>'列表', '2'=>'添加', '3'=> '更新', '4'=>'模块正文匹配');
 $config['WYSIWYG'] = true;
 
 class ContentsClass extends ListAdvanced
