@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 {*debug*}
 {config_load file="{$config.smarty}"}
 {$dcn=1}
@@ -7,7 +8,7 @@
   <legend>{$config.title|default:$config.self|upper} 查询:</legend>
   <table border="0px">
     <tbody>
-
+    
     {foreach $search_form as $item}
     {if $dcn % $config.dcn}
     <tr> {/if}
@@ -18,6 +19,8 @@
       <td><label for="{$item['id']}"> {$item['display_name']} </label></td>
       <td><div class="selectWrapper">
           <select name="{$item['name']}" id="{$item['id']}">
+            
+            
 
       	{if $config.self=='users'}{obj->get_level}{/if}
 
@@ -47,8 +50,10 @@
 	{if $config.self=='divisions'}{obj->get_sites_options}{/if}
 	{if $config.self=='actions'}{obj->get_keyword_selection}{/if}
 
-		</select>
-      </div></td>
+		
+          
+          </select>
+        </div></td>
       {elseif $item.type=='date'}
       <td><label for="{$item['id']}"> {$item['display_name']} </label></td>
       <td><a href="javascript: fPopCalendar('{$item['id']}')">
@@ -89,9 +94,13 @@
     
   </table>
   <div class="rowElem form-buttons">
-    <div class="green-btn">
-      <i class="icon-search"></i>&nbsp;<input type="submit" id="seach_submit" name="seach_submit" value="{$config.title|default:$config.self} 查询 ">
+    <!--    <div class="green-btn"> <i class="icon-search"></i>&nbsp;
+      <input type="submit" id="search_submit" name="search_submit" value="{$config.title|default:$config.self} 查询" />
     </div>
+-->
+    <i class="icon-search"></i>&nbsp;
+    <input type="submit" id="search_submit" name="search_submit" value="{$config.title|default:$config.self} 查询 " class="btn btn-success" />
+    <img src="{$config.path}images/spinner.gif" width="16" height="16" border="0" style="display:none;" id="search_msg">
     <!--         {$config.list.wait1|default:{#wait1#}} -->
     <input type="reset" id="reset" name="reset" value="还原" class="btn btn-warning">
     &nbsp;

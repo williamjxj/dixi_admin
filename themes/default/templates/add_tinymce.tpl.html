@@ -85,10 +85,12 @@ $(function() {
     <div class="editor-options"> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
   </div>
   <div class="submit-buttons">
-    <div class="green-btn">
+<!--    <div class="green-btn">
       <input type="submit" value="保存" name="add_submit" class="save" />
-    </div>
-    <input type="reset" value="恢复" class="btn btn-warning" />
+    </div>-->
+    <input type="submit" name="add_submit" value="保存" class="btn btn-success" />
+    <img src="{$config.path}images/spinner.gif" width="16" height="16" border="0" style="display:none;" id="search_msg">
+    <input type="reset" value="还原" class="btn btn-warning">
     <input type="hidden" id="sites" name="sites" value="{$data.sites.0.0}" />
   </div>
 </form>

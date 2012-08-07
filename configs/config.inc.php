@@ -21,13 +21,13 @@ $config = array(
 		'keywords' => '底细,真相,还原真相,反映实际情况',
 		'meta_content' => 'text/html; charset=utf-8',
 		'meta_defaultrobots' => 'index,follow',
-		'meta_robots' => '',
+		'meta_robots' => '底细,真相,还原真相,反映实际情况',
 	),
 	'js' => array(
-		'jquery' => 'jquery-1.7.2.min.js',
-		'jquery-ui' => '',
-		'bootstrap' => '',
-		'fancybox'  => '',
+		'jquery' => 'js/jquery-1.7.2.min.js',
+		'jquery-ui' => 'jqueryui/js/jquery-ui-1.8.22.custom.min.js',
+		'bootstrap' => 'bootstrap',
+		'fancybox'  => 'jquery.fancybox',
 	),
 	'dcn' => 2,     //search, edit, add forms need.
 	'calender' => true, //most common used in almost each app, 'search' is a basic function.
