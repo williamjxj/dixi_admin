@@ -623,6 +623,7 @@ table {
 	padding: 0;
 	width: auto;
 }
+/*
 input[type=reset], button[type=reset] {
 	border:none !important;
 	font-size:0;
@@ -644,6 +645,7 @@ input[type=reset]:hover, button[type=reset]:hover {
 input[type=reset] span, button[type=reset] span {
 	display:none;
 }
+*/
 #search_form table td {
 	padding:5px 0;
 }

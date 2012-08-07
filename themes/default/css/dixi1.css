@@ -1,6 +1,30 @@
 @charset "utf-8";
-/* CSS Document */
+body #TabbedPanels1 .TabbedPanelsContentGroup{background: none !important; border:none !important;}
+#main1 div.TabbedPanelsContentGroup{background: none !important;}
+body #TabbedPanels1 div.TabbedPanelsContentGroup{
+	-moz-border-radius: 4px 4px 4px 4px !important;
+	-webkit-border-radius: 4px 4px 4px 4px !important;
+	border-radius: 4px 4px 4px 4px !important;
+    border: 1px solid #C6D0DF !important;
+    margin: 31px 34px !important;
+	background: #fff !important;	
+}
+body form#search_form input.inputText{
+	border:2px solid #859bba;
+	padding: 3px 7px;
+    width: 200px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color:#48586c;
+}
+form#search_form label{color:#47586a; font-weight:bold;}
 
+.TabbedPanelsContent {padding:0 !important; margin:0 !important; }
+body #search_form{background:#f7fbff !important;}
+body #search_form fieldset{border:none ;}
+body #search_form legend{display:none;}
+/*
 body {
 	font-family: Arial, Helvetica, sans-serif;	
 	background: url(../images/bg.png);
@@ -162,7 +186,7 @@ tbody tr th span {
 }
 #search1 {
 	margin-left: auto;
-	margin-right: auto;/*text-align:center;*/
+	margin-right: auto;
 }
 #livetip {
 	position: absolute;
@@ -179,29 +203,5 @@ h2 {
 	font-size:13px;
 	margin:15px 0 0 0;
 }
+*/
 
-body #TabbedPanels1 .TabbedPanelsContentGroup{background: none !important; border:none !important;}
-#main1 div.TabbedPanelsContentGroup{background: none !important;}
-body #TabbedPanels1 div.TabbedPanelsContentGroup{
-	-moz-border-radius: 4px 4px 4px 4px !important;
-	-webkit-border-radius: 4px 4px 4px 4px !important;
-	border-radius: 4px 4px 4px 4px !important;
-    border: 1px solid #C6D0DF !important;
-    margin: 31px 34px !important;
-	background: #fff !important;	
-}
-body form#search_form input.inputText{
-	border:2px solid #859bba;
-	padding: 3px 7px;
-    width: 200px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	color:#48586c;
-}
-form#search_form label{color:#47586a; font-weight:bold;}
-
-.TabbedPanelsContent {padding:0 !important; margin:0 !important; }
-body #search_form{background:#f7fbff !important;}
-body #search_form fieldset{border:none ;}
-body #search_form legend{display:none;}

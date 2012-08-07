@@ -14,41 +14,8 @@ class ReportsClass extends ListAdvanced
   var $url, $self, $html, $session;
   public function __construct() {
     parent::__construct();
-	//$this->mdb1 = $this->pear_connect_williamjxj();
 	$this->mdb2 = $this->pear_connect_admin();
-	$this->mdb1 = $this->mdb2;
   }
-  function pear_connect_williamjxj() {
-	if(($_SERVER['SERVER_ADDR'] == '74.53.88.82') || preg_match("/cdat\.com/", $_SERVER['SERVER_NAME']) ) {
-		$dsn = array (
-			"phptype" => "mysqli",
-			"username" => "cdatcom_william",
-			"password" => "Benjamin001",
-			"hostspec" => "localhost",
-			"database" => "cdatcom_williamjxj"
-		);
-	}
-	else {  
-		$dsn = array (
-			"phptype" => "mysqli",
-			"username" => "williamjxj",
-			"password" => "Benjamin001",
-			"hostspec" => "localhost",
-			"database" => "williamjxj"
-		);
-	}
-	$options = array(
-		'debug'       => 2,
-		'persistent'  => true,
-		'portability' => MDB2_PORTABILITY_ALL,
-	);	
-	$mdb2 = MDB2::factory($dsn, $options);
-	if (PEAR::isError($mdb2)) {
-		die($mdb2->getMessage().'[ line '.__LINE__.']'.__FILE__);
-	}
-	return $mdb2;
-  }
-  
   function get_record($id) {
   	$query = "SELECT * FROM reports WHERE rid=".$id;
 	$res = $this->mdb2->query($query);
@@ -198,13 +165,10 @@ class ReportsClass extends ListAdvanced
 }
 
 $rp = new ReportsClass() or die("Can't generate the instance.");
-/*
-if(! $rp->check_access($rp->mdb1)) {
-  $rp->set_breakpoint();
-  echo "<script>if(window.opener){window.opener.location.href='".LOGIN."';} else{window.parent.location.href='".LOGIN."';}</script>";exit;
-}*/
+
+
 $rp->get_table_info();
-$config['tabs'] = array('1'=>'List Reports',  '2'=>'Add Report', '3'=> 'Update Reports');
+$config['tabs'] = array('1'=>'记录列表',  '2'=>'添加记录', '3'=> '更新记录');
 $rp->set_default_config(array('WYSIWYG'=>true,'calender'=>true));
 
 if(isset($_REQUEST['action'])) {

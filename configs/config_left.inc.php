@@ -33,10 +33,10 @@ function get_support() {
 	return array(
 		'注册信息' => 'login_info.php',
 		'管理操作' => 'actions.php',
-		'日志' => 'read_log.php',
 		'维护记录' => 'reports.php',
 		'跟踪与记录' => 'tracks.php',
-		'Notes' => 'notes.php',
+		'查询' => 'process/search.php',
+		'日志' => 'read_log.php',
 	);
 }
 function get_manage() {

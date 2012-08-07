@@ -25,7 +25,7 @@ function init() {
 <script language="javascript" type="text/javascript" src="<?=SITEROOT;?>include/js/jquery-1.7.2.min.js"></script>
 <script language="javascript" type="text/javascript" src="<?=SITEROOT;?>include/js/doTimeout.js"></script>
 <script language="javascript" type="text/javascript">
-$(document).ready(function() {
+$(function() {
 	$('#refresh').click(function() {
 		$('#log').load('<?=$_SERVER['PHP_SELF'];?>?js_refresh=1').hide().fadeIn(100);
 	});

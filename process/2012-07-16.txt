@@ -1,0 +1,65 @@
+localhost/YiiRoot/requirements/
+localhost/demo/
+vhost
+
+Reflection extension
+Standard PHP Library (SPL)
+Perl Compatible Regular Expressions (PCRE)
+DOM
+PDO
+PDO SQLite
+PDO MySQL
+Memcache
+APC
+Mcrypt
+SOAP
+GD
+
+
+YiiRoot/framework/yiic webapp demo
+
+protected/config/URL routine
+
+/Webroot/demo/protected/views/site/index.php
+/Webroot/demo/protected/views/layouts/main.php
+
+
+protected/config/main.php
+GII: code generator
+skeleton
+localhost/demo/index.php?r=gii
+-------------------------------------
+an-introduction-to-redis-in-php-using-predis
+
+You can use Redis as a session handler, which is especially useful if you are using a multi-server architecture behind a load balancer. 
+Redis also has a publish/subscribe system, which is great for creating an online chat or a live booking system. 
+
+There is a lot of argument whether Redis or Memcache is better, though as the benchmarks show they perform pretty much 
+on par with each other for basic operations. 
+Redis has more features than Memcache, such as in-memory and disk persistence, atomic commands and transactions, 
+and not logging every change to disk but rather server-side data structures instead.
+
+
+--------- go2le.com-----------------
+jquery.easing.1.3.js
+http://docs.jquery.com/UI/Effects/AdvancedEasing
+
+text rotator: jquery.jletter
+
+WOW Slider is good.
+
+jquery.nivo.slider.pack.js
+
+jquery.ad-gallery.js
+
+----------- ga.js -----------
+http://jsbeautifier.org/
+
+Markdown: http://daringfireball.net/projects/markdown/syntax
+
+--------piwik.org/Share -------
+Piwik is a free software alternative to Google Analytics.
+
+---------   PHP   --------
+gettype()
+json_encode
