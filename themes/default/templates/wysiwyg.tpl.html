@@ -65,8 +65,8 @@ $(function() {
   <label for="wysiwyg"> 正文:</label>
   <br />
   <textarea id="wysiwyg_{$tid}" name="wysiwyg" rows="10" cols="80">{$r.content}</textarea>
-  <input type="submit" value="Save" id="save_{$tid}" name="save" class="save" />
-  <input type="reset" value="Reset" class="reset" />
+  <input type="submit" value="保存" id="save_{$tid}" name="save" class="save" />
+  <input type="reset" value="还原" class="btn btn-warning" />
   {if {$tid}}
   <input type="hidden" id="tid" name="tid" value="{$tid}" />
   {/if}

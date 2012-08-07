@@ -562,31 +562,6 @@ class ListBase extends BaseClass
 	return 	$this->get_select_options($sqlr, false);
   }
 
-  // William on 2011-10-03 to work on actions.php
-
-  function get_browser_name() {
-    if(strstr($_SERVER['HTTP_USER_AGENT'], 'Firefox')){ $id="firefox"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Safari') && !strstr($_SERVER['HTTP_USER_AGENT'], 'Chrome')){ $id="safari"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Chrome')){ $id="chrome"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Opera')){ $id="opera"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 6')){ $id="ie6"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 7')){ $id="ie7"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 8')){ $id="ie8"; }
-    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 9')){ $id="ie9"; }
-	else $id=$_SERVER["HTTP_USER_AGENT"];
-	return $id;
-  }
-   
-  function get_ip() {
-    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
-      $ip=$_SERVER['HTTP_CLIENT_IP'];
-    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
-      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-    else
-      $ip=$_SERVER['REMOTE_ADDR'];
-    return $ip;
-  }
-
   function update_action($keyword, $query)
   {
   	$ary = array('reports', 'tracks', 'wordpress');

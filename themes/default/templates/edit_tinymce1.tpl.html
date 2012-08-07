@@ -4,15 +4,12 @@
 {$id=$r.id}
 {$elm='elm_'+{$id}}
 
-
 <form id="form_{$id}" name="form_{$id}" method="POST" action="{$smarty.server.SCRIPT_NAME}" target="iframe_tinymce">
   <fieldset>
-  <legend>Edit Content</legend>
-
-  <label for="wp_title"> Author: </label>
+  <label for="wp_title"> 作者/标题: </label>
   <input type="text" id="wp_title" name="wp_title" size="90"  value="{$r.post_title}" />
   <br />  
-  <label for="elm_{$id}"> HTML:</label>
+  <label for="elm_{$id}">网页内容:</label>
   <br />
   <textarea name="elm_{$id}" id="elm_{$id}" style="width:60%;height:650px" accesskey="C">{$r.post_content}</textarea>
   
@@ -20,7 +17,7 @@
    <br /> 	
   
   <input type="submit" value="Save" name="edit_submit" class="save" />
-  <input type="reset" value="Reset" class="reset" />
+  <input type="reset" value="Reset" class="还原" class="btn btn-warning" />
   <input type="hidden" id="id" name="id" value="{$id}" />
   </fieldset>
 </form>

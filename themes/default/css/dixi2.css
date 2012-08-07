@@ -245,9 +245,9 @@ button#reset {
 	border: 1px solid #406e84;
 }
 #list_tbody tr td {
-	font-size: 11px;
 	color: #5f5e5e;
-	padding: 9px;
+	padding: 7px;
+	text-shadow: 0 1px 0 #FFFFFF;
 }
 #list_tbody tr.infoRow td {
 	border-right: 1px solid #dfebf6;
@@ -619,7 +619,7 @@ table td {
 }
 table {
 	border:1px solid #c6d0df;
-	margin: 0 30px;
+	margin: 0 10px;
 	padding: 0;
 	width: auto;
 }
@@ -664,7 +664,7 @@ input[type=reset] span, button[type=reset] span {
 .titleRow th div {
 	float: right;
 	margin-right: -22px;
-	padding: 11px 0 0;
+	padding: 0;
 	width: 20px;
 }
 #ie7 .titleRow th div {
@@ -675,7 +675,6 @@ input[type=reset] span, button[type=reset] span {
 }
 th .titleName {
 	float: left !important;
-	padding: 11px 0px 11px 10px !important;
 	width: auto !important;
 	margin:0 !important;
 }
@@ -683,9 +682,8 @@ th .titleName {
 	color: #263D60 !important;
 }
 th .downArrow {
-	margin-top:3px;
+	/*margin-top:3px;top:3px;*/
 	position:relative;
-	top:3px;
 }
 #firefox th .downArrow {
 	top:-2px;

@@ -122,7 +122,7 @@
 {if !empty($pagination)}
 <div class="pager pager-bottom"> {$pagination} </div>
 {/if}
-<form action="{$config.ipath}get_csv.php" method="post" class="export-form">
+<form action="{$config.ipath}../get_csv.php" method="post" class="export-form">
   <input type="hidden" name="from" value="{$data.self}" />
   <input type="hidden" name="headers" value="{$header|@implode:','|upper}" />
   <div class="green-btn export-btn">

@@ -5,6 +5,7 @@
 	border: 1px solid #ddd;
 	padding: 1px;
 	border-radius: 3px;
+	display:none;
 }
 .bar {
 	background-color: #B4F5B4;
@@ -18,16 +19,24 @@
 	top:3px;
 	left:48%;
 }
+.div_left {
+	margin-left: 40px;
+	padding: 30px;
+}
 </style>
 <!-- script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script-->
-<script type="text/javascript" src="include/js/jquery.form.js"></script>
-<form action="upload/process-cn.php" method="post" enctype="multipart/form-data" id="upload_form">
-  <div class="content-headline"><i class="icon-gift"></i> 上载包含关键词的文件:</div>
-  <input type="file" name="keywords_file" size="30">
+<link rel="stylesheet" type="text/css" href="../include/bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="../include/js/jquery.form.js"></script>
+<div class="div_left">
+<form action="upload/process-cn.php" method="post" enctype="multipart/form-data" id="upload_form" class="well">
+  <label><i class="icon-upload"></i> 上载包含关键词的文件:</label>
+  <input type="file" name="keywords_file" size="50" placeholder="上载文件..." class="span3" />
+  <label><i class="icon-info-sign"></i>文件格式要求：每个关键词一行</label> 
   <div class="submit-buttons">
     <div class="green-btn">
+    <i class="icon-ok-sign"></i>
       <input type="submit" value="关键词文件上载">
-      </div>（每个关键词一行） 
+      </div>
   </div>
 </form>
 <div class="progress">
@@ -35,6 +44,7 @@
   <!--div class="percent">0%</div-->
 </div>
 <div id="status"></div>
+</div>
 <script type="text/javascript">
 (function() {
 	var bar = $('.bar');

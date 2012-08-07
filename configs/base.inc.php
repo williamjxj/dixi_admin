@@ -117,12 +117,30 @@ class BaseClass extends Smarty
   // to stdout.
   function print_array($vars) {
   	global $config;
-	if(is_array($vars) || is_object($vars)) {
+	if (!isset($config['debug']) || (! $config['debug']) ) return;
+/*	if(is_array($vars) || is_object($vars)) {
 		echo "<pre>"; print_r($vars); echo "</pre>";
 	}
 	else {
 		echo $vars."<br>\n";
 	}
+*/
+	$this->flog($vars);
+  }
+
+  function flog($vars) {
+	$file = FLOG;
+	$dt = date('Y-m-d H:i:s');
+	$out = '';
+	if(is_array($vars) || is_object($vars)) {
+		$out = print_r($out, true);
+	}
+	else $out = $vars;
+	
+	$str = '['.$dt.']['.$this->get_browser_name().']['.$this->get_ip().'] -- '.$out;
+	$fh = fopen($file, "a"); //rewind($fh);
+	fwrite($fh, $str."\n");
+	fclose($fh); //ob_start, ob_get_contents(), ob_end_flush()
   }
 
   //return rand(1,99)*time(); //bigint instead of varchar(32);
@@ -167,6 +185,30 @@ class BaseClass extends Smarty
 	}
 	return $style;
   }
+
+  function get_browser_name() {
+    if(strstr($_SERVER['HTTP_USER_AGENT'], 'Firefox')){ $id="firefox"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Safari') && !strstr($_SERVER['HTTP_USER_AGENT'], 'Chrome')){ $id="safari"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Chrome')){ $id="chrome"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Opera')){ $id="opera"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 6')){ $id="ie6"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 7')){ $id="ie7"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 8')){ $id="ie8"; }
+    elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE 9')){ $id="ie9"; }
+	else $id=$_SERVER["HTTP_USER_AGENT"];
+	return $id;
+  }
+   
+  function get_ip() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+      $ip=$_SERVER['HTTP_CLIENT_IP'];
+    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+    else
+      $ip=$_SERVER['REMOTE_ADDR'];
+    return $ip;
+  }
+
 
 }
 ?>

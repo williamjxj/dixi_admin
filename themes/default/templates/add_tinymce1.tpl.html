@@ -17,7 +17,7 @@
   <div> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
    <br />
   <input type="submit" value="Save" name="add_submit" class="save" />
-  <input type="reset" value="Reset" class="reset" />
+  <input type="reset" value="Reset" class="btn btn-warning" />
   </fieldset>
 </form>
 <iframe id="iframe_add_tinymce" name="iframe_add_tinymce" src="about:blank" frameborder="0" style="width:0;height:0;border:0px solid #fff;"></iframe>

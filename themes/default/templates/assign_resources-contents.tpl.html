@@ -64,20 +64,20 @@
           </td>
       </tr>
       <tr>
-        <td align="right" valign="middle"><label for="{$m0}">Contents:</label></td>
+        <td align="right" valign="middle"><label for="{$m0}">正文:</label></td>
         <td>
         <div class="selectWrapper">
         <select name="{$m0}[]" id="{$m0}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
   {if $r}
             <option value="{$r.cid}" title="{$r.file|escape:'html'|default:''}">{$r.author|escape:'html'} </option>
   {else}
-            <option value="">Please select a content first.</option>
+            <option value="">请先选择正文.</option>
   {/if}
           </select>
           </div>
           </td>
-        <td align="right" valign="middle"><label for="{$m1}">Assigned<br />
-          Resources:</label></td>
+        <td align="right" valign="middle"><label for="{$m1}">已分配<br />
+          资源:</label></td>
         <td>
         <div class="selectWrapper">
         <select name="{$m1}[]" id="{$m1}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
@@ -86,15 +86,15 @@
           <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[1]} - {$dc[2]}</option>
     {/foreach}
 		{else}        
-            <option value="">Assigned Resources.</option>
+            <option value="">已分配资源</option>
            {/if}
           </select>
           </div>
           </td>
            <td align="center" valign="middle"><label><a id="{$a1}" class="forward-green-arrow"></a></label>
           <label><a id="{$a2}" class="back-green-arrow"></a></label></td>
-        <td align="right" valign="middle"><label for="{$m2}">Availabe<br />
-          Resources:</label></td>
+        <td align="right" valign="middle"><label for="{$m2}">可用<br />
+          资源:</label></td>
         <td>
         <div class="selectWrapper">
         <select name="{$m2}[]"  id="{$m2}" multiple="multiple" size="30" style="min-width:{#select_min_width#}; width:{#select_width#}; max-width:{#select_max_width#}">
@@ -103,7 +103,7 @@
           <option value="{$dc[0]}" title="{$dc[2]|escape:'html'}">{$dc[1]} - {$dc[2]}</option>
     {/foreach}
 		{else}        
-            <option value="">Available Resources.</option>
+            <option value="">可用资源：</option>
          {/if}
           </select>
           </div>
@@ -113,9 +113,9 @@
         <td colspan="7" align="center">
        	  <div class="big-form-buttons">
               <div class="green-btn">
-               <input type="submit" value="Assign Resources->Contents" id="{$submit}" name="{$submit}" />
+               <input type="submit" value="分配 资源->正文" id="{$submit}" name="{$submit}" />
                </div>
-              <input type="reset" name="reset" value="Reset" />
+              <input type="reset" name="reset" value="还原" class="btn btn-warning" />
           </div>
           <span id="{$msg}" name="{$msg}" style="display: none">{$config.list.wait1}</span> &nbsp;
           {if $r}

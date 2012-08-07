@@ -26,21 +26,22 @@ function init() {
 <script language="javascript" type="text/javascript" src="<?=SITEROOT;?>include/js/doTimeout.js"></script>
 <script language="javascript" type="text/javascript">
 $(function() {
+	var ps = '<?=$_SERVER['PHP_SELF'];?>';
 	$('#refresh').click(function() {
-		$('#log').load('<?=$_SERVER['PHP_SELF'];?>?js_refresh=1').hide().fadeIn(100);
+		$('#log').load(ps+'?js_refresh=1').hide().fadeIn(100);
 	});
 	/*setTimeout( function() {
-		$('#log').load('<?=$_SERVER['PHP_SELF'];?>?js_refresh=1').hide().fadeIn(100);
+		$('#log').load(ps+'?js_refresh=1').hide().fadeIn(100);
 	}, 5000);	*/
 	$.doTimeout(5000, function() {
-		$('#log').load('<?=$_SERVER['PHP_SELF'];?>?js_refresh=1').hide().fadeIn(100);
+		$('#log').load(ps+'?js_refresh=1').hide().fadeIn(100);
 		return true;	
 	});
 });
 </script>
 </head>
 <body>
-<input type="button" id="refresh" value="Refresh" />
+<input type="button" id="refresh" value="刷新" />
 <div>
 <textarea id="log" style="height:600px; width:90%"><?php get_output(); ?></textarea>
 </div>
@@ -58,6 +59,10 @@ function get_env() {
 
 function get_output()
 {
+	if (!file_exists(TEXT_FILE) || filesize(TEXT_FILE)==0) {
+		echo '当前日志文件 ['.TEXT_FILE.']为空.';
+		return false;
+	}
 	if(get_env()=='Windows') {
 	  $fsize = round(filesize(TEXT_FILE)/1024/1024,2); //megabytes
 	  $lines = read_file(TEXT_FILE, LINES_COUNT);

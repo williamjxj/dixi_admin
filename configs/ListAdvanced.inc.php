@@ -23,7 +23,6 @@ class ListAdvanced extends ListBase
 	
 	if(strcmp($type, 'string')==0) $sql .= " = '".$id ."'";	
 	else $sql .= " = ".$id;
-	echo $sql;
 	$result = $this->mdb2->query($sql);
 	if($hash_flag)
 		$row = $result->fetchRow(MDB2_FETCHMODE_ASSOC);
