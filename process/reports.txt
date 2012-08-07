@@ -1,0 +1,40 @@
+==============  July ============== 
+
+最近我的工作按照计划进行，比较顺利。
+
+(1) 域名和服务器设置完成:
+域名: dixitruth.com
+服务器: 选用goddady公司的Dedicate Server, 是Linux的CentOs 6 操作系统, 可以ssh到服务器进行编程和配置.
+
+
+(2) 配置服务器:
+熟悉并设置了服务器，比如：
+下载安装并配置了XAMPP: Web服务器和MySQL数据库服务器。
+目录和用户的权限设置和分配。
+
+
+(3) 下载安装并测试了所需要的软件:
+(+) YII Framework 源代码
+(+) git 版本控制系统
+(+) PhpMyAdmin数据库管理工具
+(+) 从Perl的CPAN 下载安装了Scraper Scripts所需要的modules.
+(+) PHP 的PEAR的一些中间件，数据库接口模块
+(+) PHP的MDB2，Smarty模板引擎
+(+) JavaScript的jQuery 和它的Plugins, 和twitter.bootstrap包。
+(+) jQuery的一些第三方模块，比如fancybox, bbq, validator, web-font等。
+
+(4) 写了一个用户登录程序，加强系统的安全性；
+现在可以直接访问http://dixitruth.com
+用户名/密码：adminadmin / dixi123456
+
+
+(5) 写了不同的snippets codes, 来实现网页编程的不同方面，还没有把他们联系起来。
+
+
+(6) 数据库的设计和测试。完成了数据库表的设计，并表之间的关联，索引，主外键关系
+，前后台都将使用这个数据库。
+
+(7) 安装测试成功我的一些以前的项目及程序，编程将很大程度的依赖这些以前的代码。
+
+
+==============  August ============== 

@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 {*$smarty.env.PATH}{$smarty.server.SERVER_NAME*}
 {config_load file="{$config.smarty}"}
 <script language="javascript" type="text/javascript">
@@ -8,7 +9,7 @@ var monthname=new Array("January","February","March","April","May","June","July"
 var TODAY = monthname[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
 $('#title_3').val(TODAY); // $('#elm3').focus(); // no use.
 
-$(document).ready(function() {
+$(function() {
  jQuery.init_tinyMCE = function(WYSIWYG) {
   return tinyMCE.init({
 	mode : "exact",
@@ -39,31 +40,23 @@ $(document).ready(function() {
 	alert('where is elm3? can not initialize.');
   }  
 });
-
 </script>
-
 <form id="form_add_tinymce" name="form_add_tinymce" method="post" action="{$smarty.server.SCRIPT_NAME}" target="iframe_add_tinymce">
   <fieldset>
-  <legend>Add Content</legend>
-
-  <label for="title_3"> Author: </label>  
+  <label for="title_3" style="display:inline;"> 时间/标题: </label>
   <a href="javascript: fPopCalendar('title_3')">
-        <input name="title_3" id="title_3" type="text" onFocus="this.select();" size="90" />
-        <img src="{$config.path}images/cal2.jpg" width="14" height="14" alt="date" border="0"></a>
-  <br />
- <label for="notes_3"> Author: </label>
-  
+  <input name="title_3" id="title_3" type="text" onFocus="this.select();" size="90" />
+  <img src="{$config.path}images/cal2.jpg" width="14" height="14" alt="date" border="0"></a> <br />
+  <label for="notes_3"> 问题或bug: </label>
   <textarea id="notes_3" name="notes_3" style="width:60%;height:60px;"  />
   <br />
-
-  <label for="elm3"> HTML:</label>
+  <label for="elm3"> 解决方案：</label>
   <br />
-  <textarea name="elm3" id="elm3" style="width: 60%; height: 650px" accesskey="C"></textarea>
-  
+  <textarea name="elm3" id="elm3" style="width: 60%; height: 250px" accesskey="C"></textarea>
   <div> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
-   <br />
-  <input type="submit" value="Save" name="add_submit" class="save" />
-  <input type="reset" value="Reset" class="reset" />
+  <br />
+  <input type="submit" value="保存" name="add_submit" class="btn btn-primary" />
+  <input type="reset" value="还原" class="btn btn-warning" />
   </fieldset>
 </form>
-<iframe id="iframe_add_tinymce" name="iframe_add_tinymce" src="about:blank" frameborder="0" style="width:500px;height:100px;border:0px solid #fff;"></iframe>
+<iframe id="iframe_add_tinymce" name="iframe_add_tinymce" src="about:blank" frameborder="0" style="width:0px;height:0px;border:0px solid #fff;"></iframe>

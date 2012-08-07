@@ -1,8 +1,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {config_load file="{$config.smarty}"}
+
+<form id="form_add_tinymce" name="form_add_tinymce" method="post" action="{$smarty.server.SCRIPT_NAME}" target="iframe_add_tinymce">
+  <fieldset>
+  <legend>Add Content</legend>
+
+  <label for="wp_title_3"> Author: </label>
+  
+  <input type="text" id="wp_title_3" name="wp_title_3" size="90"  />
+  <br />
+
+  <label for="elm3"> HTML:</label>
+  <br />
+  <textarea name="elm3" id="elm3" style="width: 60%; height: 650px" accesskey="C"></textarea>
+  
+  <div> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
+   <br />
+  <input type="submit" value="Save" name="add_submit" class="save" />
+  <input type="reset" value="Reset" class="reset" />
+  </fieldset>
+</form>
+<iframe id="iframe_add_tinymce" name="iframe_add_tinymce" src="about:blank" frameborder="0" style="width:0;height:0;border:0px solid #fff;"></iframe>
+
 <script language="javascript" type="text/javascript">
 
-$(document).ready(function() {
+$(function() {
   
  jQuery.init_tinyMCE = function(WYSIWYG) {
   return tinyMCE.init({
@@ -36,24 +58,3 @@ $(document).ready(function() {
 });
 
 </script>
-
-<form id="form_add_tinymce" name="form_add_tinymce" method="post" action="{$smarty.server.SCRIPT_NAME}" target="iframe_add_tinymce">
-  <fieldset>
-  <legend>Add Content</legend>
-
-  <label for="wp_title_3"> Author: </label>
-  
-  <input type="text" id="wp_title_3" name="wp_title_3" size="90"  />
-  <br />
-
-  <label for="elm3"> HTML:</label>
-  <br />
-  <textarea name="elm3" id="elm3" style="width: 60%; height: 650px" accesskey="C"></textarea>
-  
-  <div> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
-   <br />
-  <input type="submit" value="Save" name="add_submit" class="save" />
-  <input type="reset" value="Reset" class="reset" />
-  </fieldset>
-</form>
-<iframe id="iframe_add_tinymce" name="iframe_add_tinymce" src="about:blank" frameborder="0" style="width:0;height:0;border:0px solid #fff;"></iframe>

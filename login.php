@@ -25,7 +25,7 @@ class Login
 <script type="text/javascript" src="<?=SITEROOT;?>include/validationEngine/jquery.validationEngine-en.js"></script>
 <script type="text/javascript" src="<?=SITEROOT;?>include/validationEngine/jquery.validationEngine.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(function() {
 var form = $('#login_form');
 form.validationEngine();
 $(form).submit(function(event){
