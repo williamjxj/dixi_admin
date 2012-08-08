@@ -161,7 +161,7 @@ $('#username').select().focus();
 	}
 	
 	function update_logout_info() {
-		$query = "update login_info set logout='Y', logout_time=NULL, session=NULL where session='".$this->get_session()."'";
+		$query = "update login_info set logout='Y', logout_time=NULL, session=NULL where session='".session_id()."'";
 		$affected = $this->mdb2->exec($query);
 		if (PEAR::isError($affected)) {
 			die($affected->getMessage());
