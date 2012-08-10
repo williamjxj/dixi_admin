@@ -1,21 +1,41 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <base target="mainFrame">
 <link rel="stylesheet" type="text/css" href="{$config.path}css/header.css" />
 <link rel="stylesheet" type="text/css" href="{$config.ipath}bootstrap/css/bootstrap.min.css" />
 <script type="text/javascript" src="{$config.ipath}js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="{$config.ipath}js/cookie.js"></script>
+<script type="text/javascript" src="{$config.ipath}bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+;(function($) {
+  getDateTime = function() {
+	var dt = new Date();
+	return dt.getFullYear() + '年' + (dt.getMonth() + 1) + '月' + dt.getDate() + '日 ' + dt.getHours() + '时' + dt.getMinutes() + '分' + dt.getSeconds() + '秒';
+  };
+})(jQuery);
+$(function() {
+  $('#dt').html(getDateTime());
+});
+</script>
 </head>
 <body>
 <div id="header_{$config.browser_id}">
-  <div class="dixilogo"></div>
-  <div id="userNav">
-    <i class="icon-share"></i><a onclick="parent.document.location.href=this.href;return false;" href="login.php?logout=1">注销</a>
+  <div class="row">
+    <div class="dixilogo"></div>
+    <div class="span8 hlist"> <span class="user-info"><i class="icon-check icon-white"></i>&nbsp;欢迎 <strong> {$smarty.session.dixitruth_admin.username}, </strong> <i class="icon-time icon-white"></i>&nbsp;当前时间: <span id="dt"></span> </span> &nbsp;&nbsp; <a class="btn btn-danger" href="login.php?logout=1" onClick="parent.document.location.href=this.href;return false;"><i class="icon-share icon-white"></i> 注销</a> <a class="btn btn-info" href="#"><i class="icon-info-sign icon-white"></i> 更多信息&raquo;</a> </div>
+    <div class="btn-toolbar" style="margin-bottom: 9px">
+      <div class="btn-group"> <a href="#" class="btn btn-primary"><i class="icon-user icon-white"></i>帮助</a> <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#"><i class="icon-pencil"></i> 联络我们</a></li>
+          <li><a href="#"><i class="icon-trash"></i> 客户服务</a></li>
+          <li><a href="#"><i class="icon-ban-circle"></i> 帮助中心</a></li>
+          <li class="divider"></li>
+          <li><a href="#"><i class="icon-cog"></i> 系统管理员</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div id="user-info"><i class="icon-check"></i>&nbsp;欢迎 <span> {$smarty.session.dixitruth_admin.username} </span>, 
-  <i class="icon-time"></i>&nbsp;当前时间:<span> {$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'} </span></div>
 </div>
 <script language="javascript" type="text/javascript">
 $(function() {
