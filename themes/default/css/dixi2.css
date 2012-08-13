@@ -1266,8 +1266,9 @@ a img {
 	padding:0;
 }
 #list_table-x table {
-	margin-left:0
+	margin-bottom: 20px !important;
+	margin-left:0;
 }
 #chrome #list_table-x table {
-	margin-left:30px
+	margin-left:30px;
 }

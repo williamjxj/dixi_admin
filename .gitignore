@@ -4,5 +4,4 @@ templates_c/*
 resources/
 logs/
 cache/
-themes/images/
 test/*

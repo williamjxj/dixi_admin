@@ -36,9 +36,11 @@ input:hover.login {
 }
 .dixilogo {
   background: url(./images/logo.png) no-repeat left top transparent;
-  float: left;
-  height: 81px;
-  width: 981px;  
+  margin-top: 20px;
+  margin-left:20%;
+  margin-bottom:20px;
+  height: 96px;
+  width: 290px;  
 }
 #div_login {
 	background: url(./images/login-box.png) no-repeat;

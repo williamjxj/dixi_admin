@@ -14,7 +14,7 @@
   <div class="modal-body"> </div>
   <div class="modal-bottom"> </div>
 </div>
-<div class="listing-heading"> <strong>{$data.self|default:{$config.header.title}|capitalize}</strong> &nbsp;
+<div class="listing-heading"> <strong>{$data.self_i18n|default:{$config.header.title}|capitalize}</strong> &nbsp;
   {if !empty($pagination)}
   Page {$data.current_page}, Total {$data.total_pages} pages / {$data.total_rows} records
   {/if} </div>

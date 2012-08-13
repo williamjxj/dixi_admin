@@ -188,6 +188,7 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 
 	$pagination = $kw->draw( $data['current_page'], $data['total_pages'] );
 	
+	$data['self_i18n'] = '¹Ø¼ü´Ê';
 	$kw->assign('config', $config);
 	$kw->assign('header', $header);
 	$kw->assign('data', $data);
