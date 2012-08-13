@@ -23,14 +23,21 @@
 	margin-left: 40px;
 	padding: 30px;
 }
+#upload_form {
+	height: 160px;
+}
+div.submit-buttons {
+	padding-top: 30px;
+	padding-left: 50%;
+}
 </style>
 <!-- script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script-->
-<link rel="stylesheet" type="text/css" href="../include/bootstrap/css/bootstrap.css" />
-<script type="text/javascript" src="../include/js/jquery.form.js"></script>
+<!--link rel="stylesheet" type="text/css" href="./include/bootstrap/css/bootstrap.css" /-->
+<script type="text/javascript" src="./include/js/jquery.form.js"></script>
 <div class="div_left">
 <form action="upload/process-cn.php" method="post" enctype="multipart/form-data" id="upload_form" class="well">
   <label><i class="icon-upload"></i> 上载包含关键词的文件:</label>
-  <input type="file" name="keywords_file" size="50" placeholder="上载文件..." class="span3" />
+  <input type="file" name="keywords_file" size="70" placeholder="上载文件..." class="span3" />
   <label><i class="icon-info-sign"></i>文件格式要求：每个关键词一行</label> 
   <div class="submit-buttons">
     <div class="green-btn">

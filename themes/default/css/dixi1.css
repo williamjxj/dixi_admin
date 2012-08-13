@@ -24,7 +24,6 @@ form#search_form label{color:#47586a; font-weight:bold;}
 body #search_form{background:#f7fbff !important;}
 body #search_form fieldset{border:none ;}
 body #search_form legend{display:none;}
-/*
 body {
 	font-family: Arial, Helvetica, sans-serif;	
 	background: url(../images/bg.png);
@@ -34,8 +33,6 @@ form {
 	padding: 0;
 	border: 0;
 }
-td {
-}
 input {
 	font-size: 12px;
 	color: #686868;
@@ -43,47 +40,23 @@ input {
 	font-size: 11px;
 	color: #686868;
 }
-input[type="button"] {
-}
 input[type="checkbox"] {
 	margin: 0;
 	padding: 0;
 	width: 13px;
 	height: 13px;
 }
-input[type="file"] {
-}
-input[type="hidden"] {
-}
-input[type="image"] {
-}
-input[type="password"] {
-}
-input[type="radio"] {
-}
-input[type="reset"] {
-}
-input[type="submit"] {
-}
-input[type="text"] {
-}
 textarea {
 	border: 1px solid #D1D1D1;
 	font-size: 11px;
 	color: #686868;
 }
-textarea[wrap="hard"] {
-}
-textarea[wrap="off"] {
-}
-textarea[wrap="physical"] {
-}
-textarea[wrap="soft"] {
-}
-textarea[wrap="virtual"] {
-}
-textarea[disabled="disabled"] {
-}
+textarea[wrap="hard"] { }
+textarea[wrap="off"] { }
+textarea[wrap="physical"] { }
+textarea[wrap="soft"] { }
+textarea[wrap="virtual"] { }
+textarea[disabled="disabled"] { }
 select {
 	padding: 2px;
 	margin: 0;
@@ -95,51 +68,16 @@ select[disabled="disabled"] {
 }
 select[multiple="multiple"] {
 }
-select option {
-}
-select optgroup {
-}
 ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-ul[type="circle"] {
-}
-ul[type="disc"] {
-}
-ul[type="square"] {
-}
 ul li {
 	margin: 0;
 	padding: 0;
 }
-ul li[type="1"] {
-}
-ul li[type="a"] {
-}
-ul li[type="circle"] {
-}
-ul li[type="disc"] {
-}
-ul li[type="i"] {
-}
-ul li[type="square"] {
-}
-table {
-	width: 100%;
-	border: 0;
-	padding: 0;
-	margin: 0;
-}
-table tr {
-}
-table tr th {
-}
 
-#leftNav_wrap a {
-	margin-bottom: 1px;
-}
 fieldset {
 	padding: 1em;
 	font:80%/1 sans-serif;
@@ -203,5 +141,4 @@ h2 {
 	font-size:13px;
 	margin:15px 0 0 0;
 }
-*/
 
