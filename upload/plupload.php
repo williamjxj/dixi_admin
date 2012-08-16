@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('SITEROOT', '.');
+define('SITEROOT', '../');
 require_once(SITEROOT.'/configs/setting.inc.php');
 require_once(SITEROOT.'/configs/base.inc.php');
 
@@ -11,14 +11,14 @@ header("Pragma: no-cache");
 $mdb2 = BaseClass::pear_connect_admin();
 
 if(isset($_POST['sites'])) {
-	$t = get_sname_from_sid($_POST['sites'], $mdb2);
+	//$t = get_sname_from_sid($_POST['sites'], $mdb2);
+	$targetDir = SITEROOT.'resources/';
 }
 else {
 	$t = 'generic';
+	$targetDir = SITEROOT.'resources/' . $t . '/';
 }
-//define('DIRECTORY_SEPARATOR', '/');
-//$targetDir = SITEROOT . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . $t; SITEROOT .  '/resources/' . $t . '/';
-$targetDir = './resources/' . $t . '/';
+
 if(!file_exists($targetDir)) mkdir($targetDir);
 
 @set_time_limit(5 * 60);
@@ -48,7 +48,7 @@ if (isset($_SERVER["CONTENT_TYPE"]))
 
 if (strpos($contentType, "multipart") !== false) {
 	if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
-		// Open temp file
+		// Open temp file		
 		$out = fopen($targetDir . $fileName, $chunk == 0 ? "wb" : "ab");
 		if ($out) {
 			// Read binary input stream and append it to temp file
@@ -58,7 +58,7 @@ if (strpos($contentType, "multipart") !== false) {
 				while ($buff = fread($in, 4096))
 					fwrite($out, $buff);
 			} else
-				die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+				die('fail');
 			fclose($in);
 			fclose($out);
 			@unlink($_FILES['file']['tmp_name']);
@@ -87,27 +87,27 @@ if (strpos($contentType, "multipart") !== false) {
 
 // if (!file_exists(RESOURCES_DIR)) mkdir(RESOURCES_DIR) or die ("Permission not allowed");
 if( isset($_FILES) && is_array($_FILES) && count($_FILES)>0 ) {
-	process_form($mdb2, $targetDir);
+	process_form($mdb2);
 }
 
 ////////////////////////////////////////
-function process_form($mdb2, $rdir)
+function process_form($mdb2)
 {
+	$rdir = 'resources/'; //hardcode to refer: $web/resources/ directory.
 	$h = array();
 	$h['author'] = $mdb2->escape(trim($_POST['author']));
 	$h['notes'] = $_POST['notes']?$mdb2->escape(trim($_POST['notes'])):'';
-	$h['uploader'] = isset($_SESSION['dixitruth_admin']['username']) ? $_SESSION['dixitruth_admin']['username'] : 'admin';
+	$h['uploader'] = isset($_SESSION[PACKAGE]['username']) ? $_SESSION[PACKAGE]['username'] : 'admin';
 
 	$site_id = $_POST['sites'];
 	$mid = $_POST['modules'];
-	$division = $_POST['divisions'];
 	
 	$h['file'] = $_FILES['file']['name'];
 	$h['type'] = $_FILES['file']['type'];
 	$h['size'] = (int)$_FILES['file']['size'];
 
-	$query = "INSERT INTO resources(file,type,size,path,author,notes,createdby, created, updatedby, site_id,mid,division,sname,mname) VALUES(
-	  '".$h['file']."', '".$h['type']."', ".$h['size'].", '".$rdir."', '".$h['author']."', '".$h['notes']."', '".$_SESSION['dixitruth_admin']['username']."', NOW(), '".$admin."', ".$site_id.", ".$mid.", '". $division . "', '".get_sname_from_sid($site_id, $mdb2)."', '".get_mname_from_mid($mid, $mdb2)."')";
+	$query = "INSERT INTO resources(file,type,size,path,author,notes,createdby, created, updatedby, site_id,mid,sname,mname) VALUES(
+	  '".$h['file']."', '".$h['type']."', ".$h['size'].", '".$rdir."', '".$h['author']."', '".$h['notes']."', '".$_SESSION[PACKAGE]['username']."', NOW(), '".$admin."', ".$site_id.", ".$mid.", '".get_sname_from_sid($site_id, $mdb2)."', '".get_mname_from_mid($mid, $mdb2)."')";
 
 	$affected = $mdb2->exec($query);
 	if (PEAR::isError($affected)) {

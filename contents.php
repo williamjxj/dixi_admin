@@ -40,13 +40,6 @@ class ContentsClass extends ListAdvanced
 		  'db_type' => 'int',
 		),
 		array(
-		  'type' => 'select',
-		  'display_name' => 'Division:',
-		  'id' => 'division_s',
-		  'name' => 'division',
-		  'call_func' => 'get_divisions_options',
-		),
-		array(
 			'type' => 'radio',
 			'display_name' => 'Active:',
 			'id' => 'active_s',
@@ -115,13 +108,6 @@ class ContentsClass extends ListAdvanced
 		  'name' => 'mname',
 		),
 		array(
-		  'type' => 'select',
-		  'display_name' => 'Division:',
-          'name_value' => 'division',
-		  'name' => 'division',
-		  'call_func' => 'get_divisions_options',
-		),
-		array(
 			'type' => 'radio',
 			'display_name' => 'Active:',
 			'name' => 'active',
@@ -177,22 +163,13 @@ class ContentsClass extends ListAdvanced
   }
 
   function get_contents_options_by_sid($site_id){
-	$sql = "SELECT cid, linkname, author, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, division FROM contents c WHERE site_id=" . $site_id . " ORDER BY linkname";
+	$sql = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE site_id=" . $site_id . " ORDER BY linkname";
 	return 	$this->get_select_options($sql);
   }
   function get_contents_options_by_mid($module_id){
-	$sql = "SELECT cid, linkname, author, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, division FROM contents c WHERE mid=" . $module_id . " ORDER BY linkname";
+	$sql = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE mid=" . $module_id . " ORDER BY linkname";
 	return 	$this->get_select_options($sql);
   }  
-  function get_contents_options_by_division($module_id, $division){
-  	if($division) {
-		$sql = "SELECT cid, concat(linkname,'[',mid,']','[',division,']') as linkname, author, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, division FROM contents c WHERE mid=" . $module_id . " AND division='".$division."' ORDER BY linkname";
-		return 	$this->get_select_options($sql);
-	}
-	else
-		return $this->get_contents_options_by_mid($module_id);
-  }  
-
   function update_modules_contents()
   {
 	$mid = intval($_POST['modules']);
@@ -205,9 +182,9 @@ class ContentsClass extends ListAdvanced
 	}
 	foreach($cids as $cid) {
 		$sql = "INSERT INTO contents(
-			linkname,author,notes,content,site_id,mid,division,weight,active,createdby,created) 		
+			linkname,author,notes,content,site_id,mid,weight,active,createdby,created) 		
 		SELECT
-			linkname,author,notes,content,site_id,".$mid.",division,weight,'Y','".$this->username."',NOW()
+			linkname,author,notes,content,site_id,".$mid.",weight,'Y','".$this->username."',NOW()
 		FROM contents
 		WHERE cid = ".$cid;
 		echo $sql."\n";
@@ -248,7 +225,6 @@ class ContentsClass extends ListAdvanced
 	*/
   function edit($username)
   {
-	$division = isset($_POST['division'])?$_POST['division']:'';
 	$cid = $_POST['cid'];
 	$active = $_POST['active'];
 
@@ -267,7 +243,7 @@ class ContentsClass extends ListAdvanced
 		 "author    = '" . $author ."', " .
 		 "notes    = '" . $notes . "', " .
 		 "active = '" . $active . "', " .
-		 "division = '" . $division . "', updatedby='".$username."' WHERE cid =  " . $cid; 
+		 "updatedby='".$username."' WHERE cid =  " . $cid; 
 
 	$affected = $this->mdb2->exec($query);
 	if (PEAR::isError($affected)) {
@@ -282,7 +258,6 @@ class ContentsClass extends ListAdvanced
 	$ary['linkname'] = $row['linkname'];
 	$ary['author'] = $row['author'];
 	$ary['notes'] = $row['notes'];
-	$ary['division'] = $row['division'];
 	$ary['content'] = $row['content'];
 	$encodedArray = array_map("utf8_encode", $ary);
 	return $encodedArray;
@@ -293,7 +268,6 @@ class ContentsClass extends ListAdvanced
   {
 	$site_id = $_POST['sites'];
 	$mid = $_POST['modules'];
-	$division = isset($_POST['divisions'])?$_POST['divisions']:'';
 	if(isset($_POST['content'])) $content = $_POST['content'];
 	elseif(isset($_POST['elm3'])) $content = $_POST['elm3'];
 
@@ -312,9 +286,9 @@ class ContentsClass extends ListAdvanced
 	// <cufon...>not work.
 	$content = strip_tags($content,$this->allowedTags);
 
-	$query = "INSERT INTO contents (linkname, author, notes, content, createdby, created, updatedby,site_id,mid,division,sname,mname)
+	$query = "INSERT INTO contents (linkname, author, notes, content, createdby, created, updatedby,site_id,mid,sname,mname)
 		VALUES('".$linkname."', '".$author."', '".$notes."', '" . $content . "', '" . $this->username . "', NOW(), '".$this->username."', ".
-		$site_id . ", " . $mid . ", '" . $division . "', '".$this->get_sname_from_sid($site_id)."', '".$this->get_mname_from_mid($mid)."')";
+		$site_id . ", " . $mid . ", '".$this->get_sname_from_sid($site_id)."', '".$this->get_mname_from_mid($mid)."')";
 
 	$affected = $this->mdb2->exec($query);
 	if (PEAR::isError($affected)) {
@@ -332,7 +306,6 @@ class ContentsClass extends ListAdvanced
 	$ary['content'] = $row['content'];
 	$ary['site_id'] = $row['site_id'];
 	$ary['mid'] = $row['mid'];
-	$ary['division'] = $row['division'];
 	$encodedArray = array_map("utf8_encode", $ary);
 	return $encodedArray;
   }
@@ -341,7 +314,6 @@ class ContentsClass extends ListAdvanced
   {
 	$site_id = $_POST['sites'];
 	$mid = $_POST['modules'];
-	$division = $_POST['divisions'];
 	$cid = $_POST['id'];
 	if(isset($_POST['content'])) $content = $_POST['content'];
 	else foreach($_POST as $k=>$v) if(preg_match("/^elm_/", $k)) $content = $_POST[$k];
@@ -368,7 +340,7 @@ class ContentsClass extends ListAdvanced
 		 "content  = '" . $content . "', " .
 		 "site_id  = " . $site_id . ", " .
 		 "mid      = " . $mid . ", " .
-		 "division = '" . $division . "', updatedby = '".$this->username."' WHERE cid =  " . $cid; 
+		 "updatedby = '".$this->username."' WHERE cid =  " . $cid; 
 
 	$affected = $this->mdb2->exec($query);
 	if (PEAR::isError($affected)) {
@@ -433,19 +405,18 @@ class ContentsClass extends ListAdvanced
 	$ary['sname'] = $row['sname'];
 	$ary['mid'] = $row['mid'];
 	$ary['mname'] = $row['mname'];
-	$ary['division'] = $row['division'];
 	$encodedArray = array_map("utf8_encode", $ary);
 	return $encodedArray;
   }
   // different with resources.php.
   function select_assigned_contents($mid, $site_id)
   {
-	$sqlc = "SELECT cid, linkname, author, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, division  FROM contents c WHERE active='Y' AND mid=".$mid." AND site_id=".$site_id." ORDER BY linkname";
+	$sqlc = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE active='Y' AND mid=".$mid." AND site_id=".$site_id." ORDER BY linkname";
 	return 	$this->get_select_options($sqlc, false);
   }  
   function select_available_contents($mid, $site_id)
   {
-	$sqlc = "SELECT cid, linkname, author, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, division FROM contents c WHERE active='Y' AND mid!=".$mid." AND site_id=".$site_id." ORDER BY linkname";
+	$sqlc = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE active='Y' AND mid!=".$mid." AND site_id=".$site_id." ORDER BY linkname";
 	return 	$this->get_select_options($sqlc, false);
   }
 
@@ -466,24 +437,6 @@ class ContentsClass extends ListAdvanced
 	return preg_replace("/,$/", '', $emails);
   }
 
-  /**
-  [cid] => 33
-    [linkname] => ...
-    [author] => OneFamily
-    [notes] => ...
-    [content] =>  ...
-	  [site_id] => 1
-    [sname] => SurreyOneFamily
-    [mid] => 1
-    [mname] => 
-    [division] => 
-    [weight] => 0
-    [active] => Y
-    [createdby] => OneFamily
-    [created] => 2012-02-12 22:06:17
-    [updatedby] => OneFamily
-    [updated] => 2012-02-15 15:03:52	
-	*/
   function send_email($cid) 
   {
 	$query = "SELECT * FROM contents WHERE cid=" . $cid;	
@@ -556,7 +509,6 @@ elseif(isset($_GET['js_edit_form_3'])) {
   $data['contents'] = $cont->get_contents_array();
   $data['sites'] = $cont->get_sites_array();
   $data['modules'] = $cont->get_modules_array();
-  $data['divisions'] = $cont->get_divisions_array();
   $data['record'] = $record;
   
   $cont->assign('config', $config);
@@ -579,7 +531,6 @@ elseif(isset($_GET['js_edit_form_4'])) {
   }
   $data['sites'] = $cont->get_sites_array();
   $data['modules'] = $cont->get_modules_array();
-  $data['divisions'] = $cont->get_divisions_array();  
   $cont->assign('config', $config);
   $cont->assign("data", $data);
   $cont->display($config['templs']['assign_mc']); //'assign_modules-contents.tpl.html'
@@ -600,7 +551,6 @@ elseif(isset($_GET['js_edit_form_5'])) {
   }
   $data['sites'] = $cont->get_sites_array();
   $data['modules'] = $cont->get_modules_array();
-  $data['divisions'] = $cont->get_divisions_array();  
   $cont->assign('config', $config);
   $cont->assign("data", $data);
   $cont->display($config['templs']['assign_rc']); //'assign_resources-contents.tpl.html'
@@ -623,7 +573,6 @@ elseif(isset($_GET['js_add_form'])) {
 	//$cont->get_add_form($ary);
   $data['sites'] = $cont->get_sites_array();
   //$data['modules'] = $cont->get_modules_array();
-  $data['divisions'] = $cont->get_divisions_array();
   
   $cont->assign('config', $config);
   $cont->assign("data", $data);
@@ -636,18 +585,11 @@ elseif(isset($_REQUEST['js_get_modules'])) {
 	$cont->get_modules_options($_REQUEST['site_id']);
 }
 
-elseif(isset($_REQUEST['js_get_divisions'])) {
-	$sid = isset($_REQUEST['site_id']) ? $_REQUEST['site_id'] : '';
-	$cont->get_divisions_options($sid);
-}
 elseif(isset($_REQUEST['js_get_contents_by_sid'])) {
 	$cont->get_contents_options_by_sid($_REQUEST['site_id']);
 }
 elseif(isset($_REQUEST['js_get_contents_by_mid'])) {
 	$cont->get_contents_options_by_mid($_REQUEST['mid']);
-}
-elseif(isset($_REQUEST['js_get_contents_by_division'])) {
-	$cont->get_contents_options_by_division($_REQUEST['mid'], $_REQUEST['division']);
 }
 elseif(isset($_GET['js_assign_form'])) {
 	$data = array();

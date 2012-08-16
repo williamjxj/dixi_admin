@@ -35,21 +35,7 @@ class ModulesClass extends ListAdvanced
 			'display_name' => 'URL:',
 			'id' => 'url_s',
 			'name' => 'url',
-		), /*
-		array(
-		  'type' => 'select',
-		  'display_name' => 'Division:',
-		  'id' => 'division_s',
-		  'name' => 'division',
-		  'call_func' => 'get_divisions_options',
 		),
-		array(
-			'type' => 'text',
-			'display_name' => 'Description:',
-			'id' => 'description_s',
-			'name' => 'description',
-		),
-		*/
 		array(
 			'type' => 'text',
 			'display_name' => 'Name:',
@@ -106,13 +92,6 @@ class ModulesClass extends ListAdvanced
 		  'name_value' => 'site_id',
 		  'name' => 'site_id',
 		),
-		/*
-		array(
-		  'type' => 'select',
-		  'display_name' => 'Division:',
-		  'name' => 'division',
-		  'call_func' => 'get_divisions_options',
-		), */
 		array(
 			'type' => 'text',
 			'display_name' => 'ID:',

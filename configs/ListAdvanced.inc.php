@@ -143,8 +143,12 @@ class ListAdvanced extends ListBase
 		}
 	}
   if(empty($id)) return "There is NO ID for this form."; //$this->error
-  
-	$sql = preg_replace("/,\s+$/", '', $sql);
+
+	if(isset($_SESSION[PACKAGE]['username']) && $_SESSION[PACKAGE]['username']) {
+		$updatedby = $_SESSION[PACKAGE]['username'];
+		$sql .= "updatedby = '" .  $updatedby . "', ";
+	}
+	$sql = preg_replace("/,\s+$/", '', $sql);	
 
 	$query="UPDATE " . $this->table_array['table_name'] . "  SET " . $sql . $sql1;
 

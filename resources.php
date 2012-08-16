@@ -70,25 +70,6 @@ class ResourcesClass extends ListAdvanced
 			'id' => 'updatedby_s',
 			'name' => 'updatedby',
 		),
-		/*
-		array(
-			'type' => 'textarea',
-			'display_name' => 'Notes:',
-			'id' => 'notes_s',
-			'name' => 'notes',
-		),
-		array(
-			'type' => 'radio',
-			'display_name' => 'Active:',
-			'name' => 'active',
-			'lists' => array(
-				'N' => 'No',
-				'Y' => 'Yes',
-				'A' => 'All',
-			),
-			'checked' => 'A',
-			'ignore' => 'A',
-		), */
 		array(
 			'type' => 'date',
 			'display_name' => 'Created:',

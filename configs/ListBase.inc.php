@@ -9,16 +9,16 @@ class ListBase extends BaseClass
   function __construct()
   {
 	global $config;
-        parent::__construct();
-        $this->url = $_SERVER['PHP_SELF'];
-        $this->data = array();
+	parent::__construct();
+	$this->url = $_SERVER['PHP_SELF'];
+	$this->data = array();
 	$this->ini_array = array();
 	$this->table_array = array();
 	$this->coltypes_array = array();
 	$this->html = '';
 	$this->ary1 = array('users', 'sites', 'levels');
-	$this->username = $_SESSION[PACKAGE]['username'];
-	$this->userid = $_SESSION[PACKAGE]['userid'];
+	$this->username = isset($_SESSION[PACKAGE]['username'])?$_SESSION[PACKAGE]['username']:'demo';
+	$this->userid = isset($_SESSION[PACKAGE]['userid'])?$_SESSION[PACKAGE]['userid']:2;
 
 	if(isset($_COOKIE[$this->project]['path']) && (!empty($_COOKIE[$this->project]['path'])))
 		$config['path'] = SITEROOT.'themes/'.$_COOKIE[$this->project]['path'].'/';
@@ -169,9 +169,9 @@ class ListBase extends BaseClass
 	}
 
 	$acy = array('module'=>'', 'contents'=>'', 'resources'=>'');
-	if (isset($_SESSION['dixitruth_admin']['userlevel']) && $_SESSION['dixitruth_admin']['userlevel']!=1) {
-		$userlevel = " WHERE level = " . $_SESSION['dixitruth_admin']['userlevel'];
-		$al = $this->get_sites_by_level($_SESSION['dixitruth_admin']['userlevel']);
+	if (isset($_SESSION[PACKAGE]['userlevel']) && $_SESSION[PACKAGE]['userlevel']!=1) {
+		$userlevel = " WHERE level = " . $_SESSION[PACKAGE]['userlevel'];
+		$al = $this->get_sites_by_level($_SESSION[PACKAGE]['userlevel']);
 		if(count($al)>0) {
 			$str = implode(',', $al);
 			$acy['module'] = " AND m.site_id IN ($str) ";
@@ -233,7 +233,7 @@ class ListBase extends BaseClass
 		if (isset($userlevel)) $query .= $userlevel;
 	}
 	elseif ($this->self=='pages') {
-                $al = $this->get_sites_by_level($_SESSION['dixitruth_admin']['userlevel']);
+                $al = $this->get_sites_by_level($_SESSION[PACKAGE]['userlevel']);
 		if(count($al)>0) {
 			$usersites = " WHERE site_id IN (" . implode(',',$al) . ")";
 			$query .= $usersites;
@@ -515,6 +515,17 @@ class ListBase extends BaseClass
   function get_keyword_options() {
 	$sql = "SELECT kid, name, description FROM " . $this->table . " where active='Y' ORDER BY name";
 	return 	$this->get_select_options($sql);
+  }
+  function get_group_options() {
+?>
+<option value=0> --- 请选择 --- </option>
+<option value="1" title="组别1">组别 1</option>
+<option value="2" title="组别1">组别 2</option>
+<option value="3" title="组别1">组别 3</option>
+<option value="4" title="组别1">组别 4</option>
+<option value="5" title="组别1">组别 5</option>
+<option value="6" title="组别1">组别 6</option>
+<?php
   }
   function get_frequency_options() {
 	$sql = "SELECT distinct frequency FROM " . $this->table . " ORDER BY frequency";

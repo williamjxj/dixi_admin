@@ -26,13 +26,10 @@
       <td><label> {$item['display_name']} </label></td>
       <td><div class="selectWrapper">
           <select name="{$item['name']}">
-            
 	{if $column_value}
-		
             <option value="{$column_value}">{$column_value|escape:'html'}</option>
-            
-	{/if}
-	
+	{/if}          
+	{if $config.self=='categories'}{obj->get_group_options}{/if}	
           </select>
         </div></td>
       {elseif $item.type=='date'}

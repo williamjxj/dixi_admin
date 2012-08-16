@@ -34,7 +34,7 @@ class CategoryClass extends ListAdvanced
 		  'display_name' => '频率:',
 		  'id' => 'frequency_s',
 		  'name' => 'frequency',
-		  'call_func' => 'get_frequency_options',
+		  'call_func' => 'get_group_options',
 		  'db_type' => 'int',
 		),
 		array(
@@ -88,8 +88,14 @@ class CategoryClass extends ListAdvanced
 		array(
 			'type' => 'text',
 			'display_name' => '链接地址:',
-			'id' => 'url_s',
-			'name' => 'url',
+			'name' => 'curl',
+		),
+		array(
+		  'type' => 'select',
+		  'display_name' => '频率:',
+		  'name' => 'frequency',
+		  'call_func' => 'get_group_options',
+		  'db_type' => 'int',
 		),
 		array(
 			'type' => 'textarea',
@@ -121,6 +127,14 @@ class CategoryClass extends ListAdvanced
 		  'id' => 'name',
 		  'name' => 'name',
 		),
+		array(
+		  'type' => 'select',
+		  'display_name' => '频率:',
+		  'id' => 'frequency',
+		  'name' => 'frequency',
+		  'call_func' => 'get_group_options',
+		  'db_type' => 'int',
+		),		
 		array(
 		  'type' => 'text',
 		  'display_name' => '链接地址:',
@@ -239,6 +253,7 @@ elseif(isset($_REQUEST['action'])) {
 	switch($_REQUEST['action']) {
 		case 'edit':
 		  $ary = $cate->get_edit_form_settings();
+		  
 		  echo json_encode($cate->edit_table($ary));
 			break;
 		case 'delete':
