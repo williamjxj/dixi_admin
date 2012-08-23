@@ -1,5 +1,4 @@
 <?php
-// alter table divisions add column sname varchar(255) default null after site_id
 session_start();
 error_reporting(E_ALL);
 define('SITEROOT', './');
@@ -142,12 +141,6 @@ class CommonUsersClass extends ListAdvanced
 		  'name' => 'username',
 		),
 		array(
-		  'type' => 'text',
-		  'display_name' => 'GWL:',
-		  'id' => 'gwl',
-		  'name' => 'gwl',
-		),
-		array(
 		  'type' => 'password',
 		  'display_name' => 'Password:',
 		  'id' => 'password1',
@@ -187,12 +180,6 @@ class CommonUsersClass extends ListAdvanced
 				'F' => 'Female',
 			),
 			'checked' => 'M',
-		),
-		array(
-		  'type' => 'select',
-		  'display_name' => 'Division:',
-		  'id' => 'division',
-		  'name' => 'division',
 		),
 		array(
 		  'type' => 'text',

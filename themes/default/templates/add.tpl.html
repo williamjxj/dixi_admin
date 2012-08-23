@@ -46,10 +46,8 @@
       <select name="{$item['name']}" id="{$item['id']}" class="validate[required]">          
     {if $config.self=='users' || $config.self=='sites'}{obj->get_level}
 	{elseif $config.self=='items'}{obj->get_category_options}
-	{elseif $config.self=='pages'}{obj->get_sites_options}
 	{elseif $config.self=='modules'}{obj->get_sites_options}
 	{elseif $config.self=='categories'}{obj->get_group_options}
-	{elseif $config.self=='common_users'}{obj->get_divisions_options}
 	{/if}          
       </select>
     </div>
@@ -84,7 +82,6 @@
   <div class="input">
     <label> {$item['display_name']} </label>
     <input name="{$item['name']}" id="{$item['name']}" type="file" class="validate[required,file]" size="50" />
-    <!--style="width:250px; border:solid 1px !important;" -->
   </div>
 
   {elseif $item['type']=='checkbox'}
@@ -124,7 +121,7 @@ this_form.bind('submit', function(event) {
 	var $data = this_form.serialize()+'&action=add';
 	{if  $config.self=='items'}
 		$data += '&category='+$('#cid').find('option:selected').text();
-		alert($data);
+		//alert($data);
 	{/if}
 	if(this_form.validationEngine({ returnIsValid:true })) {
 		$.ajax({

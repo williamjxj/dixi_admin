@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 {config_load file="{$config.smarty}"}
 <script language="javascript" type="text/javascript">
 $(function() {
@@ -55,7 +56,7 @@ $(function() {
 });
 </script>
 <form  class="page-form" id="form_tinymce" name="form_tinymce" method="post" action="{$smarty.server.SCRIPT_NAME}" target="iframe_add_tinymce">
-  <div class="content-headline">添加正文</div>
+  <!--iv class="content-headline">添加正文</div-->
   <div class="input">
     <label for="modules"> 模块: </label>
     <div class="selectWrapper">
@@ -76,8 +77,14 @@ $(function() {
   <div class="input textfield">
     <label for="input_title_3"> 作者: </label>
     <span id="sprytextfield1">
-    <input type="text" id="input_title_3" name="input_title_3" size="90"  />
+    <input type="text" id="input_title_3" name="input_title_3" size="90" value="Demo"  />
     <span class="textfieldRequiredMsg">A value is required.</span></span> </div>
+  <div class="input radio">
+    <label> 语言: </label>
+    <input type="radio" value="E" name="language" class="radio" />
+    <span>英语</span>
+    <input type="radio" value="C" name="language" class="radio" checked="checked" />
+    <span>中文</span> </div>
   <div class="input mce_editor">
     <label for="elm3"> 正文:</label>
     <br />
@@ -85,14 +92,10 @@ $(function() {
     <div class="editor-options"> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').show();">[Show]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').hide();">[Hide]</a> <a href="javascript:;" onMouseDown="tinyMCE.get('elm3').execCommand('Bold');">[Bold]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').getContent());">[Get contents]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent());">[Get selected HTML]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getContent({ format : 'text' }));">[Get selected text]</a> <a href="javascript:;" onMouseDown="alert(tinyMCE.get('elm3').selection.getNode().nodeName);">[Get selected element]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert HTML]</a> <a href="javascript:;" onMouseDown="tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a> </div>
   </div>
   <div class="submit-buttons">
-<!--    <div class="green-btn">
-      <input type="submit" value="保存" name="add_submit" class="save" />
-    </div>-->
     <input type="submit" name="add_submit" value="保存" class="btn btn-success" />
     <img src="{$config.path}images/spinner.gif" width="16" height="16" border="0" style="display:none;" id="search_msg">
-    <input type="reset" value="还原" class="btn btn-warning">
+    <input type="reset" value="还原" class="btn btn-warning" />
     <input type="hidden" id="sites" name="sites" value="{$data.sites.0.0}" />
   </div>
 </form>
-
 <iframe id="iframe_add_tinymce" name="iframe_add_tinymce" src="about:blank" frameborder="0" style="width:0;height:0;border:0px solid #fff;"></iframe>

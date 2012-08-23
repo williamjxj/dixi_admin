@@ -32,13 +32,11 @@
 
         {if $config.self=='modules'}
         	{if $item['name']=='site_id'}{obj->get_sites_options}
-		{elseif $item['name']=='division'} {obj->get_divisions_options}
 		{/if}
         {/if}
         {if $config.self=='contents'}
         	{if $item['name']=='site_id'}{obj->get_sites_options}
 		{elseif $item['name']=='mid'}{obj->get_modules_options}
-		{elseif $item['name']=='division'}{obj->get_divisions_options}
 		{/if}
         {/if}
         {if $config.self=='resources'}
@@ -47,7 +45,6 @@
 			{elseif $item['name']=='type'}{obj->get_types_options}            
 		{/if}
         {/if}
-	{if $config.self=='divisions'}{obj->get_sites_options}{/if}
 	{if $config.self=='actions'}{obj->get_keyword_selection}{/if}
 
 		

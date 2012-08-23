@@ -11,8 +11,6 @@ $(document).ready(function(){
     $("#list_thead tr.titleRow th:eq(0)").css("border-left", "1px solid #d0d0d0");
     $("tr td:first-child").css("border-left", "1px solid #d0d0d0");    
     $("tr.infoRow:odd td").css({"border-top" : "1px solid #eaeaea", "border-bottom" : "1px solid #eaeaea"});
-    $("input.active").addClass("gwl");
-    $("input.gwl").closest("td").attr("align","center");
     
     var sideH = $(".sidebarBox").height();    
     var winH = $(window).height();  

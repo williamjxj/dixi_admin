@@ -33,7 +33,6 @@ if($('#sites').length) {
   $('#sites').bind('change', function(e) {
 	e.preventDefault(); 
 	$('#modules').load(url, {'js_get_modules':1, 'site_id':$(this).val()});
-	$('#divisions').load(url, {'js_get_divisions':1, 'site_id':$(this).val()});
 	$(m0).load(url, {'js_get_resources_by_sid':1, 'site_id':$(this).val()});
 	$(m1).get(0).innerHTML = '';
 	$(m2)[0].innerHTML = '';
