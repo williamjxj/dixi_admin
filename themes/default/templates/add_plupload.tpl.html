@@ -57,7 +57,7 @@ $(function() {
 		max_file_size : '10mb',
 		chunk_size : '1mb',
 		unique_names : true,
-		multipart_params: { 'author':'','notes':'','sites':'','modules':'','divisions':'' },
+		multipart_params: { 'author':'','notes':'','sites':'','modules':'' },
 		filters : [
 			{ title : "Image files", extensions : "jpg,gif,png" },
 			{ title : "PDF files", extensions : "pdf" },
@@ -81,7 +81,6 @@ $(function() {
 			up.settings.multipart_params.notes = $("#notes").val();
 			up.settings.multipart_params.sites = $("#sites").val();
 			up.settings.multipart_params.modules = $("#modules").val();
-			up.settings.multipart_params.divisions = $("#divisions").val();
 		  },
 		  FileUploaded : function(up, files, info) {
 			var obj = eval('(' + info.response + ')');

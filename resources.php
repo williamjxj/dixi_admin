@@ -209,22 +209,13 @@ class ResourcesClass extends ListAdvanced
 	return;
   }
   function get_resources_options_by_sid($site_id){
-	$sql = "SELECT rid, file, author, (SELECT name FROM modules m where r.mid=m.mid) AS mname, division FROM resources r WHERE r.site_id=".$site_id." ORDER BY author";
+	$sql = "SELECT rid, file, author, (SELECT name FROM modules m where r.mid=m.mid) AS mname FROM resources r WHERE r.site_id=".$site_id." ORDER BY author";
 	return 	$this->get_select_options($sql);
   }
   function get_resources_options_by_mid($module_id){
-	$sql = "SELECT rid, file, author, (SELECT name FROM modules m WHERE m.mid=r.mid) AS mname, division FROM resources r WHERE mid=" . $module_id . " ORDER BY author";
+	$sql = "SELECT rid, file, author, (SELECT name FROM modules m WHERE m.mid=r.mid) AS mname FROM resources r WHERE mid=" . $module_id . " ORDER BY author";
 	return 	$this->get_select_options($sql);
   }  
-  function get_resources_options_by_division($module_id, $division){
-  	if($division) {
-		$sql = "SELECT rid, file, author, (SELECT name FROM modules m WHERE m.mid=r.mid) AS mname, division FROM resources r WHERE mid=" . $module_id . " AND division='".$division."' ORDER BY author";
-		return 	$this->get_select_options($sql);
-	}
-	else
-		return $this->get_resources_options_by_mid($module_id);
-  }  
-
   function get_types_options()
   {
   	$sql = "SELECT DISTINCT type FROM resources";
@@ -271,7 +262,6 @@ class ResourcesClass extends ListAdvanced
 	$ary['sname'] = $row['sname'];
 	$ary['mid'] = $row['mid'];
 	$ary['mname'] = $row['mname'];
-	$ary['division'] = $row['division'];
 	$encodedArray = array_map("utf8_encode", $ary);
 	return $encodedArray;
   }
@@ -327,7 +317,6 @@ elseif(isset($_GET['js_edit_form_3'])) {
 	$data['record'] = $record;
 	$data['sites'] = $rese->get_sites_array();
 	$data['modules'] = $rese->get_modules_array();
-	$data['divisions'] = $rese->get_divisions_array();
 	$rese->assign('config', $config);
 	$rese->assign('data', $data);
 	$rese->display($config['templs']['assign_cr']); //'assign_contents-resources.tpl.html'
@@ -338,7 +327,6 @@ elseif(isset($_GET['js_add_form'])) {
 	//$header = $rese->get_header($rese->get_mappings());
 	//$rese->assign('header', $header);
 	$data['sites'] = $rese->get_sites_array();
-	$data['divisions'] = $rese->get_divisions_array();
 	$rese->assign('config', $config);
 	$rese->assign('data', $data);
 	$rese->display($config['templs']['add_plupload']); //'add_plupload.tpl.html'
@@ -347,17 +335,11 @@ elseif(isset($_GET['js_add_form'])) {
 elseif(isset($_REQUEST['js_get_modules'])) {
 	$rese->get_modules_options($_REQUEST['site_id']);
 }
-elseif(isset($_REQUEST['js_get_divisions'])) {
-	$rese->get_divisions_options($_REQUEST['site_id']);
-}
 elseif(isset($_REQUEST['js_get_resources_by_sid'])) {
 	$rese->get_resources_options_by_sid($_REQUEST['site_id']);
 }
 elseif(isset($_REQUEST['js_get_resources_by_mid'])) {
 	$rese->get_resources_options_by_mid($_REQUEST['mid']);
-}
-elseif(isset($_REQUEST['js_get_resources_by_division'])) {
-	$rese->get_resources_options_by_division($_REQUEST['mid'], $_REQUEST['division']);
 }
 elseif (isset($_GET['rid']) && isset($_GET['step'])) {
 	switch($_GET['step']) {

@@ -158,20 +158,6 @@ class ModulesClass extends ListAdvanced
 			'display_name' => 'Description:',
 			'name' => 'description',
 		),
-		/*
-		array(
-		  'type' => 'date',
-		  'display_name' => 'Created Date:',
-		  'name' => 'created',
-		  'readonly' => 'readonly',
-		  'size' => INPUT_SIZE,
-		),
-		array(
-			'type' => 'date',
-			'display_name' => 'Updated Date:',
-			'name' => 'updated',
-			'size' => INPUT_SIZE,
-		), */
 		array(
 			'type' => 'text',
 			'display_name' => 'Created By:',
@@ -228,6 +214,20 @@ class ModulesClass extends ListAdvanced
 	  );
   }
 
+  function get_header() {
+	return array(
+		'索引' => 'mid',
+		'模块名称' => 'name',
+		'URL' => 'url',
+		'位置' => 'weight',
+		'语言' => 'language',
+		'描述' => 'description',
+		'活动状态' => 'active',
+		'创建' => 'created,createdby',
+		'更新' => 'updated,updatedby',
+	);
+  }
+  
 	function select_users_modules($uid, $cid=0) {
 		$sql = "SELECT um.mid, m.name FROM users_modules um inner join modules m on um.mid=m.mid and uid=".$uid;
 		$str = '';

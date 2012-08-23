@@ -11,6 +11,7 @@ class ListBase extends BaseClass
 	global $config;
 	parent::__construct();
 	$this->url = $_SERVER['PHP_SELF'];
+	//$this->url = $_SERVER['SCRIPT_FILENAME'];//绝对路径,不work.
 	$this->data = array();
 	$this->ini_array = array();
 	$this->table_array = array();
@@ -100,12 +101,6 @@ class ListBase extends BaseClass
 	return $this->coltypes_array;
   }
 
-  /**
-   * <th>Header Title</th><th>...</th>
-   * $this->get_header($this->get_mappings();   benefits.php->[benefits]
-   * Division = division
-   * Address = address, city, province, postalcode "=>" [display_name=sort_column: Address=address]
-   */
   function get_header($section_info=NULL)
   {
 	// 'new_key'=>'new key': replace '_' with ' '.
@@ -181,42 +176,28 @@ class ListBase extends BaseClass
 	}
 
 	if($this->self=='modules') {
-		$query = "SELECT m.mid, p.name AS page, m.weight, m.sname,
-			m.name, m.description, m.active, m.createdby, m.created, m.updatedby, m.updated, m.url, m.url_flag, m.left1, m.right3
-			FROM modules AS m
-			INNER JOIN pages AS p
-			INNER JOIN pages_modules AS pm
-			ON p.pid = pm.pid
-			AND m.mid = pm.mid ".
+		$query = "SELECT m.mid, m.weight, m.sname, m.language,
+			m.name, m.description, m.active, m.createdby, 
+			m.created, m.updatedby, m.updated, m.url, m.url_flag
+			FROM modules AS m ".
 			$acy['module'] .
 			" UNION
-			SELECT m.mid, '' AS page, m.weight, m.sname,
-			m.name, m.description, m.active, m.createdby, m.created, m.updatedby, m.updated, m.url, m.url_flag, m.left1, m.right3
-			FROM modules AS m
-			WHERE m.mid NOT IN (SELECT mid from pages_modules) ".
+			SELECT m.mid, m.weight, m.sname, m.language,
+			m.name, m.description, m.active, m.createdby, 
+			m.created, m.updatedby, m.updated, m.url, m.url_flag
+			FROM modules AS m ".
 			$acy['module'] .
 			" ORDER BY mid DESC";
 	}
 	elseif($this->self=='contents') {
-		$query = "SELECT ct.cid, ct.weight, 
-			(SELECT name FROM sites WHERE sites.site_id=ct.site_id) as site_id,
-			cp.name AS page,
-			(select name from modules where modules.mid=ct.mid) as mid,
-			ct.linkname, ct.author,ct.notes,ct.content, ct.division,ct.createdby, ct.created, ct.updatedby, ct.updated
-			FROM contents AS ct
-			INNER JOIN pages AS cp
-			INNER JOIN pages_modules AS pm
-			ON cp.pid = pm.pid
-			AND ct.mid = pm.mid ".
+		$query = "SELECT ct.cid, ct.weight, ct.sname, mname, ct.language, 
+			ct.linkname, ct.author,ct.notes,ct.content, ct.createdby, ct.created, ct.updatedby, ct.updated
+			FROM contents AS ct " .
 			$acy['contents'].
 			" UNION
-			SELECT ct.cid, ct.weight,
-			(SELECT name FROM sites WHERE sites.site_id=ct.site_id) as site_id,
-			 '' AS page,
-			(SELECT name FROM modules WHERE modules.mid=ct.mid) as mid,
-			ct.linkname, ct.author,ct.notes,ct.content, ct.division,ct.createdby, ct.created, ct.updatedby, ct.updated
-			FROM contents AS ct
-			WHERE ct.mid NOT IN (SELECT mid from pages_modules) ".
+			SELECT ct.cid, ct.weight, ct.sname, ct.mname, ct.language,  
+			ct.linkname, ct.author,ct.notes,ct.content, ct.createdby, ct.created, ct.updatedby, ct.updated
+			FROM contents AS ct " . 
 			$acy['contents'] .
 			" ORDER BY cid desc";
 	}
@@ -312,8 +293,7 @@ class ListBase extends BaseClass
 			else {
 				if(preg_match("/id/i", $k)) $data[$count][$k] = $row[$v];
 				else {
-					if($k=='GWL') $data[$count][$k] = $row[$v];
-					elseif($k=='Weight') $data[$count][$k] = $row[$v];
+					if($k=='Weight') $data[$count][$k] = $row[$v];
 					elseif($k=='Types') $data[$count][$k] = $this->get_ftype($row[$v]); //for $this->self='resources'.
 					else $data[$count][$k] = $row[strtolower($v)]; //htmlentities($row[strtolower($v)]);
 				}
@@ -341,11 +321,9 @@ class ListBase extends BaseClass
 	//if (preg_match("/(\s|,|\t)/", $str)) return 'N/A'; //only include 'space' or ','.
 	if (empty($str) || preg_match("/^\s+$/",$str)) return 'N / A'; //only has 'space'.
 	$s = '';
-	if(preg_match("/^\d+$/", $str) && $flag) { //gwl can't format.
-		$s = number_format($str);
-	}
+
 	// does str_replace() is quicker than preg_replace() ?
-	else if(preg_match("/\s+00:00:00/", $str)) {
+	if(preg_match("/\s+00:00:00/", $str)) {
 		// $s = preg_replace("/\s+00:00:00/", '', $str);
 		$s = trim(str_replace("00:00:00", '', $str));
 	}
@@ -364,26 +342,26 @@ class ListBase extends BaseClass
 			foreach ($_GET as $key => $value) {
 				if ($key != 'page') $queryURL .= '&'.$key.'='.$value;
 			}
-		}		
+		}
 		if (($total_pages) > 1) {
 			if ($current_page != 1) {
-				$plinks[] = ' <a href="'.$this->url.'?page=1'.$queryURL.'">&laquo;&laquo; First </a> ';
-				$plinks[] = ' <a href="'.$this->url.'?page='.($current_page - 1).$queryURL.'">&laquo; Prev</a> ';
+				$plinks[] = ' <a href="?page=1'.$queryURL.'">&laquo;&laquo; First </a> ';
+				$plinks[] = ' <a href="?page='.($current_page - 1).$queryURL.'">&laquo; Prev</a> ';
 			}
 			// Assign all the page numbers & links to the array
 			for ($j = ($current_page-5); $j < ($current_page+5); $j++) {
 			  if($j<1) continue;
 			  if($j>$total_pages) break;
 			  if ($current_page == $j) {
-				$links[] = ' <a class="'.$this->url.'selected">'.$j.'</a> '; // If we are on the same page as the current item
+				$links[] = ' <a class="selected">'.$j.'</a> '; // If we are on the same page as the current item
 			  } else {
-				$links[] = ' <a href="'.$this->url.'?page='.$j.$queryURL.'">'.$j.'</a> '; // add the link to the array
+				$links[] = ' <a href="?page='.$j.$queryURL.'">'.$j.'</a> '; // add the link to the array
 			  }
 			}
 			// Assign the 'next page' if we are not on the last page
 			if ($current_page < $total_pages) {
-				$slinks[] = ' <a href="'.$this->url.'?page='.($current_page + 1).$queryURL.'"> Next &raquo; </a> ';
-				$slinks[] = ' <a href="'.$this->url.'?page='.($total_pages).$queryURL.'"> Last &raquo;&raquo; </a> ';
+				$slinks[] = ' <a href="?page='.($current_page + 1).$queryURL.'"> Next &raquo; </a> ';
+				$slinks[] = ' <a href="?page='.($total_pages).$queryURL.'"> Last &raquo;&raquo; </a> ';
 			}
 	        return implode(' ', $plinks).implode(' ', $links).implode(' ', $slinks);
 		}
@@ -467,15 +445,7 @@ class ListBase extends BaseClass
 		WHERE m.active='Y' and m.site_id=".$site_id." ORDER BY m.name";
 	return 	$this->get_select_options($sql);
   }
-  function get_divisions_options($site_id=1)
-  {
-	$sql = "SELECT division, name, description, (SELECT name FROM sites s WHERE s.site_id=d.site_id) AS sname FROM divisions d WHERE site_id=".$site_id." ORDER BY division";
-	return 	$this->get_select_options($sql);
-  }
-  function get_levels_options(){
-	$sql = "SELECT level, name, description FROM levels ORDER BY name";
-	return 	$this->get_select_options($sql);
-  }
+
 
   ///////////////////////////////////////////////
   function get_select_array($sql) {
@@ -500,10 +470,7 @@ class ListBase extends BaseClass
 	$sql = "SELECT mid, concat(m.name,' - [',s.name,']') as name, m.description FROM modules m inner join sites s where m.site_id=s.site_id and m.active='Y' ORDER BY m.name";
 	return 	$this->get_select_array($sql);
   }
-  function get_divisions_array($site_id=1) {
-	$sql = "SELECT division, name, description FROM divisions WHERE site_id=".$site_id." ORDER BY division";
-	return 	$this->get_select_array($sql);
-  }
+
   function get_contents_array() {
 	$sql = "SELECT cid, concat(linkname,' - [',sname,'] - [',mname,']') as name FROM contents ORDER BY linkname"; //vw_contents
 	return 	$this->get_select_array($sql);

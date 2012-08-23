@@ -120,7 +120,7 @@ button#reset {
 #ie7 #search_form #seach_submit span {
 	margin-top:-3px;
 }
-.pager {
+.pager1 {
 	display: block;
 	float: right;
 	font-size: 11px;
@@ -134,16 +134,16 @@ button#reset {
 .pager-bottom {
 	margin-top:15px;
 }
-.pager a {
-	background: url("../images/pager.png") no-repeat scroll 0 0 transparent;
+.pager1 a {
+	background: url(../images/pager.png) no-repeat scroll 0 0 transparent;
 	color: #434343 !important;
 	padding: 5px 9px;
 	text-align: center;
 }
-#ie7 .pager a, #ie7 .pager a.selected, #ie7 .bigPagerButton {
+#ie7 .pager1 a, #ie7 .pager1 a.selected, #ie7 .bigPagerButton {
 	line-height:23px;
 }
-.pager a.selected {
+.pager1 a.selected {
 	color:#fff !important;
 	background-position:0 -25px
 }
@@ -264,19 +264,6 @@ button#reset {
 #list_tbody tr td a.delete {
 	background: url(../images/icon-xmark.png) no-repeat;
 	width:  15px;
-	height: 15px;
-	padding-left: 20px;
-	margin-left: 5px;
-}
-#list_tbody tr td a.delete {
-	width:  15px;
-	height: 15px;
-	padding-left: 20px;
-	margin-left: 5px;
-}
-#list_tbody tr td a.pension {
-	background: url(../images/new/money_bag.png) no-repeat;
-	width:  0px;
 	height: 15px;
 	padding-left: 20px;
 	margin-left: 5px;
@@ -623,29 +610,6 @@ table {
 	padding: 0;
 	width: auto;
 }
-/*
-input[type=reset], button[type=reset] {
-	border:none !important;
-	font-size:0;
-	padding:38px 0 0 0 !important;
-	height:0;
-	overflow:hidden;
-	width:111px !important;
-	background: url(../images/form-buttons.png) 0 0 no-repeat !important;
-	cursor:pointer;
-	margin-left:8px;
-}
-#ie7 input[type=reset], #ie7 button[type=reset] {
-	padding:0 0 0 0 !important;
-	height:38px;
-}
-input[type=reset]:hover, button[type=reset]:hover {
-	background-position:0 -41px !important;
-}
-input[type=reset] span, button[type=reset] span {
-	display:none;
-}
-*/
 #search_form table td {
 	padding:5px 0;
 }
@@ -922,7 +886,7 @@ form .green-btn input:hover, form .green-btn button:hover, form .green-btn span:
 	padding-right: 10px;
 }
 .page-form div.input, .page-form div.submit-buttons {
-	padding:15px 0 8px 220px;
+	padding:4px 0 4px 220px;
 	float:left;
 	height:40px;
 }
@@ -966,13 +930,13 @@ body form .big-form-buttons {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	color:#48586c;
-	padding:6px 6px;
+	padding:2px 2px;
 	width:500px;
 	background: #fff;
-	font-size:15px;
+	font-size:14px;
 }
 .page-form textarea, .edit-form textarea {
-	height:130px;
+	/*height:130px;*/
 }
 .page-form .selectWrapper select {
 	width:500px !important;
@@ -981,7 +945,7 @@ body form .big-form-buttons {
 	border:none;
 }
 .edit-form table td {
-	padding:10px;
+	padding:4px;
 }
 .textfieldRequiredMsg {
 	color:#f00;

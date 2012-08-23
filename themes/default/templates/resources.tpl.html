@@ -35,8 +35,6 @@
         <input type="text" name="component" class="inputTitle" value="{$r.cname}" />
         <label> Module: </label>
         <input type="text" name="module" class="inputTitle" value="{$r.mname}" />
-        <label> Division: </label>
-        <input type="text" name="division" class="inputTitle" value="{$r.division}" /></td>
     </tr>
     <tr>
       <td align="right" valign="middle"><label for="{$m1}">Available<br />
@@ -108,7 +106,6 @@ $(function() {
 			$(":input[name='site']", form).val(data.sname);
 			$(":input[name='component']", form).val(data.sname);
 			$(":input[name='module']", form).val(data.mname);
-			$(":input[name='division']", form).val(data.division);
 			$('#cr_id').val(data.cid);
 		}
 	})

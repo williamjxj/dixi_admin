@@ -255,7 +255,7 @@ tr.odd {
 	background-position: left center;
 	padding-left: 22px;
 }
-input#division, input#phone, input#reporter, input#date1, input#date2 {
+input#phone, input#reporter, input#date1, input#date2 {
 	width: 145px;
 	height: 21px;
 	background-color: #FFF;
@@ -267,7 +267,7 @@ input.formField, select#payment_type {
 	font-size: 11px;
 	color: #686868;
 }
-input.formField, input#division, input#date1, input#date2 {
+input.formField, input#date1, input#date2 {
 	padding: 0 3px;
 	width: 139px;
 }

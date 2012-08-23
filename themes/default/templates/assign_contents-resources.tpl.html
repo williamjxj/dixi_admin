@@ -42,23 +42,9 @@
   {/if}
           </select></div></td>
         <td>&nbsp;</td>
-        <td align="right" nowrap="nowrap"><label for="divisions">Select Division:</label>
+        <td>&nbsp;</label>
         </td>        
         <td  style="padding-right:30px">
-        <div class="selectWrapper">
-        <select name="divisions"  id="cr_divisions"  accesskey="D" style="width:{#select_width#}">
-  {if $r}
-            <option value="{$r.division}" title="{$r.division|escape:'html'|default:''}">{$r.division} </option>
-  {else}
-            <option value=""> -- Select Division -- </option>
-  {/if}
-		{if $data.divisions}
-      {foreach $data.divisions as $dd}
-            <option value="{$dd[0]}" title="{$dd[2]}"> {$dd[1]} </option>
-      {/foreach}
-        {/if}
-          </select>
-          </div>
           </td>
       </tr>
       <tr>
@@ -126,12 +112,10 @@ var wait1 = '{$config.list.wait1}';
 var wait2 = '{$config.list.wait2}';
 var sites = '#cr_sites';
 var modules = '#cr_modules';
-var divisions = '#cr_divisions';
 
 $(sites).bind('change', function(e) {
 	e.preventDefault(); 
 	$(modules).load(url, { 'js_get_modules':1, 'site_id':$(this).val() });
-	$(divisions).load(url, { 'js_get_divisions':1, 'site_id':$(this).val() });
 	$(m0).load(url, { 'js_get_resources_by_sid':1, 'site_id':$(this).val() });
 	$(m1).get(0).innerHTML = '';
 	$(m2)[0].innerHTML = '';
@@ -140,15 +124,6 @@ $(sites).bind('change', function(e) {
 $(modules).bind('change', function(e) {
   	e.preventDefault();
 	$(m0).load(url, { 'js_get_resources_by_mid':1, 'mid':$(this).val() });
-	$(m1).get(0).innerHTML = '';
-	$(m2)[0].innerHTML = '';
-	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');
-	$(m2).append('<option>'+wait1+'</option>');
-	return false;
-});
-$(divisions).bind('change', function(e) {
-	e.preventDefault();
-	$(m0).load(url, { 'js_get_resources_by_division':1, 'mid':$(modules).val(), 'division':$(this).val() });
 	$(m1).get(0).innerHTML = '';
 	$(m2)[0].innerHTML = '';
 	$(m1).text('<option value=""><img src="images/spinner.gif" width="16" height="16" border="0"></option>');

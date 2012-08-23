@@ -96,9 +96,7 @@ $(function() {
   var form = '#form_'+cid;
   var site = '#sites_'+cid;
   var module = '#modules_'+cid;
-  var division = '#divisions_'+cid;  
   var elm = 'elm_'+cid;  
-  //alert(elm+','+site+','+module+','+division);
 
   $(form + ' select[name=sites]').bind('change', function() {
 	$(module).load(url+'?js_get_modules=1&site_id='+$(this).val());
@@ -162,7 +160,6 @@ $(function() {
 			
 			$(site + " option[value='"+data.site_id+"']").attr('selected', 'selected');
 			$(module + " option[value='"+data.mid+"']").attr('selected', 'selected');
-			$(division + " option[value='"+data.division+"']").attr('selected', 'selected');
 
 			$('#input_linkname_3').val(data.linkname);
 			$('#input_title_3').val(data.author).show('fast').attr('readonly',true);

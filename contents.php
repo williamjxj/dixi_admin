@@ -9,7 +9,7 @@ require_once("config.inc.php");
 require_once("ListAdvanced.inc.php");
 global $config;
 
-$config['tabs'] = array('1'=>'列表', '2'=>'添加', '3'=> '更新', '4'=>'模块正文匹配');
+$config['tabs'] = array('1'=>'列表', '2'=>'添加', '3'=> '更新'); //'4'=>'模块正文匹配');
 $config['WYSIWYG'] = true;
 
 class ContentsClass extends ListAdvanced
@@ -17,7 +17,6 @@ class ContentsClass extends ListAdvanced
   var $url, $self, $session, $allowedTags;
   public function __construct() {
     parent::__construct();
-    //$this->allowedTags = '<a><p><strong><em><u><h1><h2><h3><h4><h5><h6><img><li><ol><ul><span><div><br><ins><del><table><tr><td><tbody><thead><tfoot><b>';  
 	$this->allowedTags = ALLOWTAGS;
   }
 
@@ -25,15 +24,7 @@ class ContentsClass extends ListAdvanced
 	return array(
 		array(
 		  'type' => 'select',
-		  'display_name' => 'Site:',
-		  'id' => 'site_id_s',
-		  'name' => 'site_id',
-		  'call_func' => 'get_sites_options',
-		  'db_type' => 'int',
-		),
-		array(
-		  'type' => 'select',
-		  'display_name' => 'Module:',
+		  'display_name' => '模块:',
 		  'id' => 'mid_s',
 		  'name' => 'mid',
 		  'call_func' => 'get_modules_options',
@@ -41,7 +32,7 @@ class ContentsClass extends ListAdvanced
 		),
 		array(
 			'type' => 'radio',
-			'display_name' => 'Active:',
+			'display_name' => '活动状态:',
 			'id' => 'active_s',
 			'name' => 'active',
 			'lists' => array(
@@ -54,39 +45,39 @@ class ContentsClass extends ListAdvanced
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Linked Name:',
+			'display_name' => '标题:',
 			'id' => 'linknamet_s',
 			'name' => 'linkname',
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Author:',
+			'display_name' => '作者/出处:',
 			'id' => 'author_s',
 			'name' => 'author',
 		),
 		array(
 			'type' => 'date',
-			'display_name' => 'Created Date:',
+			'display_name' => '创建日期:',
 			'id' => 'created_s',
 			'name' => 'created',
 			'size' => INPUT_SIZE,
 		),
 		array(
 			'type' => 'date',
-			'display_name' => 'Updated Date:',
+			'display_name' => '更改日期:',
 			'id' => 'updated_s',
 			'name' => 'updated',
 			'size' => INPUT_SIZE,
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Created By:',
+			'display_name' => '创建:',
 			'id' => 'createdby_s',
 			'name' => 'createdby',
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Updated By:',
+			'display_name' => '更改:',
 			'id' => 'updatedby_s',
 			'name' => 'updatedby',
 		),
@@ -97,19 +88,13 @@ class ContentsClass extends ListAdvanced
 	return array(
 		array(
 		  'type' => 'text',
-		  'display_name' => 'Site:',
-		  'name_value' => 'site_id',
-		  'name' => 'sname',
-		),
-		array(
-		  'type' => 'text',
-		  'display_name' => 'Module:',
+		  'display_name' => '模块:',
 		  'name_value' => 'mid',
 		  'name' => 'mname',
 		),
 		array(
 			'type' => 'radio',
-			'display_name' => 'Active:',
+			'display_name' => '活动状态:',
 			'name' => 'active',
 			'lists' => array(
 				'N' => 'No',
@@ -118,40 +103,27 @@ class ContentsClass extends ListAdvanced
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Linked Name:',
+			'display_name' => '标题:',
 			'name' => 'linkname',
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Author:',
+			'display_name' => '作者/出处:',
 			'name' => 'author',
 		),
 		array(
 			'type' => 'textarea',
-			'display_name' => 'Notes:',
+			'display_name' => '注释:',
 			'name' => 'notes',
-		),/*
-		array(
-		  'type' => 'date',
-		  'display_name' => 'Created Date:',
-		  'name' => 'created',
-		  'readonly' => 'readonly',
-		  'size' => INPUT_SIZE,
 		),
 		array(
-			'type' => 'date',
-			'display_name' => 'Updated Date:',
-			'name' => 'updated',
-			'size' => INPUT_SIZE,
-		), */
-		array(
 			'type' => 'text',
-			'display_name' => 'Created By:',
+			'display_name' => '创建者:',
 			'name' => 'createdby',
 		),
 		array(
 			'type' => 'text',
-			'display_name' => 'Updated By:',
+			'display_name' => '更改着:',
 			'name' => 'updatedby',
 		),
 		array(
@@ -162,6 +134,20 @@ class ContentsClass extends ListAdvanced
 	);
   }
 
+  function get_header() {
+	return array(
+		'索引' => 'cid',
+		'模块名称' => 'mname',
+		'标题' => 'linkname',
+		'作者/出处' => 'author',
+		'注释' => 'notes',
+		'位置' => 'weight',
+		'语言' => 'language',
+		'创建' => 'created,createdby',
+		'更新' => 'updated,updatedby',
+	);
+  }
+		
   function get_contents_options_by_sid($site_id){
 	$sql = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE site_id=" . $site_id . " ORDER BY linkname";
 	return 	$this->get_select_options($sql);
@@ -217,12 +203,6 @@ class ContentsClass extends ListAdvanced
 	return true;
   }
 
-	/**
-	$content = $_POST['content'];
-	$content = $this->mdb2->escape($content);
-	$site_id = $_POST['sname']; $mid = $_POST['mname'];
-	site_id  = " . $site_id . ", " .  "mid      = " . $mid . ", " .
-	*/
   function edit($username)
   {
 	$cid = $_POST['cid'];
@@ -282,13 +262,13 @@ class ContentsClass extends ListAdvanced
 		$notes = $this->mdb2->escape(trim($_POST['input_notes_3']));
 		$content = $this->mdb2->escape($content);
 	}
-	//http://www.tinymce.com/wiki.php/How-to_implement_TinyMCE_in_PHP: $content = nl2br(htmlentities(stripslashes(trim($_POST['content']))));
-	// <cufon...>not work.
+	$language = $_POST['language']=='C'?'中文':'英文'; 
+
 	$content = strip_tags($content,$this->allowedTags);
 
-	$query = "INSERT INTO contents (linkname, author, notes, content, createdby, created, updatedby,site_id,mid,sname,mname)
+	$query = "INSERT INTO contents (linkname, author, notes, content, createdby, created, updatedby,site_id,mid,sname,mname, language)
 		VALUES('".$linkname."', '".$author."', '".$notes."', '" . $content . "', '" . $this->username . "', NOW(), '".$this->username."', ".
-		$site_id . ", " . $mid . ", '".$this->get_sname_from_sid($site_id)."', '".$this->get_mname_from_mid($mid)."')";
+		$site_id . ", " . $mid . ", '".$this->get_sname_from_sid($site_id)."', '".$this->get_mname_from_mid($mid)."', '". $language . "')";
 
 	$affected = $this->mdb2->exec($query);
 	if (PEAR::isError($affected)) {
