@@ -1,9 +1,27 @@
 <?php
 header ("content-type: text/html; charset=utf-8");
 
-$m = new Memcached();
+//memcache
+getMemcacheKeys();
 
+//memcached
+$m = new Memcached();
 $m->addServer('localhost', 11211);
+
+if (!($m->get('Ã÷ÐÇ'))) {
+//if (!($m->get('key2'))) {
+	if($m->getResultCode() == Memcached::RES_NOTFOUND) {
+		echo '11111';
+	}
+	else {
+		echo '2222';
+	}
+}
+else {
+		echo '3333';
+}
+
+return;
 
 //$t = iconv('UTF-8', 'UTF-8//TRANSLIT', 'Ã÷ÐÇ');
 //$m->getDelayed(array($t), true);
@@ -18,7 +36,6 @@ echo "<pre>"; print_r($m->fetchAll()); echo "</pre>";
 //$result = $m->getMulti(array('keyword', 'include', 'exclude'), $cas);
 //echo "<pre>"; var_dump($result, $cas); echo "</pre>";
 
-getMemcacheKeys();
 
 
 function getMemcacheKeys() {
@@ -35,8 +52,8 @@ function getMemcacheKeys() {
 			foreach($cdump AS $keys => $arrVal) {
 				if (!is_array($arrVal)) continue;
 				foreach($arrVal AS $k => $v) {                   
-					//echo $k .'<br>';
-					echo $k .' - '.date('H:i d.m.Y',$v[1]).'<br />';
+					echo $k ."<br/>\n";
+					//echo $k .' - '.date('H:i d.m.Y',$v[1]).'<br />';
 				}
 			}
 		}
