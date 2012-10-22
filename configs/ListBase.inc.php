@@ -163,45 +163,7 @@ class ListBase extends BaseClass
 		$sql .= $v . ', ';
 	}
 
-	$acy = array('module'=>'', 'contents'=>'', 'resources'=>'');
-	if (isset($_SESSION[PACKAGE]['userlevel']) && $_SESSION[PACKAGE]['userlevel']!=1) {
-		$userlevel = " WHERE level = " . $_SESSION[PACKAGE]['userlevel'];
-		$al = $this->get_sites_by_level($_SESSION[PACKAGE]['userlevel']);
-		if(count($al)>0) {
-			$str = implode(',', $al);
-			$acy['module'] = " AND m.site_id IN ($str) ";
-			$acy['contents'] = " AND ct.site_id IN ($str) ";
-			$acy['resources'] = " WHERE r.site_id IN ($str) ";
-		}
-	}
-
-	if($this->self=='modules') {
-		$query = "SELECT m.mid, m.weight, m.sname, m.language,
-			m.name, m.description, m.active, m.createdby, 
-			m.created, m.updatedby, m.updated, m.url, m.url_flag
-			FROM modules AS m ".
-			$acy['module'] .
-			" UNION
-			SELECT m.mid, m.weight, m.sname, m.language,
-			m.name, m.description, m.active, m.createdby, 
-			m.created, m.updatedby, m.updated, m.url, m.url_flag
-			FROM modules AS m ".
-			$acy['module'] .
-			" ORDER BY mid DESC";
-	}
-	elseif($this->self=='contents') {
-		$query = "SELECT ct.cid, ct.weight, ct.sname, mname, ct.language, 
-			ct.linkname, ct.author,ct.notes,ct.content, ct.createdby, ct.created, ct.updatedby, ct.updated
-			FROM contents AS ct " .
-			$acy['contents'].
-			" UNION
-			SELECT ct.cid, ct.weight, ct.sname, ct.mname, ct.language,  
-			ct.linkname, ct.author,ct.notes,ct.content, ct.createdby, ct.created, ct.updatedby, ct.updated
-			FROM contents AS ct " . 
-			$acy['contents'] .
-			" ORDER BY cid desc";
-	}
-	elseif($this->self=='resources') {
+	if($this->self=='resources') {
 		$query = "SELECT * FROM resources r WHERE 1=1 ORDER BY rid DESC";
 	}
 	else {
@@ -472,7 +434,7 @@ class ListBase extends BaseClass
   }
 
   function get_contents_array() {
-	$sql = "SELECT cid, concat(linkname,' - [',sname,'] - [',mname,']') as name FROM contents ORDER BY linkname"; //vw_contents
+	$sql = "SELECT cid, concat(title,' - [',category,'] - [',item,']') as name FROM contents ORDER BY title";
 	return 	$this->get_select_array($sql);
   }
 
@@ -527,17 +489,6 @@ class ListBase extends BaseClass
 		LEFT JOIN pages p ON (p.pid = pm.pid) 
 		WHERE m.active='Y' AND m.mid NOT IN (SELECT mid from pages_modules WHERE pid=".$pid.") AND m.site_id=".$site_id." ORDER BY m.name";
 	return 	$this->get_select_options($sqlm, false);
-  }
-
-  function select_assigned_resources($cid, $site_id)
-  {
-	$sqlr = "SELECT r.rid, file, author FROM resources r INNER JOIN contents_resources cr WHERE cr.rid = r.rid AND active='Y' AND cr.cid=".$cid." AND site_id=".$site_id." ORDER BY author ";
-	return 	$this->get_select_options($sqlr, false);
-  }  
-  function select_available_resources($cid, $site_id)
-  {
-	$sqlr = "SELECT rid, file, author FROM resources WHERE rid NOT IN (SELECT rid from contents_resources WHERE cid=".$cid.") AND site_id=".$site_id." AND active='Y' ORDER BY author";
-	return 	$this->get_select_options($sqlr, false);
   }
 
   function update_action($keyword, $query)

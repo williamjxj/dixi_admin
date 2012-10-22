@@ -13,9 +13,9 @@ $config = array(
 ///////////////////////////////
 function get_site() {
 	return array(
-		'站点管理' => 'sites.php',
-		'网页' => 'pages.php',
-		'模块' => 'modules.php',
+		//'站点管理' => 'sites.php',
+		//'网页' => 'pages.php',
+		//'模块' => 'modules.php',
 		'正文内容' => 'contents.php',
 		'资源' => 'resources.php',
 	);
@@ -23,10 +23,11 @@ function get_site() {
 function get_core() {
 	return array(
 		'关键词' => 'keywords.php',
+		'Related Keywords' => 'key_related.php',
 		'类别' => 'categories.php',
 		'栏目' => 'items.php',
 		'标签' => 'tags.php',
-		'通道' => 'channels.php',
+		//'通道' => 'channels.php',
 	);
 }
 function get_support() {
@@ -44,7 +45,7 @@ function get_manage() {
 		'管理用户' => 'users.php',
 		'管理用户组' => 'levels.php',
 		'普通用户' => 'common_users.php',
-		'网页韵律' => 'themes.php',
+		// '网页韵律' => 'themes.php',
 	);
 }
 ?>

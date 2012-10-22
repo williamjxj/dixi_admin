@@ -60,6 +60,7 @@ class ItemsClass extends ListAdvanced
 	);
   }
 	
+	//'标签' => 'tag',
 	function get_header() {
 		return array(
 			'IID' => 'iid',
@@ -67,7 +68,7 @@ class ItemsClass extends ListAdvanced
 			'项目' => 'name',
 			'链接地址' => 'iurl',
 			'频率' => 'frequency',
-			'标签' => 'tag',
+			'weight' => 'weight',
 			'状态' => 'active',
 			'描述' => 'description',
 			'创建' => 'created,createdby',

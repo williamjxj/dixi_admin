@@ -51,7 +51,7 @@ input:hover.login {
 form#login_form {
 	width: 290px;
 	margin: 0 auto;
-	padding-top: 43px;
+	padding-top: 18px;
 }
 form#login_form .user {
 	margin-bottom: 4px;
