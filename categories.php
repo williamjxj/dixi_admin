@@ -260,12 +260,7 @@ elseif(isset($_REQUEST['action'])) {
 			$cate->delete($_GET['id']);
 			break;
 		case 'add':
-			$last_cid = $cate->create(array('createdby'=>$cate->username, 'updatedby'=>$cate->username, 'created'=>'NOW()'));
-			$query = "UPDATE category AS p, (SELECT name FROM categories WHERE cid=".$_POST['cid']." ) AS s SET p.sname = s.name WHERE cid=".$last_cid;
-			$affected = $cate->mdb2->exec($query);
-			if (PEAR::isError($affected)) {
-					die($affected->getMessage().': ' . $query . ". line: " . __LINE__);
-			}
+			$cate->create(array('createdby'=>$cate->username, 'updatedby'=>$cate->username, 'created'=>'NOW()'));
 			break;    
 		default:
 			break;

@@ -75,7 +75,6 @@ $('#username').select().focus();
 </script>
 </head>
 <body>
-<div>
 <div class="dixilogo"></div>
 <div class="headerText">
   <h1>底细,真相,还原真相,反映实际情况</h1>

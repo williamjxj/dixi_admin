@@ -1,9 +1,7 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 {config_load file="{$config.smarty}"}
 <script language="javascript" type="text/javascript">
-$(function() {
-
+$(function() 
+{
   var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
   var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1");
   $('#input_title_3').change(function() {
@@ -81,10 +79,11 @@ $(function() {
     <span class="textfieldRequiredMsg">A value is required.</span></span> </div>
   <div class="input radio">
     <label> 语言: </label>
-    <input type="radio" value="E" name="language" class="radio" />
-    <span>英语</span>
-    <input type="radio" value="C" name="language" class="radio" checked="checked" />
-    <span>中文</span> </div>
+    <input type="radio" value="中文" name="language" class="radio" checked="checked" />
+    <span>中文</span> 
+    <input type="radio" value="Engliah" name="language" class="radio" />
+    <span>英文</span>
+    </div>
   <div class="input mce_editor">
     <label for="elm3"> 正文:</label>
     <br />
