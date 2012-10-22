@@ -177,7 +177,7 @@ elseif(isset($_REQUEST['action'])) {
 			$ks->delete($_GET['id']);
 			break;
 		case 'add':
-			//$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
+			$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
 			//将POST的数据插入到Memcached的内存中。
 			$pattern = "/\s+/";
 			$t1 = preg_replace($pattern, ' ', trim($_POST['keyword']));
@@ -187,7 +187,7 @@ elseif(isset($_REQUEST['action'])) {
 			$keyword = explode(' ', $t1);
 			$include = explode(' ', $t2);
 			$exclude = explode(' ', $t3);
-			$item = array( $t1 => array( 'keyword' => $keyword, 'include' => $include, 'exclude' => $exclude ));
+			$item = array( "$t1" => array( 'keyword' => $keyword, 'include' => $include, 'exclude' => $exclude ));
 			$ks->set_memcached($item);
 			break;
 		default:
