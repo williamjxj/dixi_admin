@@ -16,6 +16,13 @@ class KeySearchClass extends ListAdvanced
 	$this->table = 'key_search';
   }
 
+  function set_memcached($items)
+  {
+	$m = new Memcached();
+	$m->addServer('localhost', 11211);
+	$m->setMulti($items);
+  }
+  
   function get_search_form_settings() {
 	return array(
 		array(
@@ -75,20 +82,19 @@ class KeySearchClass extends ListAdvanced
 		),
 		array(
 			'type' => 'text',
-			'display_name' => '包括:',
+			'display_name' => '包括:(空格分开的单词，比如：劣质 过期 腐烂 变质)',
 			'id' => 'include',
 			'name' => 'include',
 		),
 		array(
 			'type' => 'text',
-			'display_name' => '排除:',
+			'display_name' => '排除:(空格分开的单词，比如：优质 健康 营养 美味)',
 			'id' => 'exclude',
 			'name' => 'exclude',
 		),
 	);
   }
 
-  
   // parse_ini 不支持多国字体。
   function get_header() {
   	return array(
@@ -171,7 +177,17 @@ elseif(isset($_REQUEST['action'])) {
 			$ks->delete($_GET['id']);
 			break;
 		case 'add':
-			$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
+			//$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
+			//将POST的数据插入到Memcached的内存中。
+			$keyword = explode(' ', trim($_POST['keyword']));
+			$include = explode(' ', trim($_POST['include']));
+			$exclude = explode(' ', trim($_POST['exclude']));
+			$item = array(
+				'keyword' => $keyword,
+				'include' => $include,
+				'exclude' => $exclude,
+			);
+			$ks->set_memcached($item);			
 			break;    
 		default:
 			break;

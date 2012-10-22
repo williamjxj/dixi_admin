@@ -257,7 +257,7 @@ class ListAdvanced extends ListBase
     $sql2 = substr($sql2, 0, -1);      
 
     $query = "INSERT INTO ".$this->table_array['table_name']."(".$sql1.") VALUES(".$sql2.");";
-	echo $query;
+	// echo $query;INSERT INTO key_search(keyword,include,exclude,createdby,created) VALUES('default','最新负面消息','积极正面','Adminadmin', NOW());
 
     $affected = $this->mdb2->exec($query);
     if (PEAR::isError($affected)) {
