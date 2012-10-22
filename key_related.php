@@ -7,7 +7,7 @@ require_once(SITEROOT.'/configs/setting.inc.php');
 require_once(SITEROOT.'/configs/config.inc.php');
 require_once(SITEROOT.'/configs/ListAdvanced.inc.php');
 
-class KeywordClass extends ListAdvanced
+class KeyRelatedClass extends ListAdvanced
 {
   var $url, $self, $session;
 
@@ -70,12 +70,13 @@ class KeywordClass extends ListAdvanced
   // parse_ini 不支持多国字体。
   function get_header() {
   	return array(
+		'RID' => 'rid',
+		'keyword' => 'keyword',
+		'related_keyword' => 'rk',
+		//'URL' => 'kurl',
 		'kid' => 'kid',
-		'关键词' => 'keyword',
-		'Total' => 'total',
-		'创建者' => 'createdby',
-		'创建日期' => 'created',
-		'更新日期' => 'updated',
+		'createdby' => 'createdby',
+		'created' => 'created',
 	);
   }  
 }
@@ -85,101 +86,101 @@ class KeywordClass extends ListAdvanced
 global $config;
 $config['tabs'] = array('1'=>'关键词列表', '2'=>'添加关键词', '3'=>'上载包含关键词的文件');
 
-$kw = new KeywordClass();
+$kr = new KeyRelatedClass();
 
-if(! $kw->check_access()) {
-  $kw->set_breakpoint();
+if(! $kr->check_access()) {
+  $kr->set_breakpoint();
   echo "<script>if(window.opener){window.opener.location.href='".LOGIN."';} else{window.parent.location.href='".LOGIN."';}</script>";
   exit;
 }
-$kw->get_table_info();
+$kr->get_table_info();
 
-$kw->set_default_config(array('calender'=>true,'jvalidate'=>true));
+$kr->set_default_config(array('calender'=>true,'jvalidate'=>true));
 
 if(isset($_GET['js_search_form'])) {
-	$ary = $kw->get_search_form_settings();
-	$kw->assign('search_form', $ary);	
-	$kw->assign('config', $config);
-	$kw->display($config['templs']['search']);
+	$ary = $kr->get_search_form_settings();
+	$kr->assign('search_form', $ary);	
+	$kr->assign('config', $config);
+	$kr->display($config['templs']['search']);
 }
 elseif(isset($_GET['js_edit_form'])) {
-	$ary = $kw->get_edit_form_settings();
-	$record = $kw->get_record($_GET['id']);
-	$kw->assign('record', $record);	
-	if(isset($_GET['tr'])) $kw->assign('form_id', 'ef_'.$_GET['id'].'-'.$_GET['tr']);
-	else $kw->assign('form_id', 'ef_'.$_GET['id']);
-	$kw->assign('edit_form', $ary);	
-	$kw->assign('config', $config);
-	$kw->display($config['templs']['edit']);
+	$ary = $kr->get_edit_form_settings();
+	$record = $kr->get_record($_GET['id']);
+	$kr->assign('record', $record);	
+	if(isset($_GET['tr'])) $kr->assign('form_id', 'ef_'.$_GET['id'].'-'.$_GET['tr']);
+	else $kr->assign('form_id', 'ef_'.$_GET['id']);
+	$kr->assign('edit_form', $ary);	
+	$kr->assign('config', $config);
+	$kr->display($config['templs']['edit']);
 }
 elseif(isset($_GET['js_add_form'])) {
-	$ary = $kw->get_add_form_settings();
-	$kw->assign('add_form', $ary);	
-	$kw->assign('config', $config);
-	$kw->display($config['templs']['add']);
+	$ary = $kr->get_add_form_settings();
+	$kr->assign('add_form', $ary);	
+	$kr->assign('config', $config);
+	$kr->display($config['templs']['add']);
 }
 elseif(isset($_POST['js_edit_column'])) {
-	$ret = $kw->update_column(array('updatedby'=>$kw->username));
+	$ret = $kr->update_column(array('updatedby'=>$kr->username));
 	echo json_encode($ret);
 }
 elseif(isset($_REQUEST['action'])) {
 	switch($_REQUEST['action']) {
 		case 'edit':
-		  $ary = $kw->get_edit_form_settings();
-		  echo json_encode($kw->edit_table($ary));
+		  $ary = $kr->get_edit_form_settings();
+		  echo json_encode($kr->edit_table($ary));
 			break;
 		case 'delete':
-			$kw->delete($_GET['id']);
+			$kr->delete($_GET['id']);
 			break;
 		case 'add':
-			$last_kid = $kw->create(array('createdby'=>$kw->username, 'updatedby'=>$kw->username, 'created'=>'NOW()'));
+			$last_kid = $kr->create(array('createdby'=>$kr->username, 'updatedby'=>$kr->username, 'created'=>'NOW()'));
 			break;    
 		default:
 			break;
 	}
 }
 else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort'])) || isset($_GET['page']) || isset($_GET['js_reload_list']) ) {
-	if(isset($_POST['search'])) $kw->parse();
+	if(isset($_POST['search'])) $kr->parse();
 
-	$data = $kw->list_all();
+	$data = $kr->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $kw->get_header(); //$kw->get_mappings();
+	$header = $kr->get_header(); //$kr->get_mappings();
 
-	$pagination = $kw->draw( $data['current_page'], $data['total_pages'] );
+	$pagination = $kr->draw( $data['current_page'], $data['total_pages'] );
 	
 	$data['self_i18n'] = '�ؼ���';
-	$kw->assign('config', $config);
-	$kw->assign('header', $header);
-	$kw->assign('data', $data);
-	$kw->assign("pagination", $pagination);
-	$tpl = $kw->get_html_template();
-	$kw->display($tpl); // not use display, should use AJAX.
+	$kr->assign('config', $config);
+	$kr->assign('header', $header);
+	$kr->assign('data', $data);
+	$kr->assign("pagination", $pagination);
+	$tpl = $kr->get_html_template();
+	$kr->display($tpl); // not use display, should use AJAX.
 }
 // default: list data.
 else {
 
-	if (isset($_SESSION[$kw->self][$kw->session['sql']])) $_SESSION[$kw->self][$kw->session['sql']] = '';
+	if (isset($_SESSION[$kr->self][$kr->session['sql']])) $_SESSION[$kr->self][$kr->session['sql']] = '';
 
-	$total_rows = $kw->get_total_rows($kw->get_count_sql());
+	$total_rows = $kr->get_total_rows($kr->get_count_sql());
 
-	$_SESSION[$kw->self][$kw->session['rows']] = $total_rows < 1 ? 1 : $total_rows;
+	$_SESSION[$kr->self][$kr->session['rows']] = $total_rows < 1 ? 1 : $total_rows;
 	
-	$data = $kw->list_all();
+	$data = $kr->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $kw->get_header(); //$kw->get_mappings();
+	$header = $kr->get_header(); //$kr->get_mappings();
 
-	$pagination = $kw->draw( $data['current_page'], $data['total_pages'] );
+	$pagination = $kr->draw( $data['current_page'], $data['total_pages'] );
 	
-	$tpl = $kw->get_html_template();
+	$tpl = $kr->get_html_template();
 
-	$kw->assign('config', $config);
-	$kw->assign('header', $header);
-	$kw->assign('data', $data);
-	$kw->assign("pagination", $pagination);
+	$kr->assign('config', $config);
+	$kr->assign('header', $header);
+	$kr->assign('data', $data);
+	$kr->assign("pagination", $pagination);
 
-	$kw->assign("template", $tpl);
-	$kw->display($config['templs']['main']);
+	$kr->assign("template", $tpl);
+	$kr->display($config['templs']['main']);
 }
 ?>

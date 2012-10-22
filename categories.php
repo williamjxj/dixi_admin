@@ -179,6 +179,7 @@ class CategoryClass extends ListAdvanced
 		'名称' => 'name',
 		'链接地址' => 'curl',
 		'频率' => 'frequency',
+		'weight' => 'weight',
 		'标签' => 'tag',
 		'状态' => 'active',
 		'描述' => 'description',

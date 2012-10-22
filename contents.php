@@ -23,31 +23,10 @@ class ContentsClass extends ListAdvanced
   function get_search_form_settings() {
 	return array(
 		array(
-		  'type' => 'select',
-		  'display_name' => '模块:',
-		  'id' => 'mid_s',
-		  'name' => 'mid',
-		  'call_func' => 'get_modules_options',
-		  'db_type' => 'int',
-		),
-		array(
-			'type' => 'radio',
-			'display_name' => '活动状态:',
-			'id' => 'active_s',
-			'name' => 'active',
-			'lists' => array(
-				'N' => 'No',
-				'Y' => 'Yes',
-				'A' => 'All',
-			),
-			'checked' => 'A',
-			'ignore' => 'A',
-		),
-		array(
 			'type' => 'text',
 			'display_name' => '标题:',
-			'id' => 'linknamet_s',
-			'name' => 'linkname',
+			'id' => 'title_s',
+			'name' => 'title',
 		),
 		array(
 			'type' => 'text',
@@ -75,36 +54,15 @@ class ContentsClass extends ListAdvanced
 			'id' => 'createdby_s',
 			'name' => 'createdby',
 		),
-		array(
-			'type' => 'text',
-			'display_name' => '更改:',
-			'id' => 'updatedby_s',
-			'name' => 'updatedby',
-		),
 	);
   }
 
   function get_edit_form_settings() {
 	return array(
 		array(
-		  'type' => 'text',
-		  'display_name' => '模块:',
-		  'name_value' => 'mid',
-		  'name' => 'mname',
-		),
-		array(
-			'type' => 'radio',
-			'display_name' => '活动状态:',
-			'name' => 'active',
-			'lists' => array(
-				'N' => 'No',
-				'Y' => 'Yes',
-			),
-		),
-		array(
 			'type' => 'text',
 			'display_name' => '标题:',
-			'name' => 'linkname',
+			'name' => 'title',
 		),
 		array(
 			'type' => 'text',
@@ -137,23 +95,29 @@ class ContentsClass extends ListAdvanced
   function get_header() {
 	return array(
 		'索引' => 'cid',
-		'模块名称' => 'mname',
-		'标题' => 'linkname',
+		'标题' => 'title',
+		'模块名称' => 'pubdate',
 		'作者/出处' => 'author',
-		'注释' => 'notes',
-		'位置' => 'weight',
-		'语言' => 'language',
+		'作者/出处' => 'source',
+		'注释' => 'clicks',
+		'位置' => 'category',
+		'位置' => 'item',
+		'语言' => 'likes',
+		'语言' => 'fandui',
+		'语言' => 'pinglun',
+		'语言' => 'tags',
+		'语言' => 'guanzhu',
 		'创建' => 'created,createdby',
-		'更新' => 'updated,updatedby',
+		'更新' => 'updated'
 	);
   }
 		
   function get_contents_options_by_sid($site_id){
-	$sql = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE site_id=" . $site_id . " ORDER BY linkname";
+	$sql = "SELECT cid, title, author FROM contents c ORDER BY title";
 	return 	$this->get_select_options($sql);
   }
-  function get_contents_options_by_mid($module_id){
-	$sql = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE mid=" . $module_id . " ORDER BY linkname";
+  function get_contents_options_by_mid($cate_id){
+	$sql = "SELECT cid, title, category, author FROM contents c WHERE cate_id=" . $cate_id . " ORDER BY title";
 	return 	$this->get_select_options($sql);
   }  
   function update_modules_contents()
@@ -168,9 +132,9 @@ class ContentsClass extends ListAdvanced
 	}
 	foreach($cids as $cid) {
 		$sql = "INSERT INTO contents(
-			linkname,author,notes,content,site_id,mid,weight,active,createdby,created) 		
+			title,author,source,content,clicks,iid,cate_id,active,createdby,created) 		
 		SELECT
-			linkname,author,notes,content,site_id,".$mid.",weight,'Y','".$this->username."',NOW()
+			title,author,source,content,clicks,".$iid.",weight,'Y','".$this->username."',NOW()
 		FROM contents
 		WHERE cid = ".$cid;
 		echo $sql."\n";
@@ -209,17 +173,17 @@ class ContentsClass extends ListAdvanced
 	$active = $_POST['active'];
 
 	if (get_magic_quotes_gpc()) {
-		$linkname = trim($_POST['linkname']);
+		$title = trim($_POST['title']);
 		$author = trim($_POST['author']);
 		$notes = trim($_POST['notes']);
 	}
 	else {
-		$linkname = $this->mdb2->escape(trim($_POST['linkname']));
+		$title = $this->mdb2->escape(trim($_POST['title']));
 		$author = $this->mdb2->escape(trim($_POST['author']));
 		$notes = $this->mdb2->escape(trim($_POST['notes']));
 	}
 
-	$query = "UPDATE contents set linkname = '" . $linkname . "', " .
+	$query = "UPDATE contents set title = '" . $title . "', " .
 		 "author    = '" . $author ."', " .
 		 "notes    = '" . $notes . "', " .
 		 "active = '" . $active . "', " .
@@ -235,7 +199,7 @@ class ContentsClass extends ListAdvanced
 
 	$ary = array();
 	$ary['cid'] = $cid;
-	$ary['linkname'] = $row['linkname'];
+	$ary['title'] = $row['title'];
 	$ary['author'] = $row['author'];
 	$ary['notes'] = $row['notes'];
 	$ary['content'] = $row['content'];
@@ -252,12 +216,12 @@ class ContentsClass extends ListAdvanced
 	elseif(isset($_POST['elm3'])) $content = $_POST['elm3'];
 
 	if (get_magic_quotes_gpc()) {
-		$linkname = trim($_POST['input_linkname_3']);
+		$title = trim($_POST['input_linkname_3']);
 		$author = trim($_POST['input_title_3']);
 		$notes = trim($_POST['input_notes_3']);
 	}
 	else {
-		$linkname = $this->mdb2->escape(trim($_POST['input_linkname_3']));
+		$title = $this->mdb2->escape(trim($_POST['input_linkname_3']));
 		$author = $this->mdb2->escape(trim($_POST['input_title_3']));
 		$notes = $this->mdb2->escape(trim($_POST['input_notes_3']));
 		$content = $this->mdb2->escape($content);
@@ -266,8 +230,8 @@ class ContentsClass extends ListAdvanced
 
 	$content = strip_tags($content,$this->allowedTags);
 
-	$query = "INSERT INTO contents (linkname, author, notes, content, createdby, created, updatedby,site_id,mid,sname,mname, language)
-		VALUES('".$linkname."', '".$author."', '".$notes."', '" . $content . "', '" . $this->username . "', NOW(), '".$this->username."', ".
+	$query = "INSERT INTO contents (title, author, notes, content, createdby, created, updatedby,site_id,mid,sname,mname, language)
+		VALUES('".$title."', '".$author."', '".$notes."', '" . $content . "', '" . $this->username . "', NOW(), '".$this->username."', ".
 		$site_id . ", " . $mid . ", '".$this->get_sname_from_sid($site_id)."', '".$this->get_mname_from_mid($mid)."', '". $language . "')";
 
 	$affected = $this->mdb2->exec($query);
@@ -280,7 +244,7 @@ class ContentsClass extends ListAdvanced
 
 	$ary = array();
 	$ary['cid'] = $id;
-	$ary['linkname'] = $row['linkname'];
+	$ary['title'] = $row['title'];
 	$ary['author'] = $row['author'];
 	$ary['notes'] = $row['notes'];
 	$ary['content'] = $row['content'];
@@ -299,12 +263,12 @@ class ContentsClass extends ListAdvanced
 	else foreach($_POST as $k=>$v) if(preg_match("/^elm_/", $k)) $content = $_POST[$k];
 
 	if (get_magic_quotes_gpc()) {
-		$linkname = trim($_POST['input_linkname_3']);
+		$title = trim($_POST['input_linkname_3']);
 		$author = trim($_POST['input_title_3']);
 		$notes = trim($_POST['input_notes_3']);
 	}
 	else {
-		$linkname = $this->mdb2->escape(trim($_POST['input_linkname_3']));
+		$title = $this->mdb2->escape(trim($_POST['input_linkname_3']));
 		$author = $this->mdb2->escape(trim($_POST['input_title_3']));
 		$notes = $this->mdb2->escape(trim($_POST['input_notes_3']));
 		$content = addslashes($content);
@@ -314,7 +278,7 @@ class ContentsClass extends ListAdvanced
 	//$content = $this->mdb2->escape(strip_tags(stripslashes($content),$this->allowedTags));
 	$content = strip_tags($content, $this->allowedTags);
 
-	$query = "UPDATE contents set linkname = '" . $linkname . "', " .
+	$query = "UPDATE contents set title = '" . $title . "', " .
 		 "author    = '" . $author ."', " .
 		 "notes    = '" . $notes . "', " .
 		 "content  = '" . $content . "', " .
@@ -333,7 +297,7 @@ class ContentsClass extends ListAdvanced
 
 	$ary = array();
 	$ary['cid'] = $cid;
-	$ary['linkname'] = $row['linkname'];
+	$ary['title'] = $row['title'];
 	$ary['author'] = $row['author'];
 	$ary['notes'] = $row['notes'];
 	$ary['content'] = $row['content'];
@@ -377,7 +341,7 @@ class ContentsClass extends ListAdvanced
 	$row = $result->fetchRow(MDB2_FETCHMODE_ASSOC);
 
 	$ary['cid'] = $cid;
-	$ary['linkname'] = $row['linkname'];
+	$ary['title'] = $row['title'];
 	$ary['author'] = $row['author'];
 	$ary['notes'] = $row['notes'];
 	$ary['content'] = $row['content'];
@@ -391,12 +355,14 @@ class ContentsClass extends ListAdvanced
   // different with resources.php.
   function select_assigned_contents($mid, $site_id)
   {
-	$sqlc = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE active='Y' AND mid=".$mid." AND site_id=".$site_id." ORDER BY linkname";
+	$sqlc = "SELECT cid, title, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE active='Y' AND mid=".$mid." AND site_id=".$site_id." ORDER
+	BY title";
 	return 	$this->get_select_options($sqlc, false);
   }  
   function select_available_contents($mid, $site_id)
   {
-	$sqlc = "SELECT cid, linkname, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE active='Y' AND mid!=".$mid." AND site_id=".$site_id." ORDER BY linkname";
+	$sqlc = "SELECT cid, title, (SELECT name FROM modules m WHERE m.mid=c.mid) AS mname, author FROM contents c WHERE active='Y' AND mid!=".$mid." AND site_id=".$site_id."
+	ORDER BY title";
 	return 	$this->get_select_options($sqlc, false);
   }
 
