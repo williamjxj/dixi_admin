@@ -179,16 +179,17 @@ elseif(isset($_REQUEST['action'])) {
 		case 'add':
 			//$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
 			//将POST的数据插入到Memcached的内存中。
-			$keyword = explode(' ', trim($_POST['keyword']));
-			$include = explode(' ', trim($_POST['include']));
-			$exclude = explode(' ', trim($_POST['exclude']));
-			$item = array(
-				'keyword' => $keyword,
-				'include' => $include,
-				'exclude' => $exclude,
-			);
-			$ks->set_memcached($item);			
-			break;    
+			$pattern = "/\s+/";
+			$t1 = preg_replace($pattern, ' ', trim($_POST['keyword']));
+			$t2 = preg_replace($pattern, ' ', trim($_POST['include']));
+			$t3 = preg_replace($pattern, ' ', trim($_POST['exclude']));
+
+			$keyword = explode(' ', $t1);
+			$include = explode(' ', $t2);
+			$exclude = explode(' ', $t3);
+			$item = array( $t1 => array( 'keyword' => $keyword, 'include' => $include, 'exclude' => $exclude ));
+			$ks->set_memcached($item);
+			break;
 		default:
 			break;
 	}
