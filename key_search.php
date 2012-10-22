@@ -73,6 +73,18 @@ class KeySearchClass extends ListAdvanced
 		  'id' => 'keyword',
 		  'name' => 'keyword',
 		),
+		array(
+			'type' => 'text',
+			'display_name' => '包括:',
+			'id' => 'include',
+			'name' => 'include',
+		),
+		array(
+			'type' => 'text',
+			'display_name' => '排除:',
+			'id' => 'exclude',
+			'name' => 'exclude',
+		),
 	);
   }
 
@@ -159,7 +171,7 @@ elseif(isset($_REQUEST['action'])) {
 			$ks->delete($_GET['id']);
 			break;
 		case 'add':
-			$ks->create(array('createdby'=>$ks->username, 'updatedby'=>$ks->username, 'created'=>'NOW()'));
+			$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
 			break;    
 		default:
 			break;

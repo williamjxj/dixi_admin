@@ -26,7 +26,7 @@ function get_core() {
 		'Related Keywords' => 'key_related.php',
 		'类别' => 'categories.php',
 		'栏目' => 'items.php',
-		'标签' => 'tags.php',
+		'标签' => 'key_search.php',
 		//'通道' => 'channels.php',
 	);
 }

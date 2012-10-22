@@ -229,7 +229,7 @@ class ListBase extends BaseClass
 	$res = $this->mdb2->query($query);
 	if (PEAR::isError($this->mdb2)) die($this->mdb2->getMessage().' [line '.__LINE__.']: '. $query);     
 
-	//echo __FILE__.'['.__LINE__.']'.$query."<br>\n";
+	// echo __FILE__.'['.__LINE__.']'.$query."<br>\n";
 
 	$h = $res->getColumnNames();
 	if (PEAR::isError($h)) {

@@ -30,6 +30,8 @@ class BaseClass extends Smarty
 		$this->config_dir = SITEROOT.'configs/';
 		$this->cache_dir = SITEROOT.'cache/';
 		$this->project  = PACKAGE;
+		//$timezone = "Asia/Shanghai";
+		//if(function_exists('date_default_timezone_set')) date_default_timezone_set($timezone);
 	}
 	# in this project, use PEAR MDB2 instead of Pure MySQL.
 	public function pear_connect_admin() 

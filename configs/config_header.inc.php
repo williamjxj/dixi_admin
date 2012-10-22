@@ -24,7 +24,7 @@ function get_core() {
 		'关键词' => 'keywords.php',
 		'类别' => 'categories.php',
 		'栏目' => 'items.php',
-		'标签' => 'tags.php',
+		'标签' => 'key_search.php',
 		'通道' => 'channels.php',
 		'正文内容' => 'contents.php',
 		'模块' => 'modules.php',
