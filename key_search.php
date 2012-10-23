@@ -21,6 +21,8 @@ class KeySearchClass extends ListAdvanced
 	$m = new Memcached();
 	$m->addServer('localhost', 11211);
 	$m->setMulti($items);
+	// if existed, overwrite?
+	// if($m->getResultCode() != Memcached::RES_SUCCESS) {}
   }
   
   function get_search_form_settings() {
@@ -177,7 +179,6 @@ elseif(isset($_REQUEST['action'])) {
 			$ks->delete($_GET['id']);
 			break;
 		case 'add':
-			$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
 			//将POST的数据插入到Memcached的内存中。
 			$pattern = "/\s+/";
 			$t1 = preg_replace($pattern, ' ', trim($_POST['keyword']));
@@ -187,8 +188,13 @@ elseif(isset($_REQUEST['action'])) {
 			$keyword = explode(' ', $t1);
 			$include = explode(' ', $t2);
 			$exclude = explode(' ', $t3);
-			$item = array( "$t1" => array( 'keyword' => $keyword, 'include' => $include, 'exclude' => $exclude ));
+			$t = iconv('UTF-8', 'UTF-8//TRANSLIT', $t1);
+			$item = array( "$t" => array( 'keyword' => $keyword, 'include' => $include, 'exclude' => $exclude ));
 			$ks->set_memcached($item);
+
+			//if existed: MDB2 Error: constraint violation.
+			$ks->create(array('createdby'=>$ks->username, 'created'=>'NOW()'));
+
 			break;
 		default:
 			break;
@@ -200,7 +206,7 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 	$data = $ks->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $ks->get_header(); //$ks->get_mappings();
+	$header = $ks->get_header();
 
 	$pagination = $ks->draw( $data['current_page'], $data['total_pages'] );
 	
@@ -223,7 +229,7 @@ else {
 	$data = $ks->list_all();
 	$data['options'] = array(EDIT, DELETE);
 	
-	$header = $ks->get_header(); //$ks->get_mappings();
+	$header = $ks->get_header();
 
 	$pagination = $ks->draw( $data['current_page'], $data['total_pages'] );
 	

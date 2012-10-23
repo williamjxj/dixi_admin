@@ -1,46 +1,48 @@
 <?php
-header ("content-type: text/html; charset=utf-8");
+header("content-type: text/html; charset=utf-8");
+require_once('../fmxw/scraper_search.php');
+?>
+<form method="get">
+<input type="text" name="key" />
+<input type="submit" name="submit" value="Submit" />
+</form>
 
-//memcache
-getMemcacheKeys();
+<?php
+if(!empty($_GET['submit'])) {
 
-//memcached
-$m = new Memcached();
-$m->addServer('localhost', 11211);
+	$m = new Memcached(); //memcached
+	$m->addServer('localhost', 11211);
 
-if (!($m->get('Ã÷ÐÇ'))) {
-//if (!($m->get('key2'))) {
-	if($m->getResultCode() == Memcached::RES_NOTFOUND) {
-		echo '11111';
+	$got = $m->get($_GET['key']); //utf8_encode();mb_detect_encoding();
+	// echo "<pre>"; print_r($got); echo "</pre>";
+
+	if (! $got) {
+		if($m->getResultCode() == Memcached::RES_NOTFOUND) {
+			echo "NOT FOUND<br>\n";
+		}
+		else {
+			echo "FOUND, but error[". $t . "]<br>\n";
+		}
 	}
 	else {
-		echo '2222';
+		$ary = array(
+			'key' => implode(' ', $got['keyword']),
+			'include' => implode(' ', $got['include']),
+			'exclude' => implode(' ', $got['exclude']),
+		);
+		echo "<pre>"; print_r($ary); echo "</pre>";
 	}
+	backend_scrape(trim($_GET['key']));
 }
 else {
-		echo '3333';
+	getMemcacheKeys(); // memcache
 }
 
 return;
-
-//$t = iconv('UTF-8', 'UTF-8//TRANSLIT', 'Ã÷ÐÇ');
-//$m->getDelayed(array($t), true);
-$m->getDelayed(array('Ã÷ÐÇ'), true);
-echo "<pre>"; print_r($m->fetchAll()); echo "</pre>";
-
-return;
-
-$m->getDelayed(array('abc efg'), true);
-echo "<pre>"; print_r($m->fetchAll()); echo "</pre>";
-
-//$result = $m->getMulti(array('keyword', 'include', 'exclude'), $cas);
-//echo "<pre>"; var_dump($result, $cas); echo "</pre>";
-
-
 
 function getMemcacheKeys() {
 	$memcache = new Memcache;
-	$memcache->connect('127.0.0.1', 11211) 
+	$memcache->connect('localhost', 11211) 
 	or die ("Could not connect to memcache server");
 
 	$list = array();
