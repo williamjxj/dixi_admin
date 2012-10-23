@@ -35,13 +35,22 @@ class SyncMemcached
 			//将数组存入memcached中。
 			$item = array($include,$exclude);
 			$this->cache->set($t1, $item);
-			echo $t1, ': [' . $this->cache->getResultCode() . "]<br>\n";
+			//echo $t1, ': [' . $this->cache->getResultCode() . "]<br>\n";
 		}		
+	}
+	// Not use yet.
+	function delete($key) {
+		if(empty($key)) {
+			$sql = "select keyword from key_search";
+			$res = $this->mdb2->query($sql);
+			if (PEAR::isError($res)) die($res->getMessage());
+			while ($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) {
+				$t1 = trim($row['keyword']);
+				$this->cache->delete($t1);
+			}		
+		}
+		else $this->cache->delete($key);
 	}
 }
 
-class SyncMongoDB
-{
-
-}
 ?>

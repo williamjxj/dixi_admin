@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 {* input: $config,$pagination,$header,$data *}
 {config_load file="{$config.smarty}"}
 {$url={$smarty.server.SCRIPT_NAME}}
@@ -21,8 +22,7 @@
 <div class="pager1"> {$pagination} </div>
 {/if}
 <div style="clear:both;"></div>
-<div align="center" class="innerform-x">
-{if $config.self=='key_search'} <a href="javascript:;" onclick="$.ajax('sync_memcached.php', function(data){ alert('done'); });">�~P~L步Memcached�~F~E�~X</a>{/if}
+<div align="center" class="innerform-x"> {if $config.self=='key_search'} <a href="javascript:;" onclick="$.ajax('sync_memcached.php', function(data){ alert('完成同步'); });return false;">同步Memcached内存和MySQL数据库的数据。</a>{/if}
   <table id="list_table-x">
     <tr>
       <td><table id="list_table" cellpadding="0" cellspacing="0">
@@ -384,4 +384,4 @@ function fix_search_buttons(){
   }
 }
 </script>
-{/if}
+{/if} 

@@ -99,10 +99,6 @@
   {/foreach}
   
   <div class="submit-buttons">
-<!--    <div class="green-btn">
-      <input type="submit" id="add_submit" name="add_submit" value="添加 {$config.title|default:$config.self} 记录!">
-      <img src="{$config.path}images/ajax-loader.gif" id="upload_loading" border="0" width="35" height="35" style="display:none;" /> </div>-->
-      
    <input type="submit" name="add_submit" value="添加 {$config.title|default:$config.self} 记录!" class="btn btn-success" />
     <img src="{$config.path}images/spinner.gif" id="uploading" width="16" height="16" border="0" style="display:none;">
     <i class="icon-retweet"></i><input type="reset" name="reset" value="还原" class="btn btn-warning" />

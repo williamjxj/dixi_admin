@@ -16,8 +16,7 @@ class KeySearchClass extends ListAdvanced
 	$this->table = 'key_search';
   }
 
-  function set_memcached($items)
-  {
+  function set_memcached($items) {
 	$m = new Memcached();
 	$m->addServer('localhost', 11211);
 	$m->setMulti($items);
@@ -78,7 +77,7 @@ class KeySearchClass extends ListAdvanced
 	return array(
 		array(
 		  'type' => 'text',
-		  'display_name' => '查询词:',
+		  'display_name' => '查询词:&lt;br&gt;完整的单词，不要有空格。',
 		  'id' => 'keyword',
 		  'name' => 'keyword',
 		),

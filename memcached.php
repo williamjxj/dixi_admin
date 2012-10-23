@@ -1,8 +1,8 @@
 <div style="margin:20px;padding:10px">
-<form method="get" id="mem_form" action="<?=$_SERVER['PHP_SELF'];?>">
-  <input type="text" name="key" />
-  <input type="submit" name="submit" value="Submit" />
-</form>
+  <form method="get" id="mem_form" action="<?=$_SERVER['PHP_SELF'];?>">
+    <input type="text" name="key" />
+    <input type="submit" name="submit" value="Submit" />
+  </form>
 </div>
 <script type="text/javascript">
 $(function() {
@@ -29,16 +29,15 @@ if(!empty($_POST['key'])) {
 	}
 	else {
 		$ary = array(
-			'key' => implode(' ', $got['keyword']),
-			'include' => implode(' ', $got['include']),
-			'exclude' => implode(' ', $got['exclude']),
+			'key' => $_POST['key'],
+			'include' => implode(' ', $got[0]),
+			'exclude' => implode(' ', $got[1]),
 		);
 		echo "<pre>"; print_r($ary); echo "</pre>";
 	}
 	echo "<hr>\n";
 }
 getMemcacheKeys(); // memcache
-
 return;
 
 function getMemcacheKeys() {
