@@ -114,21 +114,6 @@ $(function() {
 	}
   });
   
-{elseif $config.self=='modules'}
-  $('#tab2').bind('click', function(event) {
-	var t = $('div.TabbedPanelsContentGroup').find('div.TabbedPanelsContent:eq(1) div:eq(0)');
-	if($(t).html().length==0) {
-		$(t).load(url+'?js_add_form=1').fadeIn(100);
-	}
-	return false;
-  });
-  $('#tab3').bind('click', function(event) {
-	var t = $('div.TabbedPanelsContentGroup').find('div.TabbedPanelsContent:eq(2) div:eq(0)');
-	if($(t).html().length==0) {
-		$(t).load(url+'?js_assign_form=1').fadeIn(100);
-	}
-  });
-  
 {else}
   $('#tab2').bind('click', function(event) {
 	var t = $('div.TabbedPanelsContentGroup').find('div.TabbedPanelsContent:eq(1) div:eq(0)');
@@ -152,8 +137,14 @@ $(function() {
 			$(t).load('upload/file_upload.html').fadeIn(100);
 		}
 	});
+{elseif $config.self=='key_search'}
+  $('#tab3').bind('click', function(event) {
+	var t = $('div.TabbedPanelsContentGroup').find('div.TabbedPanelsContent:eq(2) div:eq(0)');
+	if($(t).html().length==0) {
+		$(t).load('memcached.php').fadeIn(100);
+	}
+  });
   {/if}
-  
 {/if}
 });
 </script>

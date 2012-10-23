@@ -1,28 +1,31 @@
-<?php
-header("content-type: text/html; charset=utf-8");
-require_once('../fmxw/scraper_search.php');
-?>
-
-<form method="get">
+<div style="margin:20px;padding:10px">
+<form method="get" id="mem_form" action="<?=$_SERVER['PHP_SELF'];?>">
   <input type="text" name="key" />
   <input type="submit" name="submit" value="Submit" />
 </form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$('#mem_form').submit(function(e) {
+		var data = $(this).serialize();
+		$.post($(this).attr('action'), data, function(data) {
+			$('#main3').html(data).css('marginLeft', '10px');
+		});
+		e.preventDefault();
+		return false;
+	});
+});
+</script>
 <?php
-if(!empty($_GET['submit'])) {
+if(!empty($_POST['key'])) {
 
 	$m = new Memcached(); //memcached
 	$m->addServer('localhost', 11211);
 
-	$got = $m->get($_GET['key']); //utf8_encode();mb_detect_encoding();
-	// echo "<pre>"; print_r($got); echo "</pre>";
-
+	$got = $m->get($_POST['key']); //utf8_encode();mb_detect_encoding();
 	if (! $got) {
-		if($m->getResultCode() == Memcached::RES_NOTFOUND) {
-			echo "NOT FOUND<br>\n";
-		}
-		else {
-			echo "FOUND, but error[". $t . "]<br>\n";
-		}
+		if($m->getResultCode() == Memcached::RES_NOTFOUND) echo "NOT FOUND<br>\n";
+		else echo "FOUND, but error[". $t . "]<br>\n";
 	}
 	else {
 		$ary = array(
@@ -32,11 +35,9 @@ if(!empty($_GET['submit'])) {
 		);
 		echo "<pre>"; print_r($ary); echo "</pre>";
 	}
-	backend_scrape(trim($_GET['key']));
+	echo "<hr>\n";
 }
-else {
-	getMemcacheKeys(); // memcache
-}
+getMemcacheKeys(); // memcache
 
 return;
 

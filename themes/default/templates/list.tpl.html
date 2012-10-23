@@ -22,7 +22,7 @@
 {/if}
 <div style="clear:both;"></div>
 <div align="center" class="innerform-x">
-  {if $url=='key_search.php'} <a href="javascript:;" onclick="">åŒæ­¥Memcachedå†…å­˜</a>{/if}
+{if $config.self=='key_search'} <a href="javascript:;" onclick="$.ajax('sync_memcached.php', function(data){ alert('done'); });">å~P~Læ­¥Memcachedå~F~Eå­~X</a>{/if}
   <table id="list_table-x">
     <tr>
       <td><table id="list_table" cellpadding="0" cellspacing="0">

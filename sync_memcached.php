@@ -8,7 +8,7 @@ $s->sync();
 class SyncMemcached
 {
 	function __construct() {
-		$this->cache = this->connect_memcached();
+		$this->cache = $this->connect_memcached();
 		$this->mdb2 = pear_connect_admin();
 	}
 	function connect_memcached() {
@@ -35,6 +35,7 @@ class SyncMemcached
 			//将数组存入memcached中。
 			$item = array($include,$exclude);
 			$this->cache->set($t1, $item);
+			echo $t1, ': [' . $this->cache->getResultCode() . "]<br>\n";
 		}		
 	}
 }
