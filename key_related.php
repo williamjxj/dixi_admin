@@ -149,7 +149,7 @@ else if( isset($_POST['search']) || (isset($_GET['page']) && isset($_GET['sort']
 
 	$pagination = $kr->draw( $data['current_page'], $data['total_pages'] );
 	
-	$data['self_i18n'] = '¹Ø¼ü´Ê';
+	$data['self_i18n'] = 'ï¿½Ø¼ï¿½ï¿½';
 	$kr->assign('config', $config);
 	$kr->assign('header', $header);
 	$kr->assign('data', $data);

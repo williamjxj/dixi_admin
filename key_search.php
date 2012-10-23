@@ -114,7 +114,7 @@ class KeySearchClass extends ListAdvanced
 //////////////////////////////////////////
 
 global $config;
-$config['tabs'] = array('1'=>'标签列表', '2'=>'添加标签');
+$config['tabs'] = array('1'=>'搜索关键字列表', '2'=>'添加搜索关键字', '3'=>'Memcached内存关键字查询');
 
 $ks = new KeySearchClass();
 

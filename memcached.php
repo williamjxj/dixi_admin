@@ -2,11 +2,11 @@
 header("content-type: text/html; charset=utf-8");
 require_once('../fmxw/scraper_search.php');
 ?>
-<form method="get">
-<input type="text" name="key" />
-<input type="submit" name="submit" value="Submit" />
-</form>
 
+<form method="get">
+  <input type="text" name="key" />
+  <input type="submit" name="submit" value="Submit" />
+</form>
 <?php
 if(!empty($_GET['submit'])) {
 
