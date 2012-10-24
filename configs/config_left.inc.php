@@ -46,6 +46,10 @@ function get_manage() {
 		'管理用户组' => 'levels.php',
 		'普通用户' => 'common_users.php',
 		// '网页韵律' => 'themes.php',
+		'PMA'	=> 'http://dixitruth.com/fmxw_pma',
+		'MemCached' => 'http://dixitruth.com/fmxw_mem/',
+		'MongoDB' => 'http://dixitruth.com/apps/moadmin.php',
+		'站点信息' => 'http://dixitruth.com/apps/phpinfo.php'
 	);
 }
 ?>
