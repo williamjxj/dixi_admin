@@ -188,7 +188,7 @@ elseif(isset($_REQUEST['action'])) {
 			$include = explode(' ', $t2);
 			$exclude = explode(' ', $t3);
 			$t = iconv('UTF-8', 'UTF-8//TRANSLIT', $t1);
-			$item = array( "$t" => array( 'keyword' => $keyword, 'include' => $include, 'exclude' => $exclude ));
+			$item = array( "$t" => array( $include, $exclude ));
 			$ks->set_memcached($item);
 
 			//if existed: MDB2 Error: constraint violation.
